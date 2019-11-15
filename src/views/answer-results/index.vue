@@ -449,7 +449,7 @@ export default {
                 this.dailyhomeworkInfos.halfTrueStudentCount
               );
             }
-            this.drawBar();
+            this.drawBar("A", "B", "C", "D");
             let myChart = this.$echarts.init(
               document.getElementById("myChart")
             );
@@ -567,75 +567,71 @@ export default {
       });
     },
     drawBar(a, b, c, d) {
+      //color: ["#13A99F", "#FD6265"],
       // 基于准备好的dom，初始化echarts实例
       let myChart = this.$echarts.init(document.getElementById("myCharts"));
       // 绘制图表
       myChart.setOption({
         legend: {
-          data: ["正确选项", "错误选项"],
-          bottom: "bottom"
+          data: ["正确选项", "错误选项"]
         },
         color: ["#13A99F", "#FD6265"],
         xAxis: {
           type: "category",
-          name: "选项",
-          nameGap: 5,
+          splitLine: { show: false },
+          data: ["a", "b", "c", "d", "e", "f"],
+          axisTick: {
+            show: false
+          },
           axisLine: {
             lineStyle: {
               color: "#999"
             }
           },
-          axisTick: {
-            show: false
-          },
           splitLine: {
             show: false
-          },
-          data: ["A", "B", "C", "D"]
+          }
         },
         yAxis: {
-          name: "人数",
           type: "value",
+          axisTick: {
+            show: false
+          },
           axisLine: {
             lineStyle: {
               color: "#999"
             }
           },
           splitLine: {
-            show: false
-          },
-          axisTick: {
             show: false
           }
         },
         series: [
           {
             name: "正确选项",
-            data: [
-              {
-                value: 50,
-                name: "正确选项"
-              },
-              {
-                value: 30,
-                name: "正确选项"
-              },
-              {
-                value: 40,
-                name: "错误选项"
-              },
-              {
-                value: 20,
-                name: "错误选项"
-              }
-            ],
             type: "bar",
+            stack: "总数",
+            label: {
+              normal: {
+                show: true,
+                position: "top"
+              }
+            },
+            data: [90, 34, 3, "-", "-", 13],
             barWidth: 20
           },
           {
             name: "错误选项",
-            data: [],
-            type: "bar"
+            type: "bar",
+            stack: "总数",
+            label: {
+              normal: {
+                show: true,
+                position: "top"
+              }
+            },
+            barWidth: 20,
+            data: ["-", "-", "-", 10, 14, "-"]
           }
         ]
       });
