@@ -623,7 +623,8 @@ const actions = {
   },
   // 听说--章节模块下的试题
   unitModel({ commit, state, rootGetters }) {
-    console.log(state.EnglishWorkTextbookChapterCode);
+    // console.log(state.EnglishWorkTextbookChapterCode);
+    console.log(state.EnglishWorkTextbookChapterId);
     return http
       .get('/api/video/chapter/questionList/unitModel', {
         params: {
