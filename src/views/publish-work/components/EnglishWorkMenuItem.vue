@@ -6,7 +6,7 @@
       :class="
         EnglishWorkTextbookChapterId === item.textbookChapterId ? 'active' : ''
       "
-      @click="handleTextbookChapterId(item.textbookChapterId)"
+      @click="handleTextbookChapterId(item.textbookChapterId,item.textbookChapterCode)"
     >
       <p>{{ item.textbookChapterName }}</p>
     </div>
@@ -22,43 +22,50 @@
 </template>
 
 <script>
-import ChildMenu from './EnglishWorkChildMenuItem'
+import ChildMenu from "./EnglishWorkChildMenuItem";
 export default {
-  name: '',
-  props: ['item'],
+  name: "",
+  props: ["item"],
   components: { ChildMenu },
   data() {
     return {
       isShowChild: false
-    }
+    };
   },
   computed: {
     EnglishWorkTextbookChapterId() {
-      return this.$store.state.publish.EnglishWorkTextbookChapterId
+      return this.$store.state.publish.EnglishWorkTextbookChapterId;
     }
   },
   methods: {
-    handleTextbookChapterId(textbookChapterId) {
-      this.$store.commit('publish/TSCOUNT', 1)
-      this.isShowChild = !this.isShowChild
+    handleTextbookChapterId(textbookChapterId, textbookChapterCode) {
+      this.$store.commit("publish/TSCOUNT", 1);
+      this.isShowChild = !this.isShowChild;
       this.$store.commit(
-        'publish/ENGLISHWORKTEXTBOOKCHAPTERID',
+        "publish/ENGLISHWORKTEXTBOOKCHAPTERID",
         textbookChapterId
-      )
-      this.$store.commit('publish/ISTOGGLE', false)
+      );
+      // 存取章节code
+      this.$store.commit(
+        "publish/ENGLISHWORKTEXTBOOKCHAPTERCODE",
+        textbookChapterCode
+      );
+      this.$store.commit("publish/ISTOGGLE", false);
       //注释
-      let unitModelId = ''
+      let unitModelId = "";
       if (this.item.unitModelList != undefined) {
-        unitModelId = this.item.unitModelList[0].unitModelId
+        unitModelId = this.item.unitModelList[0].unitModelId;
       }
 
-      this.$store.commit('publish/ENGLISHWORKUNITMODEID', unitModelId)
-      this.$store.commit('publish/ENGLISHWORKLIST', []) //注释
-      this.$store.dispatch('publish/unitModel')
+      this.$store.commit("publish/ENGLISHWORKUNITMODEID", unitModelId);
+      this.$store.commit("publish/ENGLISHWORKLIST", []); //注释
+      this.$store.dispatch("publish/unitModel");
     }
   },
-  mounted() {}
-}
+  mounted() {
+    console.log(this.item);
+  }
+};
 </script>
 
 <style lang="scss" scoped>

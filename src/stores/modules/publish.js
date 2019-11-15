@@ -69,6 +69,8 @@ const state = {
   // 章节下试题
   EnglishWorkList: [],
   // 当前章节code
+  EnglishWorkTextbookChapterCode: null,
+  // 当前章节id
   EnglishWorkTextbookChapterId: null,
   EnglishWorkUnitModelId:
     localStorage.getItem('EnglishWorkUnitModelId') || null,
@@ -602,6 +604,7 @@ const actions = {
   // 听说--课本章节
   async getEnglishWork({ commit, dispatch, rootGetters }) {
     let result = await dispatch('publishPageWorkHomeProgress')
+    // console.log(rootGetters);
     return http
       .get('/api/textbook/getTextbookChapter/video', {
         params: {
@@ -620,6 +623,7 @@ const actions = {
   },
   // 听说--章节模块下的试题
   unitModel({ commit, state, rootGetters }) {
+    console.log(state.EnglishWorkTextbookChapterCode);
     return http
       .get('/api/video/chapter/questionList/unitModel', {
         params: {
@@ -926,6 +930,10 @@ const mutations = {
   // 章节id
   ENGLISHWORKTEXTBOOKCHAPTERID(state, payload) {
     state.EnglishWorkTextbookChapterId = payload
+  },
+  // 章节code
+  ENGLISHWORKTEXTBOOKCHAPTERCODE(state, paload) {
+    state.EnglishWorkTextbookChapterCode = paload
   },
   //模块id
   ENGLISHWORKUNITMODEID(state, payload) {
