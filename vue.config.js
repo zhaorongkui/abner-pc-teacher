@@ -16,6 +16,7 @@ module.exports = {
   },
   transpileDependencies: ['vue-echarts', 'resize-detector'],
   devServer: {
+    //autoOpenBrowser: true,
     open: true,
     proxy: {
       '/api': {
