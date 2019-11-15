@@ -1,0 +1,117 @@
+$color-primary: #196ae7;
+$attr: border;
+$l:line-height;
+// 背景图片
+@mixin imgBg($url,$left: center,$top: center,$width:100%,$height:100%) {
+  background-image: url($url);
+  background-repeat: no-repeat;
+  background-size: $width $height;
+  background-position: $left $top;
+}
+
+@mixin borderRadius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  -o-border-radius: $radius;
+  border-radius: $radius;
+}
+
+// 旋转
+@mixin transRotate($deg) {
+  transform: rotate($deg);
+  -ms-transform: rotate($deg); /* IE 9 */
+  -moz-transform: rotate($deg); /* Firefox */
+  -webkit-transform: rotate($deg); /* Safari 和 Chrome */
+  -o-transform: rotate($deg); /* Opera */
+}
+
+// 改变input的placeholder
+@mixin placeholder($size,$color) {
+  ::-webkit-input-placeholder { /* WebKit browsers */
+    color: $color;
+    font-size: $size;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: $color;
+    font-size: $size;
+  }
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: $color;
+    font-size: $size;
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: $color;
+    font-size: $size;
+  }
+}
+
+//定位上下左右居中
+@mixin center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+//定位上下居中
+@mixin ct {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+//定位左右居中
+@mixin cl {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+//宽高
+@mixin wh($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+//圆角
+@mixin br($t:50%,$r:50%,$b:50%,$l:50%) {
+  border-radius: $t $r $b $l;
+}
+//边框
+@mixin bd($p,$line,$color) {
+  border:$p $line $color;
+}
+//边框
+@mixin bd-l($p,$line,$color) {
+  border-left:$p $line $color;
+}
+//边框
+@mixin position($type,$l:0,$t:0,$b:0,$r:0) {
+  position:$type;
+  left:$l;
+  top:$t;
+  bottom:$b;
+  right:$r;
+}
+//字体大小，颜色
+@mixin sc($size, $color) {
+  font-size: $size;
+  color: $color;
+}
+
+//flex 布局和 子元素 对其方式
+@mixin fj($type: space-between) {
+  display: flex;
+  justify-content: $type;
+}
+
+//margin
+@mixin mg($t,$r,$b,$l) {
+  margin: $t $r $b $l;
+}
+
+//padding
+@mixin pd($t,$r,$b,$l) {
+  padding: $t $r $b $l;
+}

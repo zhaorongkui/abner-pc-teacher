@@ -1,0 +1,34 @@
+.data-analysis {
+  margin-top: 20px;
+  width: 1200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.data-analysis-chart-table {
+  display: flex;
+}
+
+.data-analysis-radio-progress {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.data-analysis-chart-pie {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.directory-item{
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+}
+.directory-item-list {
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}

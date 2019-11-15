@@ -1,0 +1,15 @@
+.ability-chart-left,
+.ability-chart-right {
+  height: 100%;
+}
+
+.ability-chart-left {
+  width: 465px;
+}
+.ability-chart-right {
+  min-width: 0;
+  flex: 1;
+}
+.statistical-table {
+  min-height: 750px;
+}

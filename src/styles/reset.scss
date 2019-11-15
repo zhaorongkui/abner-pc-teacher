@@ -1,0 +1,364 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  // font-family: 'Microsoft YaHei', 微软雅黑;
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+}
+
+/*
+KISSY CSS Reset
+理念：1. reset 的目的不是清除浏览器的默认样式，这仅是部分工作。清除和重置是紧密不可分的。
+2. reset 的目的不是让默认样式在所有浏览器下一致，而是减少默认样式有可能带来的问题。
+3. reset 期望提供一套普适通用的基础样式。但没有银弹，推荐根据具体需求，裁剪和修改后再使用。
+特色：1. 适应中文；2. 基于最新主流浏览器。
+维护：玉伯<lifesinger@gmail.com>, 正淳<ragecarrier@gmail.com>
+ */
+
+/** 清除内外边距 **/
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+/* structural elements 结构元素 */
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+/* list elements 列表元素 */
+pre,
+/* text formatting elements 文本格式元素 */
+form,
+fieldset,
+legend,
+button,
+input,
+textarea,
+/* form elements 表单元素 */
+th,
+td
+
+/* table elements 表格元素 */
+ {
+  margin: 0;
+  padding: 0;
+}
+
+/** 设置默认字体 **/
+body,
+button,
+input,
+select,
+textarea
+
+/* for ie */
+ {
+  font: 12px/1.5 tahoma, arial, \5b8b\4f53, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+}
+
+address,
+cite,
+dfn,
+em,
+var {
+  font-style: normal;
+}
+
+/* 将斜体扶正 */
+code,
+kbd,
+pre,
+samp {
+  font-family: courier new, courier, monospace;
+}
+
+/* 统一等宽字体 */
+small {
+  font-size: 12px;
+}
+
+/* 小于 12px 的中文很难阅读，让 small 正常化 */
+
+/** 重置列表元素 **/
+ul,
+ol {
+  list-style: none;
+}
+
+/** 重置文本格式元素 **/
+a {
+  text-decoration: none;
+  color: #333;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+i {
+  font-style: inherit;
+}
+/** 重置表单元素 **/
+legend {
+  color: #000;
+}
+
+/* for ie6 */
+fieldset,
+img {
+  border: 0;
+}
+
+/* img 搭车：让链接里的 img 无边框 */
+button,
+input,
+select,
+textarea {
+  font-size: 100%;
+}
+
+/* 使得表单元素在 ie 下能继承字体大小 */
+/* 注：optgroup 无法扶正 */
+
+/** 重置表格元素 **/
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* 清除浮动 */
+.ks-clear:after,
+.clear:after {
+  content: '\20';
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+.ks-clear,
+.clear {
+  *zoom: 1;
+}
+.flexbox {
+  display: flex;
+}
+
+::-webkit-scrollbar {
+  /*隐藏滚轮*/
+  display: none;
+}
+a,
+a:focus,
+a:active,
+a:link,
+a:hover {
+  text-decoration: none;
+}
+button {
+  border: none;
+}
+.sub-menu.active {
+  background-color: #e5f0fe;
+}
+.sub-menu.active + .child-menu > .child.active {
+  background-color: #1059ff;
+  color: #fff;
+}
+
+.el-input-number.el-input-number--small,
+.el-input-number.el-input-number--mini {
+  border: 1px solid #399eff;
+  border-radius: 5px;
+}
+.el-icon-minus,
+.el-icon-plus {
+  color: #399eff;
+}
+.el-input-number.el-input-number--small.is-disabled,
+.el-input-number.el-input-number--mini.is-disabled {
+  border: none;
+  .el-icon-minus,
+  .el-icon-plus {
+    color: #333;
+  }
+}
+//
+.el-badge__content {
+  width: 0;
+  min-width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 22px;
+}
+
+.el-checkbox__inner {
+  width: 20px;
+  height: 20px;
+}
+
+.el-checkbox__inner:after {
+  width: 6px;
+  height: 10px;
+  left: 5px;
+}
+
+.el-select .el-input__inner {
+  height: 35px;
+  line-height: 35px;
+}
+
+.el-select {
+  width: 85%;
+}
+
+.el-select .el-input__inner::-webkit-input-placeholder {
+  font-size: 12px;
+}
+
+.el-input__suffix-inner {
+  pointer-events: all;
+  margin-top: -2px;
+  display: block;
+}
+
+.el-tree {
+  width: 90%;
+  margin: 10px auto 0;
+  background: none;
+  border-radius: 8px;
+}
+
+.el-tree-node {
+  width: 100%;
+  min-height: 42px;
+  border-radius: 8px;
+  margin: 15px auto 0;
+  overflow: hidden;
+}
+
+.el-tree-node__content {
+  width: auto;
+  height: 42px;
+  border-radius: 8px;
+  padding-left: 18px !important;
+}
+
+.el-tree > .el-tree-node > .el-tree-node__content:nth-child(1) {
+  background: #e5f0fe;
+}
+
+.el-tree
+  > .el-tree-node
+  > .el-tree-node__children
+  > .el-tree-node
+  > .el-tree-node__content:nth-child(1) {
+  width: 94%;
+  float: right;
+  background: #e5f0fe;
+}
+
+.el-tree
+  > .el-tree-node
+  > .el-tree-node__children
+  > .el-tree-node
+  > .el-tree-node__children {
+  width: 84%;
+  float: right;
+}
+
+.el-tree-node__content > .el-tree-node__expand-icon {
+  display: none;
+}
+
+.el-checkbox {
+  margin-right: 10px;
+}
+
+.el-picker-panel {
+  z-index: 9999999999999 !important;
+}
+
+.ant-popover-title {
+  background-color: #1059ff;
+  color: #ffffff;
+  border-radius: 4px;
+}
+
+.text {
+  display: flex;
+  align-items: center;
+  p {
+    line-height: 1;
+  }
+  img {
+    max-width: 100%;
+  }
+}
+.el-icon-loading:before {
+  font-size: 26px;
+}
+.el-loading-mask {
+  z-index: 999999999 !important;
+}
+
+.wrap {
+  .el-input-number--small {
+    width: 100px;
+  }
+}
+.ant-message {
+  z-index: 99999999999;
+}
+
+.viewer-close::before {
+  background: url(../assets/img/close1.png) no-repeat;
+}
+.viewer-button {
+  width: 100px;
+  height: 100px;
+  top: -50px;
+  right: -50px;
+}
+.viewer-button::before {
+  bottom: 20px;
+  left: 20px;
+  position: absolute;
+}
+#imageView {
+  background: rgba(0, 0, 0, 0.5) !important;
+  z-index: 9999999999999 !important;
+}
+#imageView .imageBox li img {
+  transform: scale(2) !important;
+  height: auto !important;
+  width: auto !important;
+  max-width: 45% !important;
+  max-height: 45% !important;
+}
+#imageView .imageBox li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+img {
+  max-width: 100%;
+}
