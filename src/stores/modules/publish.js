@@ -211,6 +211,7 @@ const actions = {
         console.log(error)
       })
   },
+  // 这里获取章节id,与code
   async publishPageWorkHomeProgress({ commit, rootGetters }) {
     return http
       .get('/api/teacher/textbook/progress', {
@@ -623,13 +624,14 @@ const actions = {
   },
   // 听说--章节模块下的试题
   unitModel({ commit, state, rootGetters }) {
-    // console.log(state.EnglishWorkTextbookChapterCode);
-    console.log(state.EnglishWorkTextbookChapterId);
+    console.log(state.workHomeProgress) // 这里可以获取章节code
+    console.log(state.EnglishWorkTextbookChapterId)
     return http
       .get('/api/video/chapter/questionList/unitModel', {
         params: {
           textbookId: rootGetters.textbookId,
-          textbookChapterId: state.EnglishWorkTextbookChapterId,
+          // textbookChapterId: state.EnglishWorkTextbookChapterId,
+          textbookChapterCode: state.workHomeProgress,
           unitModelId: state.EnglishWorkUnitModelId
         }
       })

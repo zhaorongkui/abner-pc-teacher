@@ -22,46 +22,49 @@
 </template>
 
 <script>
-import ChildMenu from "./EnglishWorkChildMenuItem";
+import ChildMenu from './EnglishWorkChildMenuItem'
 export default {
-  name: "",
-  props: ["item"],
+  name: '',
+  props: ['item'],
   components: { ChildMenu },
   data() {
     return {
       isShowChild: false
-    };
+    }
   },
   computed: {
     EnglishWorkTextbookChapterId() {
-      return this.$store.state.publish.EnglishWorkTextbookChapterId;
+      return this.$store.state.publish.EnglishWorkTextbookChapterId
     }
   },
   methods: {
     handleTextbookChapterId(textbookChapterId, textbookChapterCode) {
-      this.$store.commit("publish/TSCOUNT", 1);
-      this.isShowChild = !this.isShowChild;
+      this.$store.commit('publish/TSCOUNT', 1)
+      this.isShowChild = !this.isShowChild
       this.$store.commit(
-        "publish/ENGLISHWORKTEXTBOOKCHAPTERID",
+        'publish/ENGLISHWORKTEXTBOOKCHAPTERID',
         textbookChapterId
-      );
-      // 存取章节code
+      )
       this.$store.commit(
-        "publish/ENGLISHWORKTEXTBOOKCHAPTERCODE",
+        'publish/ENGLISHWORKTEXTBOOKCHAPTERCODE',
         textbookChapterCode
-      );
-      this.$store.commit("publish/ISTOGGLE", false);
+      )
+      this.$store.commit('publish/ISTOGGLE', false)
       //注释
-      let unitModelId = "";
+      let unitModelId = ''
       if (this.item.unitModelList != undefined) {
-        unitModelId = this.item.unitModelList[0].unitModelId;
+        unitModelId = this.item.unitModelList[0].unitModelId
       }
 
-      this.$store.commit("publish/ENGLISHWORKUNITMODEID", unitModelId);
-      this.$store.commit("publish/ENGLISHWORKLIST", []); //注释
-      this.$store.dispatch("publish/unitModel");
+      this.$store.commit('publish/ENGLISHWORKUNITMODEID', unitModelId)
+      this.$store.commit('publish/ENGLISHWORKLIST', []) //注释
+      this.$store.dispatch('publish/unitModel')
     }
   },
+  mounted() {
+    // console.log(this.item)
+  }
+}
 </script>
 
 <style lang="scss" scoped>

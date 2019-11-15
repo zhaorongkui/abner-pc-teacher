@@ -143,7 +143,6 @@ export default {
               }
             }
           }
-
           this.$store.commit(
             'publish/ENGLISHWORKTEXTBOOKCHAPTERID',
             this.textbookChapterId
