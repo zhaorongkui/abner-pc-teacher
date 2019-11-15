@@ -62,10 +62,6 @@ export default {
       this.$store.dispatch("publish/unitModel");
     }
   },
-  mounted() {
-    console.log(this.item);
-  }
-};
 </script>
 
 <style lang="scss" scoped>
