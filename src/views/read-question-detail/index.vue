@@ -627,7 +627,7 @@ export default {
             trueLength[i] = "-";
           }
         }
-        console.lo;
+
         this.$refs.customCircleEcharts.drawBar(
           optionsList,
           trueLength,
