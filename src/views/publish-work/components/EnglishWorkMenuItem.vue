@@ -4,7 +4,7 @@
     <div
       class="sub-menu"
       :class="
-        `${EnglishWorkTextbookChapterId === item.textbookChapterId ? 'active' : ''} ${(item.unitModelList && item.unitModelList.length !== 0) ? itemBac === false || item.itemBac===false ? 'fff' : 'aaa' : ''}`
+        `${EnglishWorkTextbookChapterId === item.textbookChapterId ? 'active' : ''} ${(item.unitModelList && item.unitModelList.length !== 0) ? (itemBac === false || item.itemBac===false) ? (EnglishWorkTextbookChapterId === item.textbookChapterId ? 'simpleBlue' : '') : 'blue' : (EnglishWorkTextbookChapterId === item.textbookChapterId ? 'blue' : '')}`
       "
       @click="handleTextbookChapterId(item.textbookChapterId,item.textbookChapterCode)"
     >
@@ -100,14 +100,12 @@ export default {
     margin-top: 10px;
     padding-left: 20px;
   }
-  .aaa {
+  .simpleBlue {
     background: #e5f0fe;
   }
-  .fff {
-    background: #fff;
-  }
   .blue {
-    background: #1059ff
+    background: #1059ff;
+    color:#fff;
   }
 }
 </style>
