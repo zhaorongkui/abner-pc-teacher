@@ -27,6 +27,7 @@ export default {
       localStorage.setItem('EnglishWorkUnitModelId', unitModelId)
       this.$store.commit('publish/ENGLISHWORKUNITMODEID', unitModelId)
       this.$store.dispatch('publish/unitModel')
+      this.$parent.itemBac = false;
     }
   },
   mounted() {}

@@ -4,7 +4,7 @@
     <div
       class="sub-menu"
       :class="
-        EnglishWorkTextbookChapterId === item.textbookChapterId ? 'active' : ''
+        `${EnglishWorkTextbookChapterId === item.textbookChapterId ? 'active' : ''} ${(item.unitModelList && item.unitModelList.length !== 0) ? itemBac === false || item.itemBac===false ? 'fff' : 'aaa' : ''}`
       "
       @click="handleTextbookChapterId(item.textbookChapterId,item.textbookChapterCode)"
     >
@@ -29,7 +29,8 @@ export default {
   components: { ChildMenu },
   data() {
     return {
-      isShowChild: false
+      isShowChild: false,
+      itemBac: false
     }
   },
   computed: {
@@ -49,25 +50,31 @@ export default {
         'publish/ENGLISHWORKTEXTBOOKCHAPTERCODE',
         textbookChapterCode
       )
-      // console.log(this.$store.state.EnglishWorkTextbookChapterCode)
       this.$store.commit('publish/ISTOGGLE', false)
       //注释
-      let unitModelId = ''
-      if (this.item.unitModelList != undefined) {
-        unitModelId = this.item.unitModelList[0].unitModelId
-      }
-
-      this.$store.commit('publish/ENGLISHWORKUNITMODEID', unitModelId)
+      // let unitModelId = ''
+      // if (this.item.unitModelList != undefined) {
+      //   if(this.item.unitModelList[0] && this.item.unitModelList[0].unitModelId){
+      //     unitModelId =  this.item.unitModelList[0].unitModelId
+      //     this.$store.commit('publish/ENGLISHWORKUNITMODEID', unitModelId)
+      //   }
+      // }
+      this.$store.commit('publish/ENGLISHWORKUNITMODEID', '')
       this.$store.commit('publish/ENGLISHWORKLIST', []) //注释
       this.$store.dispatch('publish/unitModel')
+      this.itemBac = true
+      this.$parent.EnglishWork.forEach(item => {
+        if (item.textbookChapterId === textbookChapterId) {
+          item.itemBac = true
+        } else {
+          item.itemBac = false
+        }
+      })
     }
   },
-  mounted() {
-    // console.log(this.item)
-  }
+  mounted() {}
 }
 </script>
-
 <style lang="scss" scoped>
 .item {
   width: 100%;
@@ -92,6 +99,15 @@ export default {
   .child-menu {
     margin-top: 10px;
     padding-left: 20px;
+  }
+  .aaa {
+    background: #e5f0fe;
+  }
+  .fff {
+    background: #fff;
+  }
+  .blue {
+    background: #1059ff
   }
 }
 </style>

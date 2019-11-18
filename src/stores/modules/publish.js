@@ -227,7 +227,7 @@ const actions = {
       .then(({ data }) => {
         if (data.flag === 1) {
           commit('WORKHOMEPROGRESS', data.infos.textbookChapterCode)
-          commit('ENGLISHWORKTEXTBOOKCHAPTERCODE',data.infos.textbookChapterCode)
+          commit('ENGLISHWORKTEXTBOOKCHAPTERCODE', data.infos.textbookChapterCode)
         }
         return data
       })
@@ -615,6 +615,15 @@ const actions = {
       })
       .then(({ data }) => {
         if (data.flag === 1) {
+          data.infos.forEach(item => {
+            if (item.unitModelList) {
+              item.unitModelList.forEach((item1, index1) => {
+                if (item1.unitModelId === 0) {
+                  item.unitModelList.splice(index1, 1);
+                }
+              })
+            }
+          })
           commit('ENGLISHWORK', data.infos)
         }
         return {
@@ -625,16 +634,18 @@ const actions = {
   },
   // 听说--章节模块下的试题
   unitModel({ commit, state, rootGetters }) {
-    console.log(state.EnglishWorkTextbookChapterCode)
-    console.log(state.EnglishWorkTextbookChapterId)
+    let params = {
+      textbookId: rootGetters.textbookId,
+      textbookChapterCode: state.EnglishWorkTextbookChapterCode,
+      unitModelId: state.EnglishWorkUnitModelId
+    }
+    // 当点击章节时，查询章节题目不传unitModelId，当点击单元模块再传
+    if (params.unitModelId === '') {
+      delete params.unitModelId
+    }
     return http
       .get('/api/video/chapter/questionList/unitModel', {
-        params: {
-          textbookId: rootGetters.textbookId,
-          // textbookChapterId: state.EnglishWorkTextbookChapterId,
-          textbookChapterCode: state.EnglishWorkTextbookChapterCode,
-          unitModelId: state.EnglishWorkUnitModelId
-        }
+        params
       })
       .then(({ data }) => {
         if (data.flag === 1) {
@@ -642,7 +653,6 @@ const actions = {
           list.forEach((item, index) => {
             list[index] = { ...item, readNumber: 1, active: false }
           })
-
           localforage.getItem('selectedItemList').then(selectedItemList => {
             if (selectedItemList) {
               let target = [...list]
@@ -1012,10 +1022,10 @@ const mutations = {
   HIDESELECTEDITEMLIST(state) {
     let list = state.selectedItemList.filter(item => item.active)
     localforage.setItem('selectedItemList', list).then(() => {
-      state.selectedItemList = list
-    })
+      state.selectedItemList = list;
+    });
   }
-}
+};
 
 export default {
   namespaced: true,
@@ -1023,4 +1033,4 @@ export default {
   getters,
   actions,
   mutations
-}
+};

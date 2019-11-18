@@ -29,7 +29,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$store.state.publish.EnglishWork)
   }
 }
 </script>

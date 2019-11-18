@@ -8,7 +8,7 @@ module.exports = {
     '@vue/prettier'
   ],
   rules: {
-    'semi': 0,
+    "semi": [0, "always"],
     "quotes": [2, "single", "avoid-escape"],
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
