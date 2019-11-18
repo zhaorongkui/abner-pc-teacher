@@ -28,7 +28,9 @@ export default {
       return this.$store.state.publish.EnglishWork
     }
   },
-  mounted() {}
+  mounted() {
+    console.log(this.$store.state.publish.EnglishWork)
+  }
 }
 </script>
 <style lang="scss" scoped>

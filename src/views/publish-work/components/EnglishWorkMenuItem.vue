@@ -49,6 +49,7 @@ export default {
         'publish/ENGLISHWORKTEXTBOOKCHAPTERCODE',
         textbookChapterCode
       )
+      // console.log(this.$store.state.EnglishWorkTextbookChapterCode)
       this.$store.commit('publish/ISTOGGLE', false)
       //注释
       let unitModelId = ''

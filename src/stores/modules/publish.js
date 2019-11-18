@@ -227,6 +227,7 @@ const actions = {
       .then(({ data }) => {
         if (data.flag === 1) {
           commit('WORKHOMEPROGRESS', data.infos.textbookChapterCode)
+          commit('ENGLISHWORKTEXTBOOKCHAPTERCODE',data.infos.textbookChapterCode)
         }
         return data
       })
@@ -624,14 +625,14 @@ const actions = {
   },
   // 听说--章节模块下的试题
   unitModel({ commit, state, rootGetters }) {
-    console.log(state.workHomeProgress) // 这里可以获取章节code
+    console.log(state.EnglishWorkTextbookChapterCode)
     console.log(state.EnglishWorkTextbookChapterId)
     return http
       .get('/api/video/chapter/questionList/unitModel', {
         params: {
           textbookId: rootGetters.textbookId,
           // textbookChapterId: state.EnglishWorkTextbookChapterId,
-          textbookChapterCode: state.workHomeProgress,
+          textbookChapterCode: state.EnglishWorkTextbookChapterCode,
           unitModelId: state.EnglishWorkUnitModelId
         }
       })
