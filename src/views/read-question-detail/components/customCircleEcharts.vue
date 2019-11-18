@@ -127,7 +127,13 @@
   <div class="statistic_area">
     <div id="myChart" :style="{ width: '440px', height: '260px' }"></div>
     <!-- <div id="myCharts" :style="{ width: '440px', height: '260px' }"></div> -->
-    <div id="myCharts" :style="{ width: '440px', height: '260px' }" v-if="questionTypeCode == 1 || questionTypeCode == 2 || questionTypeCode == 4 "></div>
+    <div
+      id="myCharts"
+      :style="{ width: '440px', height: '260px' }"
+      v-if="
+        questionTypeCode == 1 || questionTypeCode == 2 || questionTypeCode == 4
+      "
+    ></div>
     <el-dialog
       class="custom_dialog"
       :visible.sync="showUnfinishedStdModal"
@@ -216,7 +222,7 @@ export default {
   data() {
     return {
       item1: {},
-      questionTypeCode:'',
+      questionTypeCode: "",
       param: "",
       paramXx: [],
       showdialogFlagXx: false,
@@ -301,13 +307,12 @@ export default {
       } else {
         return this.questiondata.unSubmitStudentList;
       }
-    },
-   
+    }
   },
   components: {
     Dialog
   },
-  
+
   watch: {
     options: {
       handler(newVal, oldVal) {
@@ -325,7 +330,10 @@ export default {
     }
   },
   mounted() {
-    this.questionTypeCode = JSON.parse(localStorage.getItem('questionData')).questionTypeCode;
+    this.questionTypeCode = JSON.parse(
+      localStorage.getItem("questionData")
+    ).questionTypeCode;
+
     if (this.$route.params.item) {
       this.item1 = this.$route.params.item1;
       this.init();
@@ -369,9 +377,9 @@ export default {
         }
         // this.getUnfinishedStd();
       });
-       var self = this
+      var self = this;
       this.charts.on("click", function(param) {
-        let obj = JSON.parse(localStorage.getItem('objs'));
+        let obj = JSON.parse(localStorage.getItem("objs"));
         Object.keys(obj).forEach(function(key) {
           if (param.name == key) {
             self.param = key;
