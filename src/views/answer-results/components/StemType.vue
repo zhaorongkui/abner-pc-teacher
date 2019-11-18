@@ -75,7 +75,7 @@
           <p>
             <span>参考答案</span>
             <span>{{
-              dailyhomeworkInfos.questionAnswer == 'Y' ? '正确' : '错误'
+              dailyhomeworkInfos.questionAnswer == "Y" ? "正确" : "错误"
             }}</span>
           </p>
           <p>
@@ -151,65 +151,65 @@
 </template>
 
 <script>
-import imageView from 'vue-imageview'
-import $ from 'jquery'
+import imageView from "vue-imageview";
+import $ from "jquery";
 export default {
-  name: '',
-  props: ['dailyhomeworkInfo'],
+  name: "",
+  props: ["dailyhomeworkInfo"],
   data() {
     return {
       picflag: false,
       imgArr: [],
       imageIndex: 0
-    }
+    };
   },
   computed: {
     dailyhomeworkInfos() {
       if (this.dailyhomeworkInfo.length != 0) {
-        return this.dailyhomeworkInfo
+        return this.dailyhomeworkInfo;
       }
-      return []
+      return [];
     }
   },
   watch: {
     dailyhomeworkInfos(newValue) {
       this.$nextTick().then(() => {
-        var that = this
+        var that = this;
 
-        if (JSON.stringify(newValue) != '{}') {
-          $('.answer-infos img').click(function() {
-            that.picflag = true
-            that.imgArr = []
-            that.imgArr.push($(this).attr('src'))
-          })
+        if (JSON.stringify(newValue) != "{}") {
+          $(".answer-infos img").click(function() {
+            that.picflag = true;
+            that.imgArr = [];
+            that.imgArr.push($(this).attr("src"));
+          });
         }
-      })
+      });
     }
   },
   components: { imageView },
   mounted() {
     this.$nextTick().then(() => {
-      var that = this
+      var that = this;
 
-      if (JSON.stringify(this.dailyhomeworkInfos) != '{}') {
-        $('.answer-infos img').click(function() {
-          that.picflag = true
-          that.imgArr = []
-          that.imgArr.push($(this).attr('src'))
-        })
+      if (JSON.stringify(this.dailyhomeworkInfos) != "{}") {
+        $(".answer-infos img").click(function() {
+          that.picflag = true;
+          that.imgArr = [];
+          that.imgArr.push($(this).attr("src"));
+        });
       }
-    })
+    });
   },
   methods: {
     hideImageView() {
-      this.picflag = false
+      this.picflag = false;
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scope>
-@import '@/styles/variable.scss';
+@import "@/styles/variable.scss";
 
 .work-stem-wrap {
   @include wh(540px, 100%);
