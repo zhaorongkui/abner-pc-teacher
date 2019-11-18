@@ -29,6 +29,10 @@
           <div class="text" v-html="item.questionContent"></div>
         </li>
       </ul>
+      <div class="answers-mark">
+      <button>正确答案</button>
+      <button>错误答案</button>
+    </div>
     </div>
     <div class="student-answers">
       <h3>学生答案</h3>
@@ -50,10 +54,6 @@
           <div>{{ item.questionOption }}</div>
         </li>
       </ul>
-    </div>
-    <div class="answers-mark">
-      <button>正确答案</button>
-      <button>错误答案</button>
     </div>
   </div>
 </template>
@@ -141,7 +141,7 @@ export default {
     }
     .reference-version-list {
       width: 100%;
-      display: flex;
+      // display: flex;
       flex-direction: column;
       // align-items: center;
       justify-content: center;
@@ -157,7 +157,7 @@ export default {
         padding: 0 10px;
         line-height: 50px;
         font-size: 16px;
-        display: flex;
+        // display: flex;
         align-items: center;
         word-break: break-all;
         span {
@@ -165,7 +165,8 @@ export default {
         }
         > div {
           width: 100%;
-          display: flex;
+          // display: flex;
+          display: block;
           color: #fd6265;
           height: 100%;
         }
@@ -202,6 +203,7 @@ export default {
       align-items: center;
       justify-content: center;
       padding: 0 10px;
+      position: relative;
       li {
         width: 100%;
         height: 50px;
@@ -255,8 +257,8 @@ export default {
   }
   .answers-mark {
     position: absolute;
-    top: 430px;
-    left: 16px;
+    bottom: -35px;
+    left: 0px;
     button:first-child {
       width: 58px;
       height: 21px;
