@@ -27,64 +27,64 @@
 
 <script>
 export default {
-  name: '',
-  props: ['dataItem'],
+  name: "",
+  props: ["dataItem"],
   data() {
     return {
       remindId: 1,
       studentIdsList: [],
       unfinishStudents: []
-    }
+    };
   },
   computed: {},
   components: {},
   mounted() {
-    this.unfinishStudent()
+    this.unfinishStudent();
   },
   methods: {
     closes() {
-      this.$emit('toParentsEvent', false)
+      this.$emit("toParentsEvent", false);
     },
     //一键提醒
     remind() {
       this.$http
-        .post('/api/teacher/homework/remind', {
+        .post("/api/teacher/homework/remind", {
           homeworkClassId: this.dataItem.homeworkClassId,
           studentIds:
             this.studentIdsList != undefined
-              ? this.studentIdsList.join(',')
-              : '',
+              ? this.studentIdsList.join(",")
+              : "",
           teacherId: this.$store.state.userInfo.teacherId
         })
         .then(res => {
           if (res.data.flag == 1) {
-            this.remindId = 0
-            this.showStudentViewWrap = false
-            this.$message.success('已经提醒学生去完成作业')
+            this.remindId = 0;
+            this.showStudentViewWrap = false;
+            this.$message.success("已经提醒学生去完成作业");
           }
-        })
+        });
     },
     unfinishStudent() {
       this.$http
-        .get('/api/teacher/homework/unfinish/students', {
+        .get("/api/teacher/homework/unfinish/students", {
           params: {
             homeworkClassId: this.dataItem.homeworkClassId
           }
         })
         .then(res => {
-          this.remindId = res.data.infos.remind
-          this.unfinishStudents = res.data.infos.studentList
+          this.remindId = res.data.infos.remind;
+          this.unfinishStudents = res.data.infos.studentList;
           this.unfinishStudents.forEach(item => {
-            this.studentIdsList.push(item.studentInfoId)
-          })
-        })
+            this.studentIdsList.push(item.studentInfoId);
+          });
+        });
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scope>
-@import '@/styles/variable.scss';
+@import "@/styles/variable.scss";
 .student-view-wrap {
   @include wh(100%, 100%);
   background: rgba(0, 0, 0, 0.4);
