@@ -91,10 +91,15 @@
       <!-- 学生互评 -->
       <PeerGrading :questionInfo="questionInfo"></PeerGrading>
       <div class="canvas">
-        <div class="share">
-          <img src="../../../assets/img/shareNormal.png" alt="" />
-          <!-- <img src="../../../assets/img/shareOut.png" alt="" /> -->
-          <span>分享答案</span>
+        <div class="share" @click="share">
+          <img
+            src="../../../assets/img/shareNormal.png"
+            alt=""
+            v-if="questionInfo.ifShare == 1"
+          />
+          <img src="../../../assets/img/shareOut.png" alt="" v-else />
+          <span v-if="questionInfo.ifShare == 1">分享全班</span>
+          <span v-else class="hover-span">分享全班</span>
         </div>
         <template
           v-if="
@@ -395,7 +400,8 @@ export default {
       // 涂鸦文件
       blob: null,
       //是否需要弹框
-      isDialog: true
+      isDialog: true,
+      ifShare: 0
     }
   },
   computed: {
@@ -553,6 +559,39 @@ export default {
     }
   },
   methods: {
+    share() {
+      this.ifShare = 0
+      if (
+        (this.questionInfo.hasRewive == 1 ||
+          this.questionInfo.hasRewive == 4) &&
+        this.questionInfo.isTrue == 0
+      ) {
+        if (this.questionInfo.ifShare == 0) {
+          this.ifShare = 1
+        }
+        this.$http
+          .post('/api/teacher/homework/shareStudentAnswer', {
+            ifShare: this.ifShare,
+            studentAnswerId: this.questionInfo.studentAnswerId
+          })
+          .then(({ data }) => {
+            if (data.flag === 1) {
+              if (this.ifShare == 0) {
+                this.$message.success('分享成功')
+              } else {
+                this.$message.success('取消分享成功')
+              }
+
+              this.$store.dispatch('marking/questionInfo')
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      } else {
+        this.$message.error('正确答案才能分享全班哦～')
+      }
+    },
     //  hideImageView() {
     //   this.picflag = false
     // },
@@ -1749,7 +1788,7 @@ export default {
 .share {
   position: absolute;
   right: 2%;
-  top: 6%;
+  top: 10%;
   z-index: 999;
   color: #999;
   padding: 6px 20px;
