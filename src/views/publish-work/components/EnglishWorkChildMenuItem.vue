@@ -12,7 +12,13 @@
 export default {
   name: '',
   components: {},
-  props: ['child'],
+  // props: ['child'],
+  props: {
+    child: {
+      type: Object,
+      default: null
+    }
+  },
   data() {
     return {}
   },
@@ -27,7 +33,7 @@ export default {
       localStorage.setItem('EnglishWorkUnitModelId', unitModelId)
       this.$store.commit('publish/ENGLISHWORKUNITMODEID', unitModelId)
       this.$store.dispatch('publish/unitModel')
-      this.$parent.itemBac = false;
+      this.$parent.itemBac = false
     }
   },
   mounted() {}
