@@ -4,9 +4,9 @@
     <div
       class="sub-menu"
       :class="
-        EnglishWorkTextbookChapterId === item.textbookChapterId ? 'active' : ''
+        `${EnglishWorkTextbookChapterId === item.textbookChapterId ? 'active' : ''} ${(item.unitModelList && item.unitModelList.length !== 0) ? (itemBac === false || item.itemBac===false) ? (EnglishWorkTextbookChapterId === item.textbookChapterId ? 'simpleBlue' : '') : 'blue' : (EnglishWorkTextbookChapterId === item.textbookChapterId ? 'blue' : '')}`
       "
-      @click="handleTextbookChapterId(item.textbookChapterId)"
+      @click="handleTextbookChapterId(item.textbookChapterId,item.textbookChapterCode)"
     >
       <p>{{ item.textbookChapterName }}</p>
     </div>
@@ -29,7 +29,8 @@ export default {
   components: { ChildMenu },
   data() {
     return {
-      isShowChild: false
+      isShowChild: false,
+      itemBac: false
     }
   },
   computed: {
@@ -38,29 +39,42 @@ export default {
     }
   },
   methods: {
-    handleTextbookChapterId(textbookChapterId) {
+    handleTextbookChapterId(textbookChapterId, textbookChapterCode) {
       this.$store.commit('publish/TSCOUNT', 1)
       this.isShowChild = !this.isShowChild
       this.$store.commit(
         'publish/ENGLISHWORKTEXTBOOKCHAPTERID',
         textbookChapterId
       )
+      this.$store.commit(
+        'publish/ENGLISHWORKTEXTBOOKCHAPTERCODE',
+        textbookChapterCode
+      )
       this.$store.commit('publish/ISTOGGLE', false)
       //注释
-      let unitModelId = ''
-      if (this.item.unitModelList != undefined) {
-        unitModelId = this.item.unitModelList[0].unitModelId
-      }
-
-      this.$store.commit('publish/ENGLISHWORKUNITMODEID', unitModelId)
+      // let unitModelId = ''
+      // if (this.item.unitModelList != undefined) {
+      //   if(this.item.unitModelList[0] && this.item.unitModelList[0].unitModelId){
+      //     unitModelId =  this.item.unitModelList[0].unitModelId
+      //     this.$store.commit('publish/ENGLISHWORKUNITMODEID', unitModelId)
+      //   }
+      // }
+      this.$store.commit('publish/ENGLISHWORKUNITMODEID', '')
       this.$store.commit('publish/ENGLISHWORKLIST', []) //注释
       this.$store.dispatch('publish/unitModel')
+      this.itemBac = true
+      this.$parent.EnglishWork.forEach(item => {
+        if (item.textbookChapterId === textbookChapterId) {
+          item.itemBac = true
+        } else {
+          item.itemBac = false
+        }
+      })
     }
   },
   mounted() {}
-};
+}
 </script>
-
 <style lang="scss" scoped>
 .item {
   width: 100%;
@@ -85,6 +99,13 @@ export default {
   .child-menu {
     margin-top: 10px;
     padding-left: 20px;
+  }
+  .simpleBlue {
+    background: #e5f0fe;
+  }
+  .blue {
+    background: #1059ff;
+    color: #fff;
   }
 }
 </style>

@@ -30,6 +30,7 @@ export default {
   data() {
     return {
       textbookChapterId: '', //注释
+      textbookChapterCode: '', //注释
       unitModelId: '', //注释
       EnglishWork: []
     }
@@ -57,8 +58,12 @@ export default {
             data.result.infos.textbookChapterId != undefined
               ? data.result.infos.textbookChapterId
               : null
-          this.unitModelId =
-            localStorage.getItem('EnglishWorkUnitModelId') || null
+          this.textbookChapterCode =
+            data.result.infos.textbookChapterCode != undefined
+              ? data.result.infos.textbookChapterCode
+              : null
+          this.unitModelId = null
+            // localStorage.getItem('EnglishWorkUnitModelId') || null
           this.EnglishWork.forEach((item, index) => {
             //注释 //if (item.unitModelList && item.unitModelList.length > 0) {
             if (this.textbookChapterId != null) {
@@ -79,6 +84,7 @@ export default {
             } else {
               if (!textbookChapterIds) {
                 this.textbookChapterId = item.textbookChapterId
+                this.textbookChapterCode = item.textbookChapterCode
                 textbookChapterIds = item.textbookChapterId
               }
               if (this.unitModelId == null) {
@@ -98,6 +104,7 @@ export default {
             for (let i = num - 1; i > 0; i--) {
               if (this.EnglishWork[i].questionCount != undefined) {
                 this.textbookChapterId = this.EnglishWork[i].textbookChapterId
+                this.textbookChapterCode = this.EnglishWork[i].textbookChapterCode
                 if (this.EnglishWork[i].unitModelList != undefined) {
                   for (
                     let j = 0;
@@ -125,6 +132,7 @@ export default {
               ) {
                 if (!textbookChapterIds) {
                   this.textbookChapterId = this.EnglishWork[i].textbookChapterId
+                  this.textbookChapterCode = this.EnglishWork[i].textbookChapterCode
                   textbookChapterIds = this.EnglishWork[i].textbookChapterId
                 }
                 for (
@@ -143,10 +151,13 @@ export default {
               }
             }
           }
-
           this.$store.commit(
             'publish/ENGLISHWORKTEXTBOOKCHAPTERID',
             this.textbookChapterId
+          )
+          this.$store.commit(
+            'publish/ENGLISHWORKTEXTBOOKCHAPTERCODE',
+            this.textbookChapterCode
           )
           this.$store.commit('publish/ENGLISHWORKUNITMODEID', this.unitModelId)
           this.$store.dispatch('publish/unitModel')
