@@ -69,6 +69,8 @@ const state = {
   // 章节下试题
   EnglishWorkList: [],
   // 当前章节code
+  EnglishWorkTextbookChapterCode: null,
+  // 当前章节id
   EnglishWorkTextbookChapterId: null,
   EnglishWorkUnitModelId:
     localStorage.getItem('EnglishWorkUnitModelId') || null,
@@ -209,6 +211,7 @@ const actions = {
         console.log(error)
       })
   },
+  // 这里获取章节id,与code
   async publishPageWorkHomeProgress({ commit, rootGetters }) {
     return http
       .get('/api/teacher/textbook/progress', {
@@ -224,6 +227,7 @@ const actions = {
       .then(({ data }) => {
         if (data.flag === 1) {
           commit('WORKHOMEPROGRESS', data.infos.textbookChapterCode)
+          commit('ENGLISHWORKTEXTBOOKCHAPTERCODE', data.infos.textbookChapterCode)
         }
         return data
       })
@@ -602,6 +606,7 @@ const actions = {
   // 听说--课本章节
   async getEnglishWork({ commit, dispatch, rootGetters }) {
     let result = await dispatch('publishPageWorkHomeProgress')
+    // console.log(rootGetters);
     return http
       .get('/api/textbook/getTextbookChapter/video', {
         params: {
@@ -610,6 +615,15 @@ const actions = {
       })
       .then(({ data }) => {
         if (data.flag === 1) {
+          data.infos.forEach(item => {
+            if (item.unitModelList) {
+              item.unitModelList.forEach((item1, index1) => {
+                if (item1.unitModelId === 0) {
+                  item.unitModelList.splice(index1, 1);
+                }
+              })
+            }
+          })
           commit('ENGLISHWORK', data.infos)
         }
         return {
@@ -620,13 +634,18 @@ const actions = {
   },
   // 听说--章节模块下的试题
   unitModel({ commit, state, rootGetters }) {
+    let params = {
+      textbookId: rootGetters.textbookId,
+      textbookChapterCode: state.EnglishWorkTextbookChapterCode,
+      unitModelId: state.EnglishWorkUnitModelId
+    }
+    // 当点击章节时，查询章节题目不传unitModelId，当点击单元模块再传
+    if (params.unitModelId === '') {
+      delete params.unitModelId
+    }
     return http
       .get('/api/video/chapter/questionList/unitModel', {
-        params: {
-          textbookId: rootGetters.textbookId,
-          textbookChapterId: state.EnglishWorkTextbookChapterId,
-          unitModelId: state.EnglishWorkUnitModelId
-        }
+        params
       })
       .then(({ data }) => {
         if (data.flag === 1) {
@@ -634,7 +653,6 @@ const actions = {
           list.forEach((item, index) => {
             list[index] = { ...item, readNumber: 1, active: false }
           })
-
           localforage.getItem('selectedItemList').then(selectedItemList => {
             if (selectedItemList) {
               let target = [...list]
@@ -927,6 +945,10 @@ const mutations = {
   ENGLISHWORKTEXTBOOKCHAPTERID(state, payload) {
     state.EnglishWorkTextbookChapterId = payload
   },
+  // 章节code
+  ENGLISHWORKTEXTBOOKCHAPTERCODE(state, paload) {
+    state.EnglishWorkTextbookChapterCode = paload
+  },
   //模块id
   ENGLISHWORKUNITMODEID(state, payload) {
     state.EnglishWorkUnitModelId = payload
@@ -1000,10 +1022,10 @@ const mutations = {
   HIDESELECTEDITEMLIST(state) {
     let list = state.selectedItemList.filter(item => item.active)
     localforage.setItem('selectedItemList', list).then(() => {
-      state.selectedItemList = list
-    })
+      state.selectedItemList = list;
+    });
   }
-}
+};
 
 export default {
   namespaced: true,
@@ -1011,4 +1033,4 @@ export default {
   getters,
   actions,
   mutations
-}
+};
