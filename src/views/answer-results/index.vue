@@ -61,9 +61,9 @@
               class="zd-tongji-tz"
               v-if="dailyhomeworkInfos.questionTypeCode == 4"
             >
-              <div>
-                <span>作答分析</span>
-                <div>
+              <div style="overflow:auto">
+                <span style="margin-top:10px">作答分析</span>
+                <div style="margin-top:10px">
                   <div>
                     <span
                       @click="selecTh(index)"
@@ -77,17 +77,26 @@
                   </div>
                 </div>
 
-                <div>
+                <div class="echart">
                   <div
                     id="myChart"
                     :style="{
                       width: '460px',
-                      height: '300px',
+                      height: '260px',
+                      margin: '0px auto 0 '
+                    }"
+                  ></div>
+
+                  <div
+                    id="myCharts"
+                    :style="{
+                      width: '450px',
+                      height: '260px',
                       margin: '0px auto 0 '
                     }"
                   ></div>
                 </div>
-                <img src="../../assets/img/publish/diwen.png" alt="" />
+                <!-- <img src="../../assets/img/publish/diwen.png" alt="" /> -->
               </div>
             </div>
             <!-- 判断 -->
@@ -97,13 +106,17 @@
             >
               <div>
                 <span>作答分析</span>
-                <div>
+                <div class="echart">
                   <div
                     id="myChart"
-                    :style="{ width: '460px', height: '300px' }"
+                    :style="{
+                      width: '460px',
+                      height: '260px',
+                      margin: '20px auto 0 '
+                    }"
                   ></div>
                 </div>
-                <img src="../../assets/img/publish/diwen.png" alt="" />
+                <!-- <img src="../../assets/img/publish/diwen.png" alt="" /> -->
               </div>
             </div>
             <!-- 主观 -->
@@ -117,13 +130,30 @@
             >
               <div>
                 <span>作答分析</span>
-                <div>
+                <div class="echart">
                   <div
                     id="myChart"
-                    :style="{ width: '460px', height: '300px' }"
+                    :style="{
+                      width: '460px',
+                      height: '260px',
+                      margin: '20px auto 0 '
+                    }"
+                  ></div>
+
+                  <div
+                    id="myCharts"
+                    v-if="
+                      dailyhomeworkInfos.questionTypeCode == 2 ||
+                        dailyhomeworkInfos.questionTypeCode == 1
+                    "
+                    :style="{
+                      width: '450px',
+                      height: '260px',
+                      margin: '0px auto 0 '
+                    }"
                   ></div>
                 </div>
-                <img src="../../assets/img/publish/diwen.png" alt="" />
+                <!-- <img src="../../assets/img/publish/diwen.png" alt="" /> -->
               </div>
             </div>
             <!-- 填空 -->
@@ -136,13 +166,17 @@
             >
               <div>
                 <span>作答分析</span>
-                <div>
+                <div class="echart">
                   <div
                     id="myChart"
-                    :style="{ width: '460px', height: '300px' }"
+                    :style="{
+                      width: '460px',
+                      height: '260px',
+                      margin: '20px auto 0 '
+                    }"
                   ></div>
                 </div>
-                <img src="../../assets/img/publish/diwen.png" alt="" />
+                <!-- <img src="../../assets/img/publish/diwen.png" alt="" /> -->
               </div>
             </div>
 
@@ -191,11 +225,38 @@
       <div class="dialog-wrap" v-if="showdialogFlag">
         <div class="dialog">
           <p>
-            <span
+            <span v-if="param == '做错'"
               >错题学生 -
               {{
                 dailyhomeworkInfos.errorStudentList != undefined
                   ? dailyhomeworkInfos.errorStudentList.length
+                  : 0
+              }}
+              人</span
+            >
+            <span v-if="param == '半对'"
+              >半对学生 -
+              {{
+                dailyhomeworkInfos.halfStudentList != undefined
+                  ? dailyhomeworkInfos.halfStudentList.length
+                  : 0
+              }}
+              人</span
+            >
+            <span v-if="param == '未批阅'"
+              >未批阅学生-
+              {{
+                dailyhomeworkInfos.pendingStudentList != undefined
+                  ? dailyhomeworkInfos.pendingStudentList.length
+                  : 0
+              }}
+              人</span
+            >
+            <span v-if="param == '做对'"
+              >做对学生-
+              {{
+                dailyhomeworkInfos.trueStudentList != undefined
+                  ? dailyhomeworkInfos.trueStudentList.length
                   : 0
               }}
               人</span
@@ -206,12 +267,55 @@
               @click="close"
             />
           </p>
-          <div>
+          <div v-if="param == '做错'">
             <span
               v-for="(item, index) in dailyhomeworkInfos.errorStudentList"
               :key="index"
               >{{ item }}</span
             >
+          </div>
+          <div v-if="param == '半对'">
+            <span
+              v-for="(item, index) in dailyhomeworkInfos.halfStudentList"
+              :key="index"
+              >{{ item }}</span
+            >
+          </div>
+          <div v-if="param == '未批阅'">
+            <span
+              v-for="(item, index) in dailyhomeworkInfos.pendingStudentList"
+              :key="index"
+              >{{ item }}</span
+            >
+          </div>
+          <div v-if="param == '做对'">
+            <span
+              v-for="(item, index) in dailyhomeworkInfos.trueStudentList"
+              :key="index"
+              >{{ item }}</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="dialog-wrap" v-if="showdialogFlagXx">
+        <div class="dialog">
+          <p>
+            <span
+              >本题选{{ param }}的学生
+              {{ paramXx.length }}
+              人</span
+            >
+            <img
+              src="../../assets/img/publish/close.png"
+              alt=""
+              @click="close"
+            />
+          </p>
+
+          <div>
+            <span v-for="(item, index) in paramXx" :key="index">{{
+              item
+            }}</span>
           </div>
         </div>
       </div>
@@ -231,36 +335,39 @@
 </template>
 
 <script>
-import localforage from 'localforage'
-import SingleItemBtn from './components/SingleItemBtn'
-import StemType from './components/StemType'
-import ClassifyDialog from './components/ClassifyDialog'
-import Dialog from '../../components/Dialog'
+import localforage from "localforage";
+import SingleItemBtn from "./components/SingleItemBtn";
+import StemType from "./components/StemType";
+import ClassifyDialog from "./components/ClassifyDialog";
+import Dialog from "../../components/Dialog";
 export default {
-  name: '',
+  name: "",
   props: [],
   data() {
     return {
+      param: "",
+      paramXx: [],
       selecThtype: 0,
-      homeworkQuestionId: '',
+      homeworkQuestionId: "",
       dailyhomeworkInfos: [],
       showdialogFlag: false,
-      dataItem: '',
+      showdialogFlagXx: false,
+      dataItem: "",
       showDialog: false,
       collectonGroupId: 0,
       CollectionInfos: {
-        collectonGroupId: '',
-        grade: '',
-        questionTypeCode: '',
-        questionId: '',
-        questionInfoId: '',
-        questionSourceId: '',
-        questionSourceName: '',
-        questionUuid: ''
+        collectonGroupId: "",
+        grade: "",
+        questionTypeCode: "",
+        questionId: "",
+        questionInfoId: "",
+        questionSourceId: "",
+        questionSourceName: "",
+        questionUuid: ""
       },
-      grade: '',
+      grade: "",
       showDialog1: false //控制未提交学生弹框
-    }
+    };
   },
 
   components: {
@@ -274,42 +381,42 @@ export default {
       this.$store.state.userInfo.grade <= 9
         ? this.$store.state.userInfo.grade
         : this.$store.state.userInfo.grade == 10
-        ? '高一'
+        ? "高一"
         : this.$store.state.userInfo.grade == 11
-        ? '高二'
-        : '高三'
+        ? "高二"
+        : "高三";
     if (!this.$route.params.homeworkQuestionId) {
-      localforage.getItem('homeworkQuestionId').then(value => {
-        this.homeworkQuestionId = value
-        localforage.getItem('dataStatistics').then(value => {
-          this.dataItem = value
-          this.dailyhomeworkInfo()
-        })
-      })
-      return
+      localforage.getItem("homeworkQuestionId").then(value => {
+        this.homeworkQuestionId = value;
+        localforage.getItem("dataStatistics").then(value => {
+          this.dataItem = value;
+          this.dailyhomeworkInfo();
+        });
+      });
+      return;
     }
-    this.homeworkQuestionId = this.$route.params.homeworkQuestionId
+    this.homeworkQuestionId = this.$route.params.homeworkQuestionId;
 
-    localforage.getItem('dataStatistics').then(value => {
-      this.dataItem = value
-      this.dailyhomeworkInfo()
-    })
+    localforage.getItem("dataStatistics").then(value => {
+      this.dataItem = value;
+      this.dailyhomeworkInfo();
+    });
   },
   methods: {
     //未提交弹框的事件
     showDialogBtn() {
-      this.showDialog1 = true
+      this.showDialog1 = true;
     },
     closes(val) {
-      this.showDialog1 = val
+      this.showDialog1 = val;
     },
     //获取收藏分组id
     getId(id) {
-      this.collectonGroupId = id
+      this.collectonGroupId = id;
     },
     //点击显示收藏弹框
     addStore() {
-      this.showDialog = true
+      this.showDialog = true;
     },
     //添加收藏
     addCollectStore() {
@@ -322,64 +429,121 @@ export default {
         questionSourceId: this.dailyhomeworkInfos.questionSourceId,
         questionSourceName: this.dailyhomeworkInfos.questionSourceName,
         questionUuid: this.dailyhomeworkInfos.questionUuid
-      }
+      };
       this.$store
-        .dispatch('publish/addStore', this.CollectionInfos)
+        .dispatch("publish/addStore", this.CollectionInfos)
         .then(data => {
           if (data.flag === 1) {
-            this.showDialog = false
-            this.$message.success('收藏成功')
-            this.dailyhomeworkInfo()
+            this.showDialog = false;
+            this.$message.success("收藏成功");
+            this.dailyhomeworkInfo();
           }
-        })
+        });
     },
     //取消收藏
     cancleStore() {
       this.$store
         .dispatch(
-          'publish/cancelStore',
+          "publish/cancelStore",
           this.dailyhomeworkInfos.teacherQuestionCollectonId
         )
         .then(data => {
           if (data.flag === 1) {
-            this.$message.success('取消收藏成功')
-            this.dailyhomeworkInfo()
+            this.$message.success("取消收藏成功");
+            this.dailyhomeworkInfo();
           }
-        })
+        });
     },
     //关闭收藏弹框
     closeChildDialog(val) {
-      this.showDialog = val
+      this.showDialog = val;
     },
     //关闭错误学生弹框
     close() {
-      this.showdialogFlag = false
+      this.showdialogFlag = false;
+      this.showdialogFlagXx = false;
     },
     selecTh(t) {
-      this.selecThtype = t
-      this.drawPie(
+      this.selecThtype = t;
+      let optionsList = [];
+      let arrLength = [];
+      let errorLength = [];
+      let trueLength = [];
+      let obj = {};
+      this.drawPieTop(
         this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-          .trueStudentCount,
+          .trueStudentList != undefined
+          ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+              .trueStudentList.length
+          : 0,
         this.dailyhomeworkInfos.childInfoList[this.selecThtype]
           .errorStudentList != undefined
           ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
               .errorStudentList.length
           : 0,
         this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-          .unSubmitStudentCount,
+          .unSubmitStudentList != undefined
+          ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+              .unSubmitStudentList.length
+          : 0,
         this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-          .halfTrueStudentCount
-      )
+          .halfStudentList != undefined
+          ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+              .halfStudentList.length
+          : 0,
+        this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+          .pendingStudentList != undefined
+          ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+              .pendingStudentList.length
+          : 0
+      );
+
+      if (
+        this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+          .optionStaticals != undefined
+      ) {
+        obj = this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+          .optionStaticals;
+        Object.keys(obj).forEach(function(key) {
+          optionsList.push(key);
+          arrLength.push(obj[key].length);
+        });
+        errorLength = arrLength.slice();
+        trueLength = arrLength.slice();
+
+        for (
+          let i = 0;
+          i <
+          this.dailyhomeworkInfos.childInfoList[this.selecThtype].questionAnswer
+            .length +
+            optionsList.length -
+            this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+              .questionAnswer.length;
+          i++
+        ) {
+          if (
+            optionsList.indexOf(
+              this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                .questionAnswer[i]
+            ) != -1
+          ) {
+            errorLength[i] = "-";
+          } else {
+            trueLength[i] = "-";
+          }
+        }
+        this.drawBar(optionsList, trueLength, errorLength);
+      }
     },
     selectId(id) {
-      this.homeworkQuestionId = id
-      this.dailyhomeworkInfo()
+      this.homeworkQuestionId = id;
+      this.dailyhomeworkInfo();
     },
     //日常作业统计详情
     dailyhomeworkInfo() {
-      var self = this
+      var self = this;
       this.$http
-        .get('/api/teacher/homework/statistical/question/info', {
+        .get("/api/teacher/homework/statistical/question/info", {
           params: {
             homeworkClassId: this.dataItem.homeworkClassId,
             homeworkQuestionId: this.homeworkQuestionId,
@@ -387,73 +551,253 @@ export default {
           }
         })
         .then(res => {
-          this.dailyhomeworkInfos = res.data.infos
+          this.dailyhomeworkInfos = res.data.infos;
           this.$nextTick().then(() => {
+            let optionsList = [];
+            let arrLength = [];
+            let errorLength = [];
+            let trueLength = [];
+            let obj = {};
             if (this.dailyhomeworkInfos.questionTypeCode == 4) {
-              this.drawPie(
+              if (this.dailyhomeworkInfos.optionStaticals != undefined) {
+                this.drawPieTop(
+                  this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                    .trueStudentList != undefined
+                    ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                        .trueStudentList.length
+                    : 0,
+                  this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                    .errorStudentList != undefined
+                    ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                        .errorStudentList.length
+                    : 0,
+                  this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                    .unSubmitStudentList != undefined
+                    ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                        .unSubmitStudentList.length
+                    : 0,
+                  this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                    .halfStudentList != undefined
+                    ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                        .halfStudentList.length
+                    : 0,
+                  this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                    .pendingStudentList != undefined
+                    ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                        .pendingStudentList.length
+                    : 0
+                );
+              } else {
+                this.drawPieBottom(
+                  this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                    .trueStudentList != undefined
+                    ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                        .trueStudentList.length
+                    : 0,
+                  this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                    .errorStudentList != undefined
+                    ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                        .errorStudentList.length
+                    : 0,
+                  this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                    .unSubmitStudentList != undefined
+                    ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                        .unSubmitStudentList.length
+                    : 0,
+                  this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                    .halfStudentList != undefined
+                    ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                        .halfStudentList.length
+                    : 0,
+                  this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                    .pendingStudentList != undefined
+                    ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                        .pendingStudentList.length
+                    : 0
+                );
+              }
+
+              if (
                 this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                  .trueStudentCount,
-                this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                  .errorStudentList != undefined
-                  ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                      .errorStudentList.length
-                  : 0,
-                this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                  .unSubmitStudentCount,
-                this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                  .halfTrueStudentCount
-              )
+                  .optionStaticals != undefined
+              ) {
+                obj = this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                  .optionStaticals;
+                Object.keys(obj).forEach(function(key) {
+                  optionsList.push(key);
+                  arrLength.push(obj[key].length);
+                });
+                errorLength = arrLength.slice();
+                trueLength = arrLength.slice();
+
+                for (
+                  let i = 0;
+                  i <
+                  this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                    .questionAnswer.length +
+                    optionsList.length -
+                    this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                      .questionAnswer.length;
+                  i++
+                ) {
+                  if (
+                    optionsList.indexOf(
+                      this.dailyhomeworkInfos.childInfoList[this.selecThtype]
+                        .questionAnswer[i]
+                    ) != -1
+                  ) {
+                    errorLength[i] = "-";
+                  } else {
+                    trueLength[i] = "-";
+                  }
+                }
+                this.drawBar(optionsList, trueLength, errorLength);
+              }
             } else {
-              this.drawPie(
-                this.dailyhomeworkInfos.trueStudentCount,
-                this.dailyhomeworkInfos.errorStudentList != undefined
-                  ? this.dailyhomeworkInfos.errorStudentList.length
-                  : 0,
-                this.dailyhomeworkInfos.unSubmitStudentCount,
-                this.dailyhomeworkInfos.halfTrueStudentCount
-              )
+              if (this.dailyhomeworkInfos.optionStaticals != undefined) {
+                this.drawPieTop(
+                  this.dailyhomeworkInfos.trueStudentList != undefined
+                    ? this.dailyhomeworkInfos.trueStudentList.length
+                    : 0,
+                  this.dailyhomeworkInfos.errorStudentList != undefined
+                    ? this.dailyhomeworkInfos.errorStudentList.length
+                    : 0,
+                  this.dailyhomeworkInfos.unSubmitStudentList != undefined
+                    ? this.dailyhomeworkInfos.unSubmitStudentList.length
+                    : 0,
+                  this.dailyhomeworkInfos.halfStudentList != undefined
+                    ? this.dailyhomeworkInfos.halfStudentList.length
+                    : 0,
+                  this.dailyhomeworkInfos.pendingStudentList != undefined
+                    ? this.dailyhomeworkInfos.pendingStudentList.length
+                    : 0
+                );
+              } else {
+                this.drawPieBottom(
+                  this.dailyhomeworkInfos.trueStudentList != undefined
+                    ? this.dailyhomeworkInfos.trueStudentList.length
+                    : 0,
+                  this.dailyhomeworkInfos.errorStudentList != undefined
+                    ? this.dailyhomeworkInfos.errorStudentList.length
+                    : 0,
+                  this.dailyhomeworkInfos.unSubmitStudentList != undefined
+                    ? this.dailyhomeworkInfos.unSubmitStudentList.length
+                    : 0,
+                  this.dailyhomeworkInfos.halfStudentList != undefined
+                    ? this.dailyhomeworkInfos.halfStudentList.length
+                    : 0,
+                  this.dailyhomeworkInfos.pendingStudentList != undefined
+                    ? this.dailyhomeworkInfos.pendingStudentList.length
+                    : 0
+                );
+              }
+
+              if (this.dailyhomeworkInfos.optionStaticals != undefined) {
+                obj = this.dailyhomeworkInfos.optionStaticals;
+                Object.keys(obj).forEach(function(key) {
+                  optionsList.push(key);
+                  arrLength.push(obj[key].length);
+                });
+                errorLength = arrLength.slice();
+                trueLength = arrLength.slice();
+
+                for (
+                  let i = 0;
+                  i <
+                  this.dailyhomeworkInfos.questionAnswer.length +
+                    optionsList.length -
+                    this.dailyhomeworkInfos.questionAnswer.length;
+                  i++
+                ) {
+                  if (
+                    optionsList.indexOf(
+                      this.dailyhomeworkInfos.questionAnswer[i]
+                    ) != -1
+                  ) {
+                    errorLength[i] = "-";
+                  } else {
+                    trueLength[i] = "-";
+                  }
+                }
+                this.drawBar(optionsList, trueLength, errorLength);
+              }
             }
 
-            let myChart = this.$echarts.init(document.getElementById('myChart'))
-            myChart.on('click', function(param) {
-              if (param.name == '做错') {
+            let myChart = this.$echarts.init(
+              document.getElementById("myChart")
+            );
+            let myCharts = this.$echarts.init(
+              document.getElementById("myCharts")
+            );
+            myChart.on("click", function(param) {
+              if (param.name == "做错") {
+                self.param = "做错";
                 if (self.dailyhomeworkInfos.errorStudentList != undefined) {
-                  self.showdialogFlag = true
+                  self.showdialogFlag = true;
                 }
               }
-              // if (param.name == '未提交') {
-              //   self.showDialog1 = true
-              // }
-            })
-          })
-        })
+              if (param.name == "做对") {
+                self.param = "做对";
+                if (self.dailyhomeworkInfos.trueStudentList != undefined) {
+                  self.showdialogFlag = true;
+                }
+              }
+              if (param.name == "半对") {
+                self.param = "半对";
+                if (self.dailyhomeworkInfos.halfStudentList != undefined) {
+                  self.showdialogFlag = true;
+                }
+              }
+              if (param.name == "未批阅") {
+                self.param = "未批阅";
+                if (self.dailyhomeworkInfos.pendingStudentList != undefined) {
+                  self.showdialogFlag = true;
+                }
+              }
+              if (param.name == "未提交") {
+                self.showDialog1 = true;
+              }
+            });
+
+            myCharts.on("click", function(param) {
+              Object.keys(obj).forEach(function(key) {
+                if (param.name == key) {
+                  self.param = key;
+                  self.showdialogFlagXx = true;
+                  self.paramXx = obj[key];
+                }
+              });
+            });
+          });
+        });
     },
-    drawPie(truerate, errorrate, unsubmit, half) {
+    drawPieBottom(truerate, errorrate, unsubmit, half, pend) {
       // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(document.getElementById('myChart'))
+      let myChart = this.$echarts.init(document.getElementById("myChart"));
       // 绘制图表
       myChart.setOption({
         tooltip: {
-          trigger: 'item',
-          formatter: '{b}:{c}人 {d}%  '
+          trigger: "item",
+          formatter: "{b}:{c}人 {d}%  "
         },
         legend: {
-          bottom: 'bottom',
-          data: ['做对', '做错', '未提交', '半对']
+          bottom: "bottom",
+          data: ["做对", "做错", "未提交", "半对", "未批阅"]
         },
         color: [
-          truerate != undefined && truerate != 0 ? '#13A99F' : '',
-          errorrate != undefined && errorrate != 0 ? '#FD6265' : '',
-          unsubmit != undefined && unsubmit != 0 ? '#ccc' : '',
-          half != undefined && half != 0 ? '#FBA057' : ''
+          truerate != undefined && truerate != 0 ? "#13A99F" : "",
+          errorrate != undefined && errorrate != 0 ? "#FD6265" : "",
+          unsubmit != undefined && unsubmit != 0 ? "#ccc" : "",
+          half != undefined && half != 0 ? "#FBA057" : "",
+          pend != undefined && pend != 0 ? "#FF8D12" : ""
         ],
         series: [
           {
-            type: 'pie',
-            radius: ['0%', '57%'],
+            type: "pie",
+            radius: ["0%", "57%"],
             label: {
               show: true,
-              formatter: '{b}:{c}人 {d}%',
+              formatter: "{b}:{c}人 {d}%",
               fontSize: 12
             },
             labelLine: {
@@ -464,55 +808,67 @@ export default {
               truerate != undefined && truerate != 0
                 ? {
                     value: truerate,
-                    name: '做对'
+                    name: "做对"
                   }
                 : {},
               errorrate != undefined && errorrate != 0
                 ? {
                     value: errorrate,
-                    name: '做错'
+                    name: "做错"
                   }
                 : {},
               unsubmit != undefined && unsubmit != 0
                 ? {
                     value: unsubmit,
-                    name: '未提交'
+                    name: "未提交"
                   }
                 : {},
               half != undefined && half != 0
                 ? {
                     value: half,
-                    name: '半对'
+                    name: "半对"
+                  }
+                : {},
+              pend != undefined && pend != 0
+                ? {
+                    value: pend,
+                    name: "未批阅"
                   }
                 : {}
             ]
           },
           {
-            type: 'pie',
-            radius: ['60%', '62%'],
+            type: "pie",
+            radius: ["60%", "62%"],
             data: [
               truerate != undefined && truerate != 0
                 ? {
                     value: truerate,
-                    name: '做对'
+                    name: "做对"
                   }
                 : {},
               errorrate != undefined && errorrate != 0
                 ? {
                     value: errorrate,
-                    name: '做错'
+                    name: "做错"
                   }
                 : {},
               unsubmit != undefined && unsubmit != 0
                 ? {
                     value: unsubmit,
-                    name: '未提交'
+                    name: "未提交"
                   }
                 : {},
               half != undefined && half != 0
                 ? {
                     value: half,
-                    name: '半对'
+                    name: "半对"
+                  }
+                : {},
+              pend != undefined && pend != 0
+                ? {
+                    value: pend,
+                    name: "未批阅"
                   }
                 : {}
             ],
@@ -526,14 +882,212 @@ export default {
             }
           }
         ]
-      })
+      });
+    },
+    drawPieTop(truerate, errorrate, unsubmit, half, pend) {
+      // 基于准备好的dom，初始化echarts实例
+      let myChart = this.$echarts.init(document.getElementById("myChart"));
+      // 绘制图表
+      myChart.setOption({
+        tooltip: {
+          trigger: "item",
+          formatter: "{b}:{c}人 {d}%  "
+        },
+        legend: {
+          top: "top",
+          data: ["做对", "做错", "未提交", "半对", "未批阅"]
+        },
+        color: [
+          truerate != undefined && truerate != 0 ? "#13A99F" : "",
+          errorrate != undefined && errorrate != 0 ? "#FD6265" : "",
+          unsubmit != undefined && unsubmit != 0 ? "#ccc" : "",
+          half != undefined && half != 0 ? "#FBA057" : "",
+          pend != undefined && pend != 0 ? "#FF8D12" : ""
+        ],
+        series: [
+          {
+            type: "pie",
+            radius: ["0%", "57%"],
+            label: {
+              show: true,
+              formatter: "{b}:{c}人 {d}%",
+              fontSize: 12
+            },
+            labelLine: {
+              length: 20,
+              length2: 10
+            },
+            data: [
+              truerate != undefined && truerate != 0
+                ? {
+                    value: truerate,
+                    name: "做对"
+                  }
+                : {},
+              errorrate != undefined && errorrate != 0
+                ? {
+                    value: errorrate,
+                    name: "做错"
+                  }
+                : {},
+              unsubmit != undefined && unsubmit != 0
+                ? {
+                    value: unsubmit,
+                    name: "未提交"
+                  }
+                : {},
+              half != undefined && half != 0
+                ? {
+                    value: half,
+                    name: "半对"
+                  }
+                : {},
+              pend != undefined && pend != 0
+                ? {
+                    value: pend,
+                    name: "未批阅"
+                  }
+                : {}
+            ]
+          },
+          {
+            type: "pie",
+            radius: ["60%", "62%"],
+            data: [
+              truerate != undefined && truerate != 0
+                ? {
+                    value: truerate,
+                    name: "做对"
+                  }
+                : {},
+              errorrate != undefined && errorrate != 0
+                ? {
+                    value: errorrate,
+                    name: "做错"
+                  }
+                : {},
+              unsubmit != undefined && unsubmit != 0
+                ? {
+                    value: unsubmit,
+                    name: "未提交"
+                  }
+                : {},
+              half != undefined && half != 0
+                ? {
+                    value: half,
+                    name: "半对"
+                  }
+                : {},
+              pend != undefined && pend != 0
+                ? {
+                    value: pend,
+                    name: "未批阅"
+                  }
+                : {}
+            ],
+            label: {
+              show: false,
+              padding: 20
+            },
+            labelLine: {
+              length: 10,
+              length2: 15
+            }
+          }
+        ]
+      });
+    },
+    drawBar(oArr, D, error) {
+      //color: ["#13A99F", "#FD6265"],
+      // 基于准备好的dom，初始化echarts实例
+      let myChart = this.$echarts.init(document.getElementById("myCharts"));
+      // 绘制图表
+      myChart.setOption({
+        legend: {
+          data: ["正确选项", "错误选项"],
+          bottom: "bottom"
+        },
+        color: ["#13A99F", "#FD6265"],
+        xAxis: {
+          type: "category",
+          splitLine: { show: false },
+          data: oArr,
+          name: "选项",
+          nameGap: 5,
+          axisTick: {
+            show: false
+          },
+          axisLine: {
+            lineStyle: {
+              color: "#666"
+            }
+          },
+          splitLine: {
+            show: false
+          }
+        },
+        yAxis: {
+          type: "value",
+          minInterval: 1,
+          name: "人数",
+          max: function(val) {
+            let value = val.max;
+            let prec = 2;
+            let ceil = true;
+            let number;
+
+            const mult = Math.pow(10, 1);
+            number = Math.ceil(Number(value) / mult) * mult;
+            return number;
+          },
+          axisTick: {
+            show: false
+          },
+          axisLine: {
+            lineStyle: {
+              color: "#666"
+            }
+          },
+          splitLine: {
+            show: false
+          }
+        },
+        series: [
+          {
+            name: "正确选项",
+            type: "bar",
+            stack: "总数",
+            label: {
+              normal: {
+                show: true,
+                position: "top"
+              }
+            },
+            data: D,
+            barWidth: 20
+          },
+          {
+            name: "错误选项",
+            type: "bar",
+            stack: "总数",
+            label: {
+              normal: {
+                show: true,
+                position: "top"
+              }
+            },
+            barWidth: 20,
+            data: error
+          }
+        ]
+      });
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scope>
-@import '@/styles/variable.scss';
+@import "@/styles/variable.scss";
 .answer-results-wrap {
   @include wh(100%, 100%);
 }
@@ -892,5 +1446,23 @@ export default {
       }
     }
   }
+}
+.single-items-wrap
+  > div:nth-child(2)
+  > div.infos
+  > div:nth-child(2)
+  > div.zd-tongji-pd
+  > div:nth-child(1)
+  > .echart {
+  flex-direction: column;
+  margin-top: 0;
+}
+.single-items-wrap
+  > div:nth-child(2)
+  > div.infos
+  > div:nth-child(2)
+  > div.zd-tongji-pd
+  > div:nth-child(1) {
+  justify-content: start;
 }
 </style>

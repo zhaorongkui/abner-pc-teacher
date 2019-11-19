@@ -15,6 +15,7 @@ import marking from './modules/marking'
 
 Vue.use(Vuex)
 const state = {
+  objs: {},
   compositionFlag: true,
   userInfo:
     JSON.parse(localStorage.getItem('userInfo')) != null
@@ -166,6 +167,9 @@ const actions = {
 
 // mutations
 const mutations = {
+  OBJS(state, payload) {
+    state.objs = payload
+  },
   GETUSERINFO(state, payload) {
     state.userInfo = payload
   },
