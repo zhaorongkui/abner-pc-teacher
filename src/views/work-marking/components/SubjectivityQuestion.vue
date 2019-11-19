@@ -91,6 +91,11 @@
       <!-- 学生互评 -->
       <PeerGrading :questionInfo="questionInfo"></PeerGrading>
       <div class="canvas">
+        <div class="share">
+          <img src="../../../assets/img/shareNormal.png" alt="" />
+          <!-- <img src="../../../assets/img/shareOut.png" alt="" /> -->
+          <span>分享答案</span>
+        </div>
         <template
           v-if="
             techerReviewList.length > 0 && techerReviewList[0].reviewFileStr
@@ -1741,6 +1746,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.share {
+  position: absolute;
+  right: 2%;
+  top: 6%;
+  z-index: 999;
+  color: #999;
+  padding: 6px 20px;
+  background: #f7f7f7;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  img {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+  }
+  span {
+    color: #8493a8;
+    font-size: 14px;
+  }
+  span.hover-span {
+    color: #ff971d;
+  }
+}
 .subjectivity-question {
   height: 100%;
   width: 100%;
