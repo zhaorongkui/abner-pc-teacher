@@ -58,6 +58,7 @@
 <template>
   <div class="subjective card" style="box-shadow: none">
     <ReadPeerGrading :questionInfo="questionInfo"></ReadPeerGrading>
+
     <div class="canvas">
       <template
         v-if="techerReviewList.length > 0 && techerReviewList[0].reviewFileStr"
