@@ -281,7 +281,7 @@ export default {
       }
     },
     trueStudentList() {
-      if (this.questiondata.trueStudentList.length === 0) {
+      if (this.questiondata.trueStudentList.length == 0) {
         return [];
       } else {
         return this.questiondata.trueStudentList;

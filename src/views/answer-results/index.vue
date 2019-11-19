@@ -726,9 +726,7 @@ export default {
             let myChart = this.$echarts.init(
               document.getElementById("myChart")
             );
-            let myCharts = this.$echarts.init(
-              document.getElementById("myCharts")
-            );
+
             myChart.on("click", function(param) {
               if (param.name == "做错") {
                 self.param = "做错";
@@ -758,16 +756,20 @@ export default {
                 self.showDialog1 = true;
               }
             });
-
-            myCharts.on("click", function(param) {
-              Object.keys(obj).forEach(function(key) {
-                if (param.name == key) {
-                  self.param = key;
-                  self.showdialogFlagXx = true;
-                  self.paramXx = obj[key];
-                }
+            if (this.dailyhomeworkInfos.optionStaticals != undefined) {
+              let myCharts = this.$echarts.init(
+                document.getElementById("myCharts")
+              );
+              myCharts.on("click", function(param) {
+                Object.keys(obj).forEach(function(key) {
+                  if (param.name == key) {
+                    self.param = key;
+                    self.showdialogFlagXx = true;
+                    self.paramXx = obj[key];
+                  }
+                });
               });
-            });
+            }
           });
         });
     },

@@ -28,7 +28,8 @@ export default {
       return this.$store.state.publish.EnglishWork
     }
   },
-  mounted() {}
+  mounted() {
+  }
 }
 </script>
 <style lang="scss" scoped>
