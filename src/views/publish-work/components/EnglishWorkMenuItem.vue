@@ -105,7 +105,7 @@ export default {
   }
   .blue {
     background: #1059ff;
-    color:#fff;
+    color: #fff;
   }
 }
 </style>
