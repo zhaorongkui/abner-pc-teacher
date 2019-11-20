@@ -203,15 +203,6 @@ export default {
       this.picIndex = 1
       this.blob = null
     }
-    // ,
-    // 'questionInfo.ifShare' : {
-    //   handler(newValue, oldValue){
-    //     console.log(newValue)
-    //     console.log(oldValue)
-    //   },
-    //   deep: true,
-    //   immediate: true
-    // }
   },
   mounted() {
     this.questionInfo.ifShare === 0 ? (this.ifShare = 1) : (this.ifShare = 0)
