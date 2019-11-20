@@ -3,16 +3,8 @@ module.exports = {
   env: {
     node: true
   },
-  extends: [
-    'plugin:vue/essential',
-    '@vue/prettier',
-    'plugin:vue/strongly-recommended',
-    'plugin:prettier/recommended'
-  ],
+  extends: ['plugin:vue/essential', '@vue/prettier'],
   rules: {
-    semi: [0, 'always'],
-    quotes: [2, 'single', 'avoid-escape'],
-    'prettier/prettier': 'warning',
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   },
