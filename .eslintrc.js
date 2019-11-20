@@ -10,6 +10,7 @@ module.exports = {
     'plugin:prettier/recommended'
   ],
   rules: {
+    'indent': 'off',
     semi: [0, 'always'],
     quotes: [2, 'single', 'avoid-escape'],
     'prettier/prettier': 'warning',
