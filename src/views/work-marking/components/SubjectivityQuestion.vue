@@ -118,7 +118,7 @@
               </li>
               <li>
                 <span>{{ picIndex }}</span
-                >/{{ techerReviewList[0].reviewFileStr.split(',').length }}
+                >/{{ techerReviewList[0].reviewFileStr.split(",").length }}
               </li>
               <li
                 @click="
@@ -366,16 +366,16 @@
 <script>
 // import imageView from 'vue-imageview'
 // import $ from 'jquery'
-import localforage from 'localforage'
-import PeerGrading from './PeerGrading'
-import Recorder from './Recorder'
-import CollectonModal from './CollectonModal'
-import EditCanvas from './EditCanvas'
+import localforage from "localforage";
+import PeerGrading from "./PeerGrading";
+import Recorder from "./Recorder";
+import CollectonModal from "./CollectonModal";
+import EditCanvas from "./EditCanvas";
 export default {
-  name: '',
+  name: "",
   components: { PeerGrading, Recorder, CollectonModal, EditCanvas },
   // 当前批阅作业详情
-  props: ['questionInfo'],
+  props: ["questionInfo"],
   data() {
     return {
       // picflag: false,
@@ -402,52 +402,52 @@ export default {
       //是否需要弹框
       isDialog: true,
       ifShare: 0
-    }
+    };
   },
   computed: {
     studentName() {
-      return this.$store.state.marking.studentName
+      return this.$store.state.marking.studentName;
     },
     picIndex: {
       get: function() {
-        return this.$store.state.marking.picIndex
+        return this.$store.state.marking.picIndex;
       },
       set: function(v) {
-        this.$store.commit('marking/PICINDEX', v)
+        this.$store.commit("marking/PICINDEX", v);
       }
     },
     questionAnswer() {
       return (
         this.questionInfo.questionAnswer &&
         JSON.parse(this.questionInfo.questionAnswer)
-      )
+      );
     },
     // 试题列表信息
     questionListInfo() {
-      return this.$store.state.marking.questionListInfo
+      return this.$store.state.marking.questionListInfo;
     },
     hasRewive() {
-      let hasRewive
+      let hasRewive;
       this.questionListInfo &&
         this.questionListInfo.homeworkQuestionList.forEach(item => {
           if (item.homeworkQuestionId === this.homeworkQuestionId) {
-            hasRewive = item.hasRewive
+            hasRewive = item.hasRewive;
           }
-        })
-      return hasRewive
+        });
+      return hasRewive;
     },
     // 试题列表
     list() {
       return (
         (this.questionListInfo && this.questionListInfo.homeworkQuestionList) ||
         []
-      )
+      );
     },
     // 主观题列表
     subjectivelist() {
       return (
         (this.list && this.list.filter(item => item.questionType === 1)) || []
-      )
+      );
     },
     // 主观未批阅列表
     noRewiveList() {
@@ -455,19 +455,19 @@ export default {
         item =>
           item.hasRewive === 0 ||
           (item.hasRewive === 2 && item.questionIsappeal === 1)
-      )
+      );
     },
     // 主观带批阅数量
     count() {
-      let count = 0
+      let count = 0;
       if (this.subjectivelist.length > 0) {
         this.subjectivelist.forEach(item => {
           if (item.hasRewive === 0) {
-            count += 1
+            count += 1;
           } else {
             if (this.questionListInfo.hasRewive !== 2) {
               if (item.questionIsappeal && item.questionIsappeal === 1) {
-                count += 1
+                count += 1;
               }
             } else {
               if (
@@ -475,38 +475,38 @@ export default {
                 this.questionListInfo.reviewType === 4
               ) {
                 if (item.questionIsappeal && item.questionIsappeal === 1) {
-                  count += 1
+                  count += 1;
                 }
               } else {
-                count += 1
+                count += 1;
               }
             }
           }
-        })
+        });
       }
-      return count
+      return count;
     },
     //是否有申诉状态
     isappealNum() {
-      let count = 0
+      let count = 0;
       if (this.list.length > 0) {
         this.list.forEach(item => {
           if (item.questionIsappeal == 1) {
-            count++
+            count++;
           }
-        })
+        });
       }
-      return count
+      return count;
     },
     // 学科
     subjectAbbreviation() {
-      return this.$store.getters.subjectAbbreviation
+      return this.$store.getters.subjectAbbreviation;
     },
     homeworkQuestionId() {
-      return this.$store.state.marking.homeworkQuestionId
+      return this.$store.state.marking.homeworkQuestionId;
     },
     reviewVoice() {
-      return this.$store.state.marking.reviewVoice
+      return this.$store.state.marking.reviewVoice;
     },
     // 教师批阅列表
     techerReviewList() {
@@ -516,21 +516,21 @@ export default {
             item => item.reviewUserType === 2
           )) ||
         []
-      )
+      );
     },
     // 批阅的文件
     fileList() {
-      let result = []
+      let result = [];
       this.questionInfo.reviewList &&
         this.questionInfo.reviewList.forEach(item => {
           if (item.reviewUserType === 2 && item.reviewFileStr) {
-            result.push(item)
+            result.push(item);
           }
-        })
+        });
       if (result.length === 0) {
-        result = this.questionInfo.fileList || []
+        result = this.questionInfo.fileList || [];
       }
-      return result
+      return result;
     }
   },
   watch: {
@@ -538,15 +538,15 @@ export default {
       // 判断是否重批
       //localforage.getItem('item').then(item => {
       //localforage.getItem('list').then(list => {
-      localforage.getItem('student').then(student => {
+      localforage.getItem("student").then(student => {
         // this.item = item
         // this.studentList = list
         // this.student = student
         this.rewiveType =
           student.reviewType === 1 ||
           student.reviewType === 4 ||
-          (student.reviewType === 2 && val === 0)
-      })
+          (student.reviewType === 2 && val === 0);
+      });
       //})
       //})
     },
@@ -560,36 +560,36 @@ export default {
   },
   methods: {
     share() {
-      this.ifShare = 0
+      this.ifShare = 0;
       if (
         (this.questionInfo.hasRewive == 1 ||
           this.questionInfo.hasRewive == 4) &&
         this.questionInfo.isTrue == 0
       ) {
         if (this.questionInfo.ifShare == 0) {
-          this.ifShare = 1
+          this.ifShare = 1;
         }
         this.$http
-          .post('/api/teacher/homework/shareStudentAnswer', {
+          .post("/api/teacher/homework/shareStudentAnswer", {
             ifShare: this.ifShare,
             studentAnswerId: this.questionInfo.studentAnswerId
           })
           .then(({ data }) => {
             if (data.flag === 1) {
               if (this.ifShare == 0) {
-                this.$message.success('分享成功')
+                this.$message.success("分享成功");
               } else {
-                this.$message.success('取消分享成功')
+                this.$message.success("取消分享成功");
               }
 
-              this.$store.dispatch('marking/questionInfo')
+              this.$store.dispatch("marking/questionInfo");
             }
           })
           .catch(error => {
-            console.log(error)
-          })
+            console.log(error);
+          });
       } else {
-        this.$message.error('正确答案才能分享全班哦～')
+        this.$message.error("正确答案才能分享全班哦～");
       }
     },
     //  hideImageView() {
@@ -597,23 +597,23 @@ export default {
     // },
     // 导出图片
     handleImportImg(blob) {
-      this.blob = blob
+      this.blob = blob;
     },
     // 隐藏收藏模态框
     handleHideCollect() {
-      this.isShowCollect = false
+      this.isShowCollect = false;
     },
     handleShow() {
-      this.isShow = !this.isShow
+      this.isShow = !this.isShow;
     },
     hanldeVisble() {
       if (this.isappealNum > 0) {
-        this.isappeal = true
-        return
+        this.isappeal = true;
+        return;
       }
       if (this.count === 0) {
         //let resultJsonArrayAll=[...this.subjectivelist]
-        let resultJsonArray = [...this.noRewiveList]
+        let resultJsonArray = [...this.noRewiveList];
         // var type=0;
         //  resultJsonArrayAll.forEach((item, index) => {
         //   if(item.hasRewive==2){
@@ -622,10 +622,10 @@ export default {
         // })
         //if(type==1){
         if (resultJsonArray.length > 0) {
-          this.hanldeReadOver()
+          this.hanldeReadOver();
         } else {
           if (this.reviewVoice || this.blob) {
-            this.hanldeReadOverOne()
+            this.hanldeReadOverOne();
           } else {
             if (
               this.student.reviewType == 0 ||
@@ -633,18 +633,18 @@ export default {
             ) {
               if (this.noRewiveStudentList.length > 0) {
                 // 打开下个学生模态框
-                this.noReviewStudent = true
+                this.noReviewStudent = true;
               } else {
                 // 打开没有学生代批阅模态框
                 //this.noStudent = true
-                this.$router.go(-1)
-                this.$message.success('恭喜您全部作业批阅完成')
-                return
+                this.$router.go(-1);
+                this.$message.success("恭喜您全部作业批阅完成");
+                return;
               }
             } else {
-              this.$router.go(-1)
-              this.$message.success('恭喜您全部作业批阅完成')
-              return
+              this.$router.go(-1);
+              this.$message.success("恭喜您全部作业批阅完成");
+              return;
             }
           }
         }
@@ -655,44 +655,44 @@ export default {
         //   return
         // }
       } else {
-        this.visible = true
+        this.visible = true;
       }
     },
     handleOk() {
-      this.visible = false
-      this.isappeal = false
+      this.visible = false;
+      this.isappeal = false;
     },
     handleCancel() {
-      this.visible = false
-      this.isappeal = false
+      this.visible = false;
+      this.isappeal = false;
     },
     handleCancelStudent() {
-      this.noStudent = false
-      this.isDialog = false
+      this.noStudent = false;
+      this.isDialog = false;
     },
     handleCancelNoReviewStudent() {
-      this.noReviewStudent = false
-      this.isShowNextStudent = true
-      this.isDialog = false
+      this.noReviewStudent = false;
+      this.isShowNextStudent = true;
+      this.isDialog = false;
     },
     handleGoList() {
-      this.$message.success('恭喜您全部作业批阅完成')
-      this.$router.go(-1)
+      this.$message.success("恭喜您全部作业批阅完成");
+      this.$router.go(-1);
     },
     hanldeReadOver() {
-      var self = this
+      var self = this;
       setTimeout(function() {
         self.loading = self.$loading({
           lock: true,
-          text: '批阅中...',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)',
-          fontSize: '14px',
+          text: "批阅中...",
+          spinner: "el-icon-loading",
+          background: "rgba(0, 0, 0, 0.7)",
+          fontSize: "14px",
           zIndex: 99999999
-        })
+        });
         // 批阅结果数组json
         //let resultJsonArrayAll=[...self.subjectivelist]
-        let resultJsonArray = [...self.noRewiveList]
+        let resultJsonArray = [...self.noRewiveList];
         //var isScore=0
         // if(resultJsonArray.length==0){
         // resultJsonArrayAll.forEach((item, index) => {
@@ -710,19 +710,19 @@ export default {
         // })
         // }else{
         //isScore=1
-        var type = 0
+        var type = 0;
         resultJsonArray.forEach((item, index) => {
           if (item.homeworkQuestionId == self.homeworkQuestionId) {
-            type = 1
+            type = 1;
           }
-        })
+        });
         if (type == 0 && (self.blob || self.reviewVoice)) {
           let reviewList =
             (self.questionInfo.reviewList &&
               self.questionInfo.reviewList.filter(
                 item => item.reviewUserType === 2
               )) ||
-            []
+            [];
           let resultJson = {
             hasRewive: self.questionInfo.hasRewive,
             score: self.questionInfo.score,
@@ -734,15 +734,15 @@ export default {
                 reviewList[0] &&
                 reviewList[0].studentAnswerReviewId) ||
               null
-          }
-          resultJsonArray.push(resultJson)
+          };
+          resultJsonArray.push(resultJson);
         }
         //}
 
         // 未批阅数组
         resultJsonArray.forEach((item, index) => {
           //英语
-          if (self.subjectAbbreviation === 'yingyu') {
+          if (self.subjectAbbreviation === "yingyu") {
             // 主观填空题
             if (
               self.questionInfo.questionTypeCode === 5 &&
@@ -751,24 +751,24 @@ export default {
               // 试题答案
               let questionAnswerList = JSON.parse(
                 self.questionInfo.questionAnswer
-              )
+              );
               // 批阅答案
               let answerContentList = JSON.parse(
                 self.questionInfo.answerContent
-              )
+              );
               //批阅结果
-              let reviewResult
+              let reviewResult;
               questionAnswerList.forEach((item, index) => {
                 if (!answerContentList[index].questionTeacherScore) {
-                  answerContentList[index].questionTeacherScore = item.score
-                  reviewResult += item.score
+                  answerContentList[index].questionTeacherScore = item.score;
+                  reviewResult += item.score;
                 } else {
-                  reviewResult += answerContentList[index].questionTeacherScore
+                  reviewResult += answerContentList[index].questionTeacherScore;
                 }
-              })
+              });
               // 是否答对
               let isTrue =
-                self.questionInfo.questionScore == reviewResult ? 0 : 1
+                self.questionInfo.questionScore == reviewResult ? 0 : 1;
 
               resultJsonArray[index] = {
                 ...item,
@@ -781,9 +781,9 @@ export default {
                     item.reviewList[0] &&
                     item.reviewList[0].studentAnswerReviewId) ||
                   null
-              }
+              };
             } else {
-              var reviewResult = item.questionScore
+              var reviewResult = item.questionScore;
               if (
                 item.hasRewive == 1 ||
                 item.hasRewive == 4 ||
@@ -792,13 +792,13 @@ export default {
                     item.questionIsappeal == 2))
               ) {
                 //if(isScore!=1){
-                reviewResult = item.score
+                reviewResult = item.score;
                 //}
               }
               // else if(item.hasRewive==1||item.hasRewive==4){
               //    reviewResult=item.score
               // }
-              var isTrue = reviewResult == item.questionScore ? 0 : 1
+              var isTrue = reviewResult == item.questionScore ? 0 : 1;
               //主观题
               resultJsonArray[index] = {
                 ...item,
@@ -810,7 +810,7 @@ export default {
                     item.reviewList[0] &&
                     item.reviewList[0].studentAnswerReviewId) ||
                   null
-              }
+              };
               //console.log(item.questionScore)
             }
           } else {
@@ -823,23 +823,24 @@ export default {
               // 批阅答案
               let answerContentList = JSON.parse(
                 self.questionInfo.answerContent
-              )
+              );
               // 试题答案
               let questionAnswerList = JSON.parse(
                 self.questionInfo.questionAnswer
-              )
+              );
               // 批阅结果
-              let reviewResult
+              let reviewResult;
 
               answerContentList.forEach((item, index) => {
                 if (!answerContentList[index].questionTeacherScore) {
-                  answerContentList[index].questionTeacherScore = 2
-                  reviewResult += 2
+                  answerContentList[index].questionTeacherScore = 2;
+                  reviewResult += 2;
                 } else {
-                  reviewResult += answerContentList[index].questionTeacherScore
+                  reviewResult += answerContentList[index].questionTeacherScore;
                 }
-              })
-              let isTrue = questionAnswerList.length * 2 == reviewResult ? 0 : 1
+              });
+              let isTrue =
+                questionAnswerList.length * 2 == reviewResult ? 0 : 1;
 
               resultJsonArray[index] = {
                 ...item,
@@ -852,9 +853,9 @@ export default {
                     item.reviewList[0] &&
                     item.reviewList[0].studentAnswerReviewId) ||
                   null
-              }
+              };
             } else {
-              var reviewResult = 2
+              var reviewResult = 2;
               if (
                 item.hasRewive == 1 ||
                 item.hasRewive == 4 ||
@@ -864,13 +865,13 @@ export default {
               ) {
                 //if(item.hasRewive==2&&(item.questionIsappeal==undefined||item.questionIsappeal==2)){
                 //if(isScore!=1){
-                reviewResult = item.score
+                reviewResult = item.score;
                 //}
               }
               // else if(item.hasRewive==1||item.hasRewive==4){
               //     reviewResult=item.score
               // }
-              var isTrue = reviewResult == 2 ? 0 : reviewResult == 0 ? 1 : 2
+              var isTrue = reviewResult == 2 ? 0 : reviewResult == 0 ? 1 : 2;
               resultJsonArray[index] = {
                 ...item,
                 isTrue: isTrue,
@@ -881,13 +882,13 @@ export default {
                     item.reviewList[0] &&
                     item.reviewList[0].studentAnswerReviewId) ||
                   null
-              }
+              };
             }
           }
-        })
+        });
         if (self.reviewVoice && self.blob) {
-          let fd = new FormData()
-          fd.append('file', self.reviewVoice)
+          let fd = new FormData();
+          fd.append("file", self.reviewVoice);
           self.$http
             .post(
               `/teacherApi/upload/uploadCommonFile/voice/homework/${self.subjectAbbreviation}`,
@@ -899,12 +900,12 @@ export default {
               }
             )
             .then(({ data }) => {
-              let reviewVoice = data.infos[0]
-              var str = {}
-              var i = 0
+              let reviewVoice = data.infos[0];
+              var str = {};
+              var i = 0;
               for (let key in self.blob) {
-                let fd = new FormData()
-                fd.append('file', self.blob[key])
+                let fd = new FormData();
+                fd.append("file", self.blob[key]);
                 self.$http
                   .post(
                     `/teacherApi/upload/uploadCommonFile/img/homework/${self.subjectAbbreviation}`,
@@ -916,40 +917,42 @@ export default {
                     }
                   )
                   .then(({ data }) => {
-                    let reviewFile = data.infos[0]
-                    str[key] = reviewFile
-                    i++
+                    let reviewFile = data.infos[0];
+                    str[key] = reviewFile;
+                    i++;
                     if (i == Object.keys(self.blob).length) {
-                      var strFiles = ''
+                      var strFiles = "";
                       if (
                         self.techerReviewList.length > 0 &&
                         self.techerReviewList[0].reviewFile
                       ) {
-                        var arr = self.techerReviewList[0].reviewFile.split(',')
+                        var arr = self.techerReviewList[0].reviewFile.split(
+                          ","
+                        );
                         arr.forEach((item, index) => {
                           if (str[index + 1] != undefined) {
-                            strFiles += str[index + 1] + ','
+                            strFiles += str[index + 1] + ",";
                           } else {
                             if (index == arr.length - 1) {
-                              strFiles += item
+                              strFiles += item;
                             } else {
-                              strFiles += item + ','
+                              strFiles += item + ",";
                             }
                           }
-                        })
+                        });
                       } else {
-                        var arr1 = self.fileList
+                        var arr1 = self.fileList;
                         arr1.forEach((item, index) => {
                           if (str[index + 1] != undefined) {
-                            strFiles += str[index + 1] + ','
+                            strFiles += str[index + 1] + ",";
                           } else {
                             if (index == arr1.length - 1) {
-                              strFiles += item.answerFileUrl
+                              strFiles += item.answerFileUrl;
                             } else {
-                              strFiles += item.answerFileUrl + ','
+                              strFiles += item.answerFileUrl + ",";
                             }
                           }
-                        })
+                        });
                       }
                       resultJsonArray.forEach((item, index) => {
                         if (
@@ -964,12 +967,12 @@ export default {
                                 item.reviewList[0] &&
                                 item.reviewList[0].studentAnswerReviewId) ||
                               null
-                          }
+                          };
                         }
-                      })
+                      });
 
                       self.$store
-                        .dispatch('marking/teacherAllReview', {
+                        .dispatch("marking/teacherAllReview", {
                           homeworkId: self.item.homeworkId,
                           ifDone: 1,
                           studentInfoId: self.student.studentInfoId,
@@ -977,17 +980,17 @@ export default {
                         })
                         .then(({ data }) => {
                           if (data.flag === 1) {
-                            self.$store.dispatch('marking/questionInfo')
+                            self.$store.dispatch("marking/questionInfo");
                             // 刷新试题详情数据
-                            self.$store.dispatch('marking/getQuestionList', {
+                            self.$store.dispatch("marking/getQuestionList", {
                               homeworkId: self.item.homeworkId,
                               studentInfoId: self.student.studentInfoId
-                            })
+                            });
 
-                            self.loading.close()
-                            self.visible = false
-                            self.isappeal = false
-                            self.blob = null
+                            self.loading.close();
+                            self.visible = false;
+                            self.isappeal = false;
+                            self.blob = null;
                             // 判断是否存在下个学生带批阅 ，有弹哥提示，1.返回列表，2.批阅下个学生
                             self.noRewiveStudentList.forEach((item, index) => {
                               if (
@@ -999,38 +1002,38 @@ export default {
                                   self.noRewiveStudentList.length - 1
                                 ) {
                                   self.nextStudentInfoId =
-                                    self.noRewiveStudentList[0].studentInfoId
+                                    self.noRewiveStudentList[0].studentInfoId;
                                 } else {
                                   self.nextStudentInfoId =
                                     self.noRewiveStudentList[
                                       index + 1
-                                    ].studentInfoId
+                                    ].studentInfoId;
                                 }
-                                self.noRewiveStudentList.splice(index, 1)
+                                self.noRewiveStudentList.splice(index, 1);
                               }
-                            })
+                            });
                             if (self.noRewiveStudentList.length > 0) {
                               // 打开下个学生模态框
-                              self.noReviewStudent = true
+                              self.noReviewStudent = true;
                             } else {
                               // 打开没有学生代批阅模态框
                               //  if(isScore==0){
                               // self.handleGoList()
                               // return
                               // }else{
-                              self.noStudent = true
+                              self.noStudent = true;
                               //}
                             }
                           }
-                        })
+                        });
                     }
                     //str += reviewFile + ','
-                  })
+                  });
               }
-            })
+            });
         } else if (self.reviewVoice) {
-          let fd = new FormData()
-          fd.append('file', self.reviewVoice)
+          let fd = new FormData();
+          fd.append("file", self.reviewVoice);
           self.$http
             .post(
               `/teacherApi/upload/uploadCommonFile/voice/homework/${self.subjectAbbreviation}`,
@@ -1042,7 +1045,7 @@ export default {
               }
             )
             .then(({ data }) => {
-              let reviewVoice = data.infos[0]
+              let reviewVoice = data.infos[0];
               resultJsonArray.forEach((item, index) => {
                 if (item.homeworkQuestionId === self.homeworkQuestionId) {
                   resultJsonArray[index] = {
@@ -1053,11 +1056,11 @@ export default {
                         item.reviewList[0] &&
                         item.reviewList[0].studentAnswerReviewId) ||
                       null
-                  }
+                  };
                 }
-              })
+              });
               self.$store
-                .dispatch('marking/teacherAllReview', {
+                .dispatch("marking/teacherAllReview", {
                   homeworkId: self.item.homeworkId,
                   ifDone: 1,
                   studentInfoId: self.student.studentInfoId,
@@ -1065,50 +1068,50 @@ export default {
                 })
                 .then(({ data }) => {
                   if (data.flag === 1) {
-                    self.$store.dispatch('marking/questionInfo')
+                    self.$store.dispatch("marking/questionInfo");
                     // 刷新试题详情数据
-                    self.$store.dispatch('marking/getQuestionList', {
+                    self.$store.dispatch("marking/getQuestionList", {
                       homeworkId: self.item.homeworkId,
                       studentInfoId: self.student.studentInfoId
-                    })
-                    self.visible = false
-                    self.isappeal = false
-                    self.loading.close()
+                    });
+                    self.visible = false;
+                    self.isappeal = false;
+                    self.loading.close();
 
                     // 判断是否存在下个学生带批阅 ，有弹哥提示，1.返回列表，2.批阅下个学生
                     self.noRewiveStudentList.forEach((item, index) => {
                       if (item.studentInfoId === self.student.studentInfoId) {
                         if (index === self.noRewiveStudentList.length - 1) {
                           self.nextStudentInfoId =
-                            self.noRewiveStudentList[0].studentInfoId
+                            self.noRewiveStudentList[0].studentInfoId;
                         } else {
                           self.nextStudentInfoId =
-                            self.noRewiveStudentList[index + 1].studentInfoId
+                            self.noRewiveStudentList[index + 1].studentInfoId;
                         }
-                        self.noRewiveStudentList.splice(index, 1)
+                        self.noRewiveStudentList.splice(index, 1);
                       }
-                    })
+                    });
                     if (self.noRewiveStudentList.length > 0) {
                       // 打开下个学生模态框
-                      self.noReviewStudent = true
+                      self.noReviewStudent = true;
                     } else {
                       // 打开没有学生代批阅模态框
                       // if(isScore==0){
                       // self.handleGoList()
                       // return
                       // }else{
-                      self.noStudent = true
+                      self.noStudent = true;
                       // }
                     }
                   }
-                })
-            })
+                });
+            });
         } else if (self.blob) {
-          var str = {}
-          var i = 0
+          var str = {};
+          var i = 0;
           for (let key in self.blob) {
-            let fd = new FormData()
-            fd.append('file', self.blob[key])
+            let fd = new FormData();
+            fd.append("file", self.blob[key]);
             self.$http
               .post(
                 `/teacherApi/upload/uploadCommonFile/img/homework/${self.subjectAbbreviation}`,
@@ -1120,40 +1123,40 @@ export default {
                 }
               )
               .then(({ data }) => {
-                let reviewFile = data.infos[0]
-                str[key] = reviewFile
-                i++
+                let reviewFile = data.infos[0];
+                str[key] = reviewFile;
+                i++;
                 if (i == Object.keys(self.blob).length) {
-                  var strFiles = ''
+                  var strFiles = "";
                   if (
                     self.techerReviewList.length > 0 &&
                     self.techerReviewList[0].reviewFile
                   ) {
-                    var arr = self.techerReviewList[0].reviewFile.split(',')
+                    var arr = self.techerReviewList[0].reviewFile.split(",");
                     arr.forEach((item, index) => {
                       if (str[index + 1] != undefined) {
-                        strFiles += str[index + 1] + ','
+                        strFiles += str[index + 1] + ",";
                       } else {
                         if (index == arr.length - 1) {
-                          strFiles += item
+                          strFiles += item;
                         } else {
-                          strFiles += item + ','
+                          strFiles += item + ",";
                         }
                       }
-                    })
+                    });
                   } else {
-                    var arr1 = self.fileList
+                    var arr1 = self.fileList;
                     arr1.forEach((item, index) => {
                       if (str[index + 1] != undefined) {
-                        strFiles += str[index + 1] + ','
+                        strFiles += str[index + 1] + ",";
                       } else {
                         if (index == arr1.length - 1) {
-                          strFiles += item.answerFileUrl
+                          strFiles += item.answerFileUrl;
                         } else {
-                          strFiles += item.answerFileUrl + ','
+                          strFiles += item.answerFileUrl + ",";
                         }
                       }
-                    })
+                    });
                   }
                   resultJsonArray.forEach((item, index) => {
                     if (item.homeworkQuestionId === self.homeworkQuestionId) {
@@ -1166,12 +1169,12 @@ export default {
                             item.reviewList[0] &&
                             item.reviewList[0].studentAnswerReviewId) ||
                           null
-                      }
+                      };
                     }
-                  })
+                  });
 
                   self.$store
-                    .dispatch('marking/teacherAllReview', {
+                    .dispatch("marking/teacherAllReview", {
                       homeworkId: self.item.homeworkId,
                       ifDone: 1,
                       studentInfoId: self.student.studentInfoId,
@@ -1179,16 +1182,16 @@ export default {
                     })
                     .then(({ data }) => {
                       if (data.flag === 1) {
-                        self.$store.dispatch('marking/questionInfo')
+                        self.$store.dispatch("marking/questionInfo");
                         // 刷新试题详情数据
-                        self.$store.dispatch('marking/getQuestionList', {
+                        self.$store.dispatch("marking/getQuestionList", {
                           homeworkId: self.item.homeworkId,
                           studentInfoId: self.student.studentInfoId
-                        })
-                        self.visible = false
-                        self.isappeal = false
-                        self.blob = null
-                        self.loading.close()
+                        });
+                        self.visible = false;
+                        self.isappeal = false;
+                        self.blob = null;
+                        self.loading.close();
 
                         // 判断是否存在下个学生带批阅 ，有弹哥提示，1.返回列表，2.批阅下个学生
                         self.noRewiveStudentList.forEach((item, index) => {
@@ -1197,36 +1200,36 @@ export default {
                           ) {
                             if (index === self.noRewiveStudentList.length - 1) {
                               self.nextStudentInfoId =
-                                self.noRewiveStudentList[0].studentInfoId
+                                self.noRewiveStudentList[0].studentInfoId;
                             } else {
                               self.nextStudentInfoId =
                                 self.noRewiveStudentList[
                                   index + 1
-                                ].studentInfoId
+                                ].studentInfoId;
                             }
-                            self.noRewiveStudentList.splice(index, 1)
+                            self.noRewiveStudentList.splice(index, 1);
                           }
-                        })
+                        });
                         if (self.noRewiveStudentList.length > 0) {
                           // 打开下个学生模态框
-                          self.noReviewStudent = true
+                          self.noReviewStudent = true;
                         } else {
                           // 打开没有学生代批阅模态框
                           // if(isScore==0){
                           //    self.handleGoList()
                           //    return
                           //   }else{
-                          self.noStudent = true
+                          self.noStudent = true;
                           //}
                         }
                       }
-                    })
+                    });
                 }
-              })
+              });
           }
         } else {
           self.$store
-            .dispatch('marking/teacherAllReview', {
+            .dispatch("marking/teacherAllReview", {
               homeworkId: self.item.homeworkId,
               ifDone: 1,
               studentInfoId: self.student.studentInfoId,
@@ -1234,51 +1237,51 @@ export default {
             })
             .then(({ data }) => {
               if (data.flag === 1) {
-                self.$store.dispatch('marking/questionInfo')
+                self.$store.dispatch("marking/questionInfo");
                 // 刷新试题详情数据
-                self.$store.dispatch('marking/getQuestionList', {
+                self.$store.dispatch("marking/getQuestionList", {
                   homeworkId: self.item.homeworkId,
                   studentInfoId: self.student.studentInfoId
-                })
-                self.visible = false
-                self.isappeal = false
-                self.loading.close()
+                });
+                self.visible = false;
+                self.isappeal = false;
+                self.loading.close();
                 // 判断是否存在下个学生带批阅 ，有弹哥提示，1.返回列表，2.批阅下个学生
                 self.noRewiveStudentList.forEach((item, index) => {
                   if (item.studentInfoId === self.student.studentInfoId) {
                     if (index === self.noRewiveStudentList.length - 1) {
                       self.nextStudentInfoId =
-                        self.noRewiveStudentList[0].studentInfoId
+                        self.noRewiveStudentList[0].studentInfoId;
                     } else {
                       self.nextStudentInfoId =
-                        self.noRewiveStudentList[index + 1].studentInfoId
+                        self.noRewiveStudentList[index + 1].studentInfoId;
                     }
-                    self.noRewiveStudentList.splice(index, 1)
+                    self.noRewiveStudentList.splice(index, 1);
                   }
-                })
+                });
                 if (self.noRewiveStudentList.length > 0) {
                   // 打开下个学生模态框
-                  self.noReviewStudent = true
+                  self.noReviewStudent = true;
                 } else {
                   // 打开没有学生代批阅模态框
                   //  if(isScore==0){
                   //     self.handleGoList()
                   //     return
                   //     }else{
-                  self.noStudent = true
+                  self.noStudent = true;
                   // }
                 }
               }
-            })
+            });
         }
-      })
+      });
     },
     hanldeReadOverOne(value) {
       // 判断英语学科
       // 是否最后一题
-      var self = this
+      var self = this;
       setTimeout(function() {
-        let ifLast = 0
+        let ifLast = 0;
         if (self.count === 1) {
           self.subjectivelist.forEach(item => {
             if (item.homeworkQuestionId === self.homeworkQuestionId) {
@@ -1286,14 +1289,14 @@ export default {
                 item.hasRewive === 0 ||
                 (item.hasRewive === 2 && item.questionIsappeal === 1)
               ) {
-                ifLast = 1
+                ifLast = 1;
               }
             }
-          })
+          });
         } else if (self.count > 1) {
-          ifLast = 0
+          ifLast = 0;
         } else {
-          ifLast = 1
+          ifLast = 1;
         }
         //批阅集合
         let reviewList =
@@ -1301,39 +1304,39 @@ export default {
             self.questionInfo.reviewList.filter(
               item => item.reviewUserType === 2
             )) ||
-          []
+          [];
         // 是否答对
-        let isTrue
-        var isD = false
+        let isTrue;
+        var isD = false;
         // let answerContent
         //英语
-        if (value != undefined && self.subjectAbbreviation === 'yingyu') {
+        if (value != undefined && self.subjectAbbreviation === "yingyu") {
           // 英语
-          isTrue = value == Number(self.questionInfo.questionScore) ? 0 : 1
-        } else if (value != undefined && self.subjectAbbreviation != 'yingyu') {
+          isTrue = value == Number(self.questionInfo.questionScore) ? 0 : 1;
+        } else if (value != undefined && self.subjectAbbreviation != "yingyu") {
           // 非英语
-          isTrue = value == 2 ? 0 : value == 0 ? 1 : 2
+          isTrue = value == 2 ? 0 : value == 0 ? 1 : 2;
         } else {
-          isD = true
-          self.isDialog = true
-          value = self.questionInfo.score
-          if (self.subjectAbbreviation === 'yingyu') {
-            isTrue = value == Number(self.questionInfo.questionScore) ? 0 : 1
+          isD = true;
+          self.isDialog = true;
+          value = self.questionInfo.score;
+          if (self.subjectAbbreviation === "yingyu") {
+            isTrue = value == Number(self.questionInfo.questionScore) ? 0 : 1;
           } else {
-            isTrue = value == 2 ? 0 : value == 0 ? 1 : 2
+            isTrue = value == 2 ? 0 : value == 0 ? 1 : 2;
           }
         }
         self.loading = self.$loading({
           lock: true,
-          text: '批阅中...',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)',
-          fontSize: '14px',
+          text: "批阅中...",
+          spinner: "el-icon-loading",
+          background: "rgba(0, 0, 0, 0.7)",
+          fontSize: "14px",
           zIndex: 99999999
-        })
+        });
         if (self.reviewVoice && self.blob) {
-          let fd = new FormData()
-          fd.append('file', self.reviewVoice)
+          let fd = new FormData();
+          fd.append("file", self.reviewVoice);
           self.$http
             .post(
               `/teacherApi/upload/uploadCommonFile/voice/homework/${self.subjectAbbreviation}`,
@@ -1345,12 +1348,12 @@ export default {
               }
             )
             .then(({ data }) => {
-              var str = {}
-              var i = 0
-              let reviewVoice = data.infos[0]
+              var str = {};
+              var i = 0;
+              let reviewVoice = data.infos[0];
               for (let key in self.blob) {
-                let fd = new FormData()
-                fd.append('file', self.blob[key])
+                let fd = new FormData();
+                fd.append("file", self.blob[key]);
                 self.$http
                   .post(
                     `/teacherApi/upload/uploadCommonFile/img/homework/${self.subjectAbbreviation}`,
@@ -1362,40 +1365,42 @@ export default {
                     }
                   )
                   .then(({ data }) => {
-                    let reviewFile = data.infos[0]
-                    str[key] = reviewFile
-                    var strFiles = ''
-                    i++
+                    let reviewFile = data.infos[0];
+                    str[key] = reviewFile;
+                    var strFiles = "";
+                    i++;
                     if (i == Object.keys(self.blob).length) {
                       if (
                         self.techerReviewList.length > 0 &&
                         self.techerReviewList[0].reviewFile
                       ) {
-                        var arr = self.techerReviewList[0].reviewFile.split(',')
+                        var arr = self.techerReviewList[0].reviewFile.split(
+                          ","
+                        );
                         arr.forEach((item, index) => {
                           if (str[index + 1] != undefined) {
-                            strFiles += str[index + 1] + ','
+                            strFiles += str[index + 1] + ",";
                           } else {
                             if (index == arr.length - 1) {
-                              strFiles += item
+                              strFiles += item;
                             } else {
-                              strFiles += item + ','
+                              strFiles += item + ",";
                             }
                           }
-                        })
+                        });
                       } else {
-                        var arr1 = self.fileList
+                        var arr1 = self.fileList;
                         arr1.forEach((item, index) => {
                           if (str[index + 1] != undefined) {
-                            strFiles += str[index + 1] + ','
+                            strFiles += str[index + 1] + ",";
                           } else {
                             if (index == arr1.length - 1) {
-                              strFiles += item.answerFileUrl
+                              strFiles += item.answerFileUrl;
                             } else {
-                              strFiles += item.answerFileUrl + ','
+                              strFiles += item.answerFileUrl + ",";
                             }
                           }
-                        })
+                        });
                       }
                       // 批阅结果数组json
                       let resultJsonArray = [
@@ -1413,16 +1418,16 @@ export default {
                               reviewList[0].studentAnswerReviewId) ||
                             null
                         }
-                      ]
+                      ];
 
-                      self.teacherAllReview(resultJsonArray, isD)
+                      self.teacherAllReview(resultJsonArray, isD);
                     }
-                  })
+                  });
               }
-            })
+            });
         } else if (self.reviewVoice) {
-          let fd = new FormData()
-          fd.append('file', self.reviewVoice)
+          let fd = new FormData();
+          fd.append("file", self.reviewVoice);
           self.$http
             .post(
               `/teacherApi/upload/uploadCommonFile/voice/homework/${self.subjectAbbreviation}`,
@@ -1434,7 +1439,7 @@ export default {
               }
             )
             .then(({ data }) => {
-              let reviewVoice = data.infos[0]
+              let reviewVoice = data.infos[0];
               // 批阅结果数组json
               let resultJsonArray = [
                 {
@@ -1451,16 +1456,16 @@ export default {
                       reviewList[0].studentAnswerReviewId) ||
                     null
                 }
-              ]
+              ];
 
-              self.teacherAllReview(resultJsonArray, isD)
-            })
+              self.teacherAllReview(resultJsonArray, isD);
+            });
         } else if (self.blob) {
-          var str = {}
-          var i = 0
+          var str = {};
+          var i = 0;
           for (let key in self.blob) {
-            let fd = new FormData()
-            fd.append('file', self.blob[key])
+            let fd = new FormData();
+            fd.append("file", self.blob[key]);
             self.$http
               .post(
                 `/teacherApi/upload/uploadCommonFile/img/homework/${self.subjectAbbreviation}`,
@@ -1472,40 +1477,40 @@ export default {
                 }
               )
               .then(({ data }) => {
-                let reviewFile = data.infos[0]
-                str[key] = reviewFile
-                var strFiles = ''
-                i++
+                let reviewFile = data.infos[0];
+                str[key] = reviewFile;
+                var strFiles = "";
+                i++;
                 if (i == Object.keys(self.blob).length) {
                   if (
                     self.techerReviewList.length > 0 &&
                     self.techerReviewList[0].reviewFile
                   ) {
-                    var arr = self.techerReviewList[0].reviewFile.split(',')
+                    var arr = self.techerReviewList[0].reviewFile.split(",");
                     arr.forEach((item, index) => {
                       if (str[index + 1] != undefined) {
-                        strFiles += str[index + 1] + ','
+                        strFiles += str[index + 1] + ",";
                       } else {
                         if (index == arr.length - 1) {
-                          strFiles += item
+                          strFiles += item;
                         } else {
-                          strFiles += item + ','
+                          strFiles += item + ",";
                         }
                       }
-                    })
+                    });
                   } else {
-                    var arr1 = self.fileList
+                    var arr1 = self.fileList;
                     arr1.forEach((item, index) => {
                       if (str[index + 1] != undefined) {
-                        strFiles += str[index + 1] + ','
+                        strFiles += str[index + 1] + ",";
                       } else {
                         if (index == arr1.length - 1) {
-                          strFiles += item.answerFileUrl
+                          strFiles += item.answerFileUrl;
                         } else {
-                          strFiles += item.answerFileUrl + ','
+                          strFiles += item.answerFileUrl + ",";
                         }
                       }
-                    })
+                    });
                   }
                   // 批阅结果数组json
                   let resultJsonArray = [
@@ -1523,12 +1528,12 @@ export default {
                           reviewList[0].studentAnswerReviewId) ||
                         null
                     }
-                  ]
+                  ];
 
-                  self.teacherAllReview(resultJsonArray, isD)
-                  self.blob = null
+                  self.teacherAllReview(resultJsonArray, isD);
+                  self.blob = null;
                 }
-              })
+              });
           }
         } else {
           // 批阅结果数组json
@@ -1547,40 +1552,40 @@ export default {
                   reviewList[0].studentAnswerReviewId) ||
                 null
             }
-          ]
+          ];
 
-          self.teacherAllReview(resultJsonArray, isD)
+          self.teacherAllReview(resultJsonArray, isD);
         }
-      })
+      });
     },
     computedNextHomeworkQuestionId() {
       // 计算下个试题ID、下个学生ID
-      this.nextHomeworkQuestionId = null
+      this.nextHomeworkQuestionId = null;
 
-      let currentIndex = null
+      let currentIndex = null;
       this.noRewiveList.forEach((item, index) => {
         if (item.homeworkQuestionId === this.homeworkQuestionId) {
-          currentIndex = index
+          currentIndex = index;
         }
-      })
+      });
 
       if (currentIndex === null) {
         this.nextHomeworkQuestionId =
-          this.noRewiveList[0] && this.noRewiveList[0].homeworkQuestionId
+          this.noRewiveList[0] && this.noRewiveList[0].homeworkQuestionId;
       } else {
         if (currentIndex === this.noRewiveList.length - 1) {
-          this.nextHomeworkQuestionId = this.noRewiveList[0].homeworkQuestionId
+          this.nextHomeworkQuestionId = this.noRewiveList[0].homeworkQuestionId;
         } else {
           this.nextHomeworkQuestionId = this.noRewiveList[
             currentIndex + 1
-          ].homeworkQuestionId
+          ].homeworkQuestionId;
         }
       }
     },
     teacherAllReview(resultJsonArray, isD) {
-      var self = this
+      var self = this;
       self.$store
-        .dispatch('marking/teacherAllReview', {
+        .dispatch("marking/teacherAllReview", {
           ifDone: 0,
           homeworkId: self.item.homeworkId,
           studentInfoId: self.student.studentInfoId,
@@ -1588,21 +1593,21 @@ export default {
         })
         .then(({ data }) => {
           if (data.flag === 1) {
-            self.loading.close()
-            self.blob = null
+            self.loading.close();
+            self.blob = null;
             if (isD) {
-              self.handleGoList()
-              return
+              self.handleGoList();
+              return;
             }
             if (self.rewiveType) {
-              self.isDialog = false
+              self.isDialog = false;
             }
             // 计算下个试题I
-            self.computedNextHomeworkQuestionId()
-            self.$store.dispatch('marking/questionInfo')
+            self.computedNextHomeworkQuestionId();
+            self.$store.dispatch("marking/questionInfo");
             // 刷新试题详情数据
             self.$store
-              .dispatch('marking/getQuestionList', {
+              .dispatch("marking/getQuestionList", {
                 homeworkId: self.item.homeworkId,
                 studentInfoId: self.student.studentInfoId
               })
@@ -1613,102 +1618,102 @@ export default {
                     if (item.studentInfoId === self.student.studentInfoId) {
                       if (index === self.noRewiveStudentList.length - 1) {
                         self.nextStudentInfoId =
-                          self.noRewiveStudentList[0].studentInfoId
+                          self.noRewiveStudentList[0].studentInfoId;
                       } else {
                         self.nextStudentInfoId =
-                          self.noRewiveStudentList[index + 1].studentInfoId
+                          self.noRewiveStudentList[index + 1].studentInfoId;
                       }
 
-                      self.noRewiveStudentList.splice(index, 1)
+                      self.noRewiveStudentList.splice(index, 1);
                     }
-                  })
+                  });
                   if (self.noRewiveStudentList.length > 0 && self.isDialog) {
-                    self.isDialog = false
+                    self.isDialog = false;
                     // 打开下个学生模态框
-                    self.noReviewStudent = true
+                    self.noReviewStudent = true;
                   } else if (self.isDialog) {
-                    self.isDialog = false
-                    self.noStudent = true
+                    self.isDialog = false;
+                    self.noStudent = true;
                   }
                 } else {
-                  self.computedNextQuestion()
+                  self.computedNextQuestion();
                 }
-              })
+              });
           }
-        })
+        });
     },
     computedNextQuestion() {
-      var self = this
+      var self = this;
       self.$store.commit(
-        'marking/UPDATEHOMEWORKQUESTIONID',
+        "marking/UPDATEHOMEWORKQUESTIONID",
         self.nextHomeworkQuestionId
-      )
+      );
       // 获取对应试题ID的作业详情
-      self.$store.dispatch('marking/questionInfo')
+      self.$store.dispatch("marking/questionInfo");
 
-      self.$store.dispatch('marking/getQuestionList', {
+      self.$store.dispatch("marking/getQuestionList", {
         homeworkId: self.item.homeworkId,
         studentInfoId: self.student.studentInfoId
-      })
+      });
     },
     nextStudent() {
-      this.isDialog = true
+      this.isDialog = true;
       //  关闭下个学生模态框
-      this.noReviewStudent = false
+      this.noReviewStudent = false;
 
-      let studentName
+      let studentName;
       this.studentList.forEach(item => {
         if (item.studentInfoId === this.nextStudentInfoId) {
-          studentName = item.studentName
+          studentName = item.studentName;
         }
-      })
-      this.$store.commit('marking/STUDENTNAME', studentName)
-      this.isShowNextStudent = false
+      });
+      this.$store.commit("marking/STUDENTNAME", studentName);
+      this.isShowNextStudent = false;
       // 初始化下个学生的信息
       this.$store
-        .dispatch('marking/getQuestionList', {
+        .dispatch("marking/getQuestionList", {
           homeworkId: this.item.homeworkId,
           studentInfoId: this.nextStudentInfoId
         })
         .then(data => {
           if (data.flag === 1) {
             // 批阅试题列表
-            let list = data.infos.homeworkQuestionList
-            this.$store.commit('marking/STUDENTINFOID', this.nextStudentInfoId)
+            let list = data.infos.homeworkQuestionList;
+            this.$store.commit("marking/STUDENTINFOID", this.nextStudentInfoId);
             // 主观题列表
-            let subjectivelist = list.filter(item => item.questionType === 1)
+            let subjectivelist = list.filter(item => item.questionType === 1);
             // 客观题列表
-            let objectiveslist = list.filter(item => item.questionType === 2)
+            let objectiveslist = list.filter(item => item.questionType === 2);
             // 设置列表中默认的作业试题ID
             let homeworkQuestionId = subjectivelist[0]
               ? subjectivelist[0].homeworkQuestionId
-              : objectiveslist[0].homeworkQuestionId
+              : objectiveslist[0].homeworkQuestionId;
 
             this.$store.commit(
-              'marking/UPDATEHOMEWORKQUESTIONID',
+              "marking/UPDATEHOMEWORKQUESTIONID",
               homeworkQuestionId
-            )
+            );
             // 获取对应试题ID的作业详情
-            this.$store.dispatch('marking/questionInfo')
+            this.$store.dispatch("marking/questionInfo");
 
             // 更改this.student
             this.studentList.forEach(item => {
               if (item.studentInfoId === this.nextStudentInfoId) {
-                localforage.setItem('student', item).then(student => {
-                  this.student = student
-                })
+                localforage.setItem("student", item).then(student => {
+                  this.student = student;
+                });
               }
-            })
+            });
           }
-        })
+        });
     },
     // 显示收藏框
     handleCollect() {
-      this.isShowCollect = true
+      this.isShowCollect = true;
     },
     handleCancleCollect() {
       this.$http
-        .get('/api/collection/teacher/delCollection', {
+        .get("/api/collection/teacher/delCollection", {
           params: {
             teacherQuestionCollectionId: this.questionInfo
               .teacherQuestionCollectonId
@@ -1716,26 +1721,26 @@ export default {
         })
         .then(({ data }) => {
           if (data.flag === 1) {
-            this.$message.success('取消收藏成功')
-            this.$store.dispatch('marking/questionInfo')
+            this.$message.success("取消收藏成功");
+            this.$store.dispatch("marking/questionInfo");
           } else {
-            this.$message.error('取消收藏失败')
+            this.$message.error("取消收藏失败");
           }
-        })
+        });
     },
     handleLeft() {
-      var self = this
+      var self = this;
       setTimeout(function() {
-        if (self.picIndex === 1) return
-        self.picIndex -= 1
-      })
+        if (self.picIndex === 1) return;
+        self.picIndex -= 1;
+      });
     },
     handleRight(maxLength) {
-      var self = this
+      var self = this;
       setTimeout(function() {
-        if (self.picIndex === maxLength) return
-        self.picIndex += 1
-      })
+        if (self.picIndex === maxLength) return;
+        self.picIndex += 1;
+      });
     }
   },
   mounted() {
@@ -1748,47 +1753,47 @@ export default {
     //   })
     // })
     // 判断是否重批
-    localforage.getItem('item').then(item => {
-      localforage.getItem('list').then(list => {
-        localforage.getItem('student').then(student => {
-          this.item = item
-          this.studentList = list
-          this.student = student
+    localforage.getItem("item").then(item => {
+      localforage.getItem("list").then(list => {
+        localforage.getItem("student").then(student => {
+          this.item = item;
+          this.studentList = list;
+          this.student = student;
           this.rewiveType =
             this.student.reviewType === 1 ||
             this.student.reviewType === 4 ||
-            (this.student.reviewType === 2 && this.count === 0)
+            (this.student.reviewType === 2 && this.count === 0);
 
           // 待批阅学生列表
-          let result
+          let result;
           if (this.student.reviewType === 0) {
             result = this.studentList.filter(
               item =>
                 item.reviewType === this.student.reviewType &&
                 item.reviewType === 0 &&
                 item.submitType === 3
-            )
+            );
           } else {
             result = this.studentList.filter(
               item =>
                 item.homeworkIsappeal === this.student.homeworkIsappeal &&
                 item.homeworkIsappeal === 1 &&
                 item.submitType === 3
-            )
+            );
           }
-          this.noRewiveStudentList = result
-        })
-      })
-    })
+          this.noRewiveStudentList = result;
+        });
+      });
+    });
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .share {
   position: absolute;
-  right: 2%;
-  top: 10%;
+  right: 0%;
+  top: 6%;
   z-index: 999;
   color: #999;
   padding: 6px 20px;
