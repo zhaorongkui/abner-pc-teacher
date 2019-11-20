@@ -30,9 +30,9 @@
         </li>
       </ul>
       <div class="answers-mark">
-      <button>正确答案</button>
-      <button>错误答案</button>
-    </div>
+        <button>正确答案</button>
+        <button>错误答案</button>
+      </div>
     </div>
     <div class="student-answers">
       <h3>学生答案</h3>
@@ -154,7 +154,7 @@ export default {
         background: rgba(240, 240, 240, 1);
         border-radius: 5px;
         margin-bottom: 8px;
-        padding: 0 10px;
+        padding: 0 10px 10px 10px;
         line-height: 50px;
         font-size: 16px;
         // display: flex;
