@@ -78,12 +78,12 @@
 <script>
 // 主观题评分
 export default {
-  name: 'SubjectiveReadOver',
+  name: "SubjectiveReadOver",
   props: {
     fileList: {
       type: Array,
       default() {
-        return []
+        return [];
       }
     },
     value: {
@@ -93,9 +93,9 @@ export default {
   },
   methods: {
     hanldeReadOverOne(val) {
-      this.$emit('input', val)
-      this.$emit('on-change', val)
+      this.$emit("input", val);
+      this.$emit("on-change", val);
     }
   }
-}
+};
 </script>

@@ -2,7 +2,7 @@
   <div class="answer">
     <div class="answer-true">
       <h3>参考答案</h3>
-      <div>{{ questionInfo.questionAnswer === 'Y' ? '正确' : '错误' }}</div>
+      <div>{{ questionInfo.questionAnswer === "Y" ? "正确" : "错误" }}</div>
     </div>
     <div class="answer-false">
       <h3>学生答案</h3>
@@ -13,7 +13,7 @@
             : 'wrong'
         "
       >
-        {{ questionInfo.answerContent === 'Y' ? '正确' : '错误' }}
+        {{ questionInfo.answerContent === "Y" ? "正确" : "错误" }}
       </div>
     </div>
     <div class="answer-result">
@@ -33,13 +33,13 @@
 
 <script>
 export default {
-  name: '',
+  name: "",
   components: {},
-  props: ['questionInfo'],
+  props: ["questionInfo"],
   data() {
-    return {}
+    return {};
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

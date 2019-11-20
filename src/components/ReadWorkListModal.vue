@@ -50,18 +50,18 @@
 
 <script>
 // 已选作业列表弹框
-import LookOriginal from './LookOriginal'
-import ReadListCard from './ReadListCard'
-import ClassifyDialog from '../views/publish-work/components/componentsOfChild/ClassifyDialog'
-import NoWorkBookPageInfo from './NoWorkBookPageInfo'
+import LookOriginal from "./LookOriginal";
+import ReadListCard from "./ReadListCard";
+import ClassifyDialog from "../views/publish-work/components/componentsOfChild/ClassifyDialog";
+import NoWorkBookPageInfo from "./NoWorkBookPageInfo";
 export default {
-  name: 'ReadWorkListModal',
+  name: "ReadWorkListModal",
   computed: {
     workList() {
-      return this.$store.getters['work/readWorkList']
+      return this.$store.getters["work/readWorkList"];
     },
     workListById() {
-      return this.$store.getters['work/readWorkListById']
+      return this.$store.getters["work/readWorkListById"];
     }
   },
   components: {
@@ -77,100 +77,100 @@ export default {
       CollectionInfos: null,
       collectonGroupId: 0,
       temporaryWorkListById: []
-    }
+    };
   },
   watch: {
     visible(curVal, oldVal) {
       if (curVal) {
-        this.temporaryWorkListById = []
+        this.temporaryWorkListById = [];
       } else {
-        this.temporaryWorkListById.forEach(this.remove)
+        this.temporaryWorkListById.forEach(this.remove);
       }
     }
   },
   methods: {
     getId(id) {
-      this.collectonGroupId = id
+      this.collectonGroupId = id;
     },
     addFavorites(data) {
       if (data.teacherQuestionCollectonId) {
-        this.deleteCollection(data)
+        this.deleteCollection(data);
       } else {
-        this.showDialog = true
-        this.CollectionInfos = data
+        this.showDialog = true;
+        this.CollectionInfos = data;
       }
     },
     deleteCollection(data) {
       let params = {
         teacherQuestionCollectionId: data.teacherQuestionCollectonId
-      }
-      this.$http('/api/collection/teacher/delCollection', { params })
+      };
+      this.$http("/api/collection/teacher/delCollection", { params })
         .then(res => {
           if (res.data.flag === 1) {
             let obj = {
               collectonId: null,
               findId: data.questionId
-            }
-            this.setWorlCollecton(obj)
-            this.$message.success('取消收藏成功')
+            };
+            this.setWorlCollecton(obj);
+            this.$message.success("取消收藏成功");
           }
         })
         .catch(err => {
-          console.error(err)
-        })
+          console.error(err);
+        });
     },
     addCollectStore() {
-      ;(this.CollectionInfos.collectonGroupId = this.collectonGroupId),
+      (this.CollectionInfos.collectonGroupId = this.collectonGroupId),
         this.$store
-          .dispatch('publish/addStore', this.CollectionInfos)
+          .dispatch("publish/addStore", this.CollectionInfos)
           .then(data => {
             if (data.flag === 1) {
-              this.showDialog = false
+              this.showDialog = false;
               let obj = {
                 collectonId: data.infos,
                 findId: this.CollectionInfos.questionId
-              }
-              this.setWorlCollecton(obj)
-              this.CollectionInfos = null
-              this.$message.success('收藏成功')
+              };
+              this.setWorlCollecton(obj);
+              this.CollectionInfos = null;
+              this.$message.success("收藏成功");
             } else {
-              this.$message.error('收藏失败')
+              this.$message.error("收藏失败");
             }
-          })
+          });
     },
     remove(id) {
-      let workListById = this.workListById
-      let workList = this.workList
+      let workListById = this.workListById;
+      let workList = this.workList;
       workList = workList.filter(item => {
-        return item.questionId !== id
-      })
+        return item.questionId !== id;
+      });
       workListById = workListById.filter(item => {
-        return item !== id
-      })
-      this.$store.commit('work/SETREADWORKLIST', workList)
-      this.$store.commit('work/SETREADWORKLISTBYID', workListById)
+        return item !== id;
+      });
+      this.$store.commit("work/SETREADWORKLIST", workList);
+      this.$store.commit("work/SETREADWORKLISTBYID", workListById);
     },
     setWorlCollecton(obj) {
-      this.$store.commit('work/SET_TECHER_QUESTION_COLLECTONID', obj)
+      this.$store.commit("work/SET_TECHER_QUESTION_COLLECTONID", obj);
     },
     addWork(data) {
-      let workListById = this.workListById
-      let workList = this.workList
+      let workListById = this.workListById;
+      let workList = this.workList;
       if (this.temporaryWorkListById.includes(data.questionId)) {
         this.temporaryWorkListById = this.temporaryWorkListById.filter(item => {
-          return item !== data.questionId
-        })
+          return item !== data.questionId;
+        });
         // this.$message.success('加入成功')
       } else {
-        this.temporaryWorkListById.push(data.questionId)
+        this.temporaryWorkListById.push(data.questionId);
         // this.$message.success('移出作业')
       }
     },
     lookOriginal(obj) {
-      console.log('查看原题', obj)
-      this.$refs['original'].id = obj.questionId
-      this.$refs['original'].visible = true
+      console.log("查看原题", obj);
+      this.$refs["original"].id = obj.questionId;
+      this.$refs["original"].visible = true;
     }
   }
-}
+};
 </script>
