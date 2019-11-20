@@ -86,12 +86,16 @@
     <ReadPeerGrading :questionInfo="questionInfo"></ReadPeerGrading>
 
     <div class="canvas">
-        <div class="share" @click="share()">
-          <img src="../../assets/img/shareNormal.png" alt="" v-if="ifShare===0"/>
-          <img src="../../assets/img/shareOut.png" alt=""  v-if="ifShare===1"/>
-          <span  v-if="ifShare===0">分享全班</span>
-          <span class="hover-span"  v-if="ifShare===1">分享全班</span>
-        </div>
+      <div class="share" @click="share()">
+        <img
+          src="../../assets/img/shareNormal.png"
+          alt=""
+          v-if="ifShare === 0"
+        />
+        <img src="../../assets/img/shareOut.png" alt="" v-if="ifShare === 1" />
+        <span v-if="ifShare === 0">分享全班</span>
+        <span class="hover-span" v-if="ifShare === 1">分享全班</span>
+      </div>
       <template
         v-if="techerReviewList.length > 0 && techerReviewList[0].reviewFileStr"
       >
@@ -107,7 +111,7 @@
             </li>
             <li>
               <span>{{ picIndex }}</span
-              >/{{ techerReviewList[0].reviewFileStr.split(',').length }}
+              >/{{ techerReviewList[0].reviewFileStr.split(",").length }}
             </li>
             <li
               @click="
@@ -151,10 +155,10 @@
 </template>
 <script>
 // 主观题
-import ReadPeerGrading from './ReadPeerGrading'
-import EditCanvas from '../../views/work-marking/components/EditCanvas'
+import ReadPeerGrading from "./ReadPeerGrading";
+import EditCanvas from "../../views/work-marking/components/EditCanvas";
 export default {
-  name: 'SubjectiveItem',
+  name: "SubjectiveItem",
   components: {
     ReadPeerGrading,
     EditCanvas
@@ -174,57 +178,57 @@ export default {
             item => item.reviewUserType === 2
           )) ||
         []
-      )
+      );
     },
     // 批阅的文件
     fileList() {
-      let result = []
+      let result = [];
       this.questionInfo.reviewList &&
         this.questionInfo.reviewList.forEach(item => {
           if (item.reviewUserType === 2 && item.reviewFileStr) {
-            result.push(item)
+            result.push(item);
           }
-        })
+        });
       if (result.length === 0) {
-        result = this.questionInfo.fileList || []
+        result = this.questionInfo.fileList || [];
       }
-      return result
-    },
+      return result;
+    }
   },
   data() {
     return {
       picIndex: 1,
       blob: null,
-      ifShare:0
-    }
+      ifShare: 0
+    };
   },
   watch: {
     questionInfo() {
-      this.picIndex = 1
-      this.blob = null
+      this.picIndex = 1;
+      this.blob = null;
     }
   },
   mounted() {
-    this.questionInfo.ifShare === 0 ? this.ifShare = 1 : this.ifShare = 0
+    this.questionInfo.ifShare === 0 ? (this.ifShare = 1) : (this.ifShare = 0);
   },
   methods: {
     handleImportImg(blob) {
-      this.blob = blob
+      this.blob = blob;
     },
     handleLeft() {
       setTimeout(() => {
-        if (this.picIndex === 1) return
-        this.picIndex -= 1
-      })
+        if (this.picIndex === 1) return;
+        this.picIndex -= 1;
+      });
     },
     handleRight(maxLength) {
       setTimeout(() => {
-        if (this.picIndex === maxLength) return
-        this.picIndex += 1
-      })
+        if (this.picIndex === maxLength) return;
+        this.picIndex += 1;
+      });
     },
     getFile() {
-      return this.blob
+      return this.blob;
     },
     share() {
       if (
@@ -233,31 +237,31 @@ export default {
         this.questionInfo.isTrue == 0
       ) {
         this.$http
-          .post('/api/teacher/homework/shareStudentAnswer', {
+          .post("/api/teacher/homework/shareStudentAnswer", {
             ifShare: this.ifShare,
             studentAnswerId: this.questionInfo.studentAnswerId
           })
           .then(({ data }) => {
             if (data.flag === 1) {
-              if (  this.ifShare == 0) {
-                this.$message.success('分享成功')
+              if (this.ifShare == 0) {
+                this.$message.success("分享成功");
               } else {
-                this.$message.success('取消分享成功')
+                this.$message.success("取消分享成功");
               }
-              this.$store.dispatch('marking/questionInfo')
+              this.$store.dispatch("marking/questionInfo");
               this.updateIfShare();
             }
           })
           .catch(error => {
-            console.log(error)
-          })
+            console.log(error);
+          });
       } else {
-        this.$message.error('正确答案才能分享全班哦～')
+        this.$message.error("正确答案才能分享全班哦～");
       }
     },
     updateIfShare() {
-      this.ifShare === 0 ? this.ifShare = 1 : this.ifShare = 0
+      this.ifShare === 0 ? (this.ifShare = 1) : (this.ifShare = 0);
     }
   }
-}
+};
 </script>

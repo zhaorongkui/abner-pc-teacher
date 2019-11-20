@@ -65,14 +65,14 @@ li.current .item-state {
   background: #ff6365;
 }
 .item-state-2 {
-  background-image: url('../assets/img/ic_right@2x.png');
+  background-image: url("../assets/img/ic_right@2x.png");
 }
 .item-state-3 {
   border: 1px solid #ff5235;
-  background-image: url('../assets/img/ic_wrong@2x.png');
+  background-image: url("../assets/img/ic_wrong@2x.png");
 }
 .item-state-4 {
-  background-image: url('../assets/img/ic_half@2x.png');
+  background-image: url("../assets/img/ic_half@2x.png");
 }
 .item-not {
   font-size: 12px;
@@ -133,12 +133,12 @@ li.current .item-state {
 <script>
 // 批阅作业左侧篇目作业列表
 export default {
-  name: 'SubtopicList',
+  name: "SubtopicList",
   props: {
     list: {
       type: Array,
       default() {
-        return []
+        return [];
       }
     },
     value: {
@@ -147,28 +147,28 @@ export default {
     }
   },
   data() {
-    return {}
+    return {};
   },
   watch: {
     value(newValue) {
-      console.log(newValue)
+      console.log(newValue);
     }
   },
   mounted() {},
   methods: {
     scrollIntoView() {
-      let dom = document.getElementById('item-' + this.value)
+      let dom = document.getElementById("item-" + this.value);
       if (dom) {
-        dom.scrollIntoView()
+        dom.scrollIntoView();
       }
     },
     currentItem({ item, child }) {
       if (this.value === child.id) {
-        return false
+        return false;
       }
-      this.$emit('input', child.id)
-      this.$emit('on-change', { item, child })
+      this.$emit("input", child.id);
+      this.$emit("on-change", { item, child });
     }
   }
-}
+};
 </script>

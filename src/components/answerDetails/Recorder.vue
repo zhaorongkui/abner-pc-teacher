@@ -51,10 +51,10 @@
 </template>
 
 <script>
-import { MediaStreamRecorder } from '@/util/MediaStreamRecorder.js'
+import { MediaStreamRecorder } from "@/util/MediaStreamRecorder.js";
 // 录音
 export default {
-  name: 'Recorder',
+  name: "Recorder",
   data() {
     return {
       audioURL: null,
@@ -67,61 +67,61 @@ export default {
       timelimit: 60,
       modal2Visible: false,
       fileBlob: null
-    }
+    };
   },
   methods: {
     handleStart() {
-      this.modal2Visible = true
-      this.timelimit = 60
-      this.mediaRecorder.start(120000)
+      this.modal2Visible = true;
+      this.timelimit = 60;
+      this.mediaRecorder.start(120000);
       this.intervaltimerid = setInterval(() => {
         // 开始累积
         if (this.timelimit < 1) {
-          this.handleStop()
-          return
+          this.handleStop();
+          return;
         }
-        this.timelimit -= 1
-      }, 1000)
+        this.timelimit -= 1;
+      }, 1000);
     },
     handleStop() {
-      this.modal2Visible = false
-      this.mediaRecorder.stop()
+      this.modal2Visible = false;
+      this.mediaRecorder.stop();
     },
     onSuccess(stream) {
-      this.mediaRecorder = new MediaStreamRecorder(stream)
-      this.mediaRecorder.mimeType = 'audio/wav'
-      var that = this
+      this.mediaRecorder = new MediaStreamRecorder(stream);
+      this.mediaRecorder.mimeType = "audio/wav";
+      var that = this;
       this.mediaRecorder.onstop = () => {
-        clearInterval(this.intervaltimerid)
-        that.audioURL = URL.createObjectURL(that.blobVoice)
-        that.fileBlob=that.blobVoice
-        that.$emit('on-success')
-        that.blobVoice = null
-      }
+        clearInterval(this.intervaltimerid);
+        that.audioURL = URL.createObjectURL(that.blobVoice);
+        that.fileBlob = that.blobVoice;
+        that.$emit("on-success");
+        that.blobVoice = null;
+      };
 
       this.mediaRecorder.ondataavailable = blob => {
-        that.blobVoice = blob
-      }
+        that.blobVoice = blob;
+      };
     },
     onError(err) {
-      console.log('The following error occured: ' + err)
+      console.log("The following error occured: " + err);
     },
     handlePlay() {
       if (this.$refs.audioRef.paused) {
-        this.$refs.audioRef.play()
+        this.$refs.audioRef.play();
       } else {
-        this.$refs.audioRef.pause() // 这个就是暂停
+        this.$refs.audioRef.pause(); // 这个就是暂停
       }
       //this.$refs.audioRef.play()
     },
     handleDel() {
-      this.timelimit = 60
-      this.audioURL = null
-      this.fileBlob = null
-      this.$emit('on-remove')
+      this.timelimit = 60;
+      this.audioURL = null;
+      this.fileBlob = null;
+      this.$emit("on-remove");
     },
     getFile() {
-      return this.fileBlob
+      return this.fileBlob;
     }
   },
   mounted() {
@@ -129,13 +129,13 @@ export default {
     if (navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices
         .getUserMedia(this.constraints)
-        .then(this.onSuccess, this.onError)
+        .then(this.onSuccess, this.onError);
     } else {
-      clearInterval(this.intervaltimerid)
-      console.log('getUserMedia not supported on your browser!')
+      clearInterval(this.intervaltimerid);
+      console.log("getUserMedia not supported on your browser!");
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .recorder {
