@@ -662,8 +662,21 @@ export default {
         this.studentInfo.studentId ===
           this.toReadStudent[this.toReadStudent.length - 1].studentId
       )
-    }
+    },
+    // questionInfo() {
+    //   return this.$store.state.marking.questionInfo
+    // }
   },
+  // watch: {
+  //   'questionInfo.ifShare' : {
+  //     handler(newValue, oldValue){
+  //       console.log(newValue)
+  //       console.log(oldValue)
+  //     },
+  //     deep: true,
+  //     immediate: true
+  //   }
+  // },
   data() {
     return {
       isDialog: true, //是否弹出框
@@ -739,12 +752,13 @@ export default {
           this.studentInfo = student
           this.reviewType = this.studentInfo.reviewType
           this.homeworkAppealType = this.studentInfo.homeworkAppealType
-          console.log(list)
-          console.log(student)
+          // console.log(list)
+          // console.log(student)
         })
       })
     })
   },
+  
   methods: {
     // 取消下个学生弹框
     nextReviewStudentCancel() {
@@ -1296,6 +1310,8 @@ export default {
           if (res.data.flag === 1) {
             let remote = res.data.infos
             this.$store.commit('marking/QUESTIONINFO', remote)
+            console.log(this.$store.state.marking.questionInfo)
+            this.questionInfo = this.$store.state.marking.questionInfo
             this.$set(this.tagData[0], 'value', remote.workbookName)
             this.$set(this.tagData[1], 'value', remote.workbookChapterPage)
             this.$set(this.tagData[3], 'value', remote.questionYytypeName)

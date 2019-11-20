@@ -188,13 +188,8 @@ export default {
         result = this.questionInfo.fileList || []
       }
       return result
-    },
-    studentInfoId() {
-      return this.$store.state.marking
     }
-
   },
-  
   data() {
     return {
       picIndex: 1,
@@ -207,6 +202,15 @@ export default {
       this.picIndex = 1
       this.blob = null
     }
+    // ,
+    // 'questionInfo.ifShare' : {
+    //   handler(newValue, oldValue){
+    //     console.log(newValue)
+    //     console.log(oldValue)
+    //   },
+    //   deep: true,
+    //   immediate: true
+    // }
   },
   mounted() {
     this.questionInfo.ifShare === 0 ? this.ifShare = 1 : this.ifShare = 0
@@ -231,6 +235,7 @@ export default {
       return this.blob
     },
     share() {
+      console.log(this.$parent)
       if (
         (this.questionInfo.hasRewive == 1 ||
           this.questionInfo.hasRewive == 4) &&
@@ -249,6 +254,7 @@ export default {
                 this.$message.success('取消分享成功')
               }
               this.$store.dispatch('marking/questionInfo')
+              console.log(this.$store.state.marking.questionInfo)
               this.updateIfShare();
             }
           })
