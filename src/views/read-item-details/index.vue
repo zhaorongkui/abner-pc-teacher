@@ -240,97 +240,212 @@
     <div class="breadcrumb-box">
       <a-breadcrumb separator=">">
         <a-breadcrumb-item>
-          <router-link to="/work">作业</router-link>
+          <router-link to="/work">
+            作业
+          </router-link>
         </a-breadcrumb-item>
         <a-breadcrumb-item>
-          <router-link to="/work-grading-assignment">学生列表</router-link>
+          <router-link to="/work-grading-assignment">
+            学生列表
+          </router-link>
         </a-breadcrumb-item>
-        <a-breadcrumb-item>{{ studentInfo && studentInfo.name }}
+        <a-breadcrumb-item>
+          {{ studentInfo && studentInfo.name }}
         </a-breadcrumb-item>
       </a-breadcrumb>
     </div>
     <div class="read-item-details">
       <div class="details-left card margin-right-10">
-        <subtopic-list v-model="subtopicId" :list="subtopicList" @on-change="subtopicChange" ref="subtopicList" />
+        <subtopic-list
+          v-model="subtopicId"
+          :list="subtopicList"
+          @on-change="subtopicChange"
+          ref="subtopicList"
+        />
       </div>
-      <div class="details-right card" v-if="questionType !== 6">
+      <div
+        class="details-right card"
+        v-if="questionType !== 6"
+      >
         <div class="details-info">
           <div style="flex: 1">
-            <time-cost :name="timeCostName" :itemList="itemList" />
-            <tag-list style="margin-left: 33px" :data="tagData" />
+            <time-cost
+              :name="timeCostName"
+              :item-list="itemList"
+            />
+            <tag-list
+              style="margin-left: 33px"
+              :data="tagData"
+            />
           </div>
-          <div class="view-question" @click="lookOriginal">
+          <div
+            class="view-question"
+            @click="lookOriginal"
+          >
             <a-icon type="eye" /> 查看原文
           </div>
         </div>
         <div class="details-main">
           <div class="details-topic">
-            <topic :titleToMain="true" :value="currentChildQuestionId" :topicData="topicData" />
+            <topic
+              :title-to-main="true"
+              :value="currentChildQuestionId"
+              :topic-data="topicData"
+            />
           </div>
           <div class="details-reply margin-left-10">
             <topic-item title="答题区">
-              <question-group style="margin: 76px 0 0 29px;" :options="questionGroup" v-if="questionType === 1" :answer="answer" :reply="reply" :key="'questionGroup'" />
-              <question-group style="margin: 76px 0 0 29px;" :options="questionGroup" :multiple="true" v-if="questionType === 2" :answer="answer" :reply="reply" :key="'multpleQuestionGroup'" />
-              <true-of-false style="margin: 96px 0 0 0;" v-else-if="questionType === 3" :answer="answer" :reply="reply" />
-              <multiple-choice-question style="margin: 10px 0 0 10px;" v-model="multipleChoiceQuestionValue" v-else-if="questionType === 4" :questionGroupList="questionGroupList" @on-change="multipleChoiceQuestionChange" />
-              <fill-in-the-blanks style="margin: 36px 0 0 29px;" v-else-if="questionType === 5" :answer="answer" :reply="reply" />
+              <question-group
+                style="margin: 76px 0 0 29px;"
+                :options="questionGroup"
+                v-if="questionType === 1"
+                :answer="answer"
+                :reply="reply"
+                :key="'questionGroup'"
+              />
+              <question-group
+                style="margin: 76px 0 0 29px;"
+                :options="questionGroup"
+                :multiple="true"
+                v-if="questionType === 2"
+                :answer="answer"
+                :reply="reply"
+                :key="'multpleQuestionGroup'"
+              />
+              <true-of-false
+                style="margin: 96px 0 0 0;"
+                v-else-if="questionType === 3"
+                :answer="answer"
+                :reply="reply"
+              />
+              <multiple-choice-question
+                style="margin: 10px 0 0 10px;"
+                v-model="multipleChoiceQuestionValue"
+                v-else-if="questionType === 4"
+                :question-group-list="questionGroupList"
+                @on-change="multipleChoiceQuestionChange"
+              />
+              <fill-in-the-blanks
+                style="margin: 36px 0 0 29px;"
+                v-else-if="questionType === 5"
+                :answer="answer"
+                :reply="reply"
+              />
             </topic-item>
           </div>
         </div>
       </div>
-      <div v-else class="details-right">
+      <div
+        v-else
+        class="details-right"
+      >
         <div class="subjective-item">
           <div class="subjective-item-info">
             <div style="flex: 1">
-              <time-cost :name="timeCostName" :itemList="itemList" />
-              <tag-list style="margin-left: 33px" :data="tagData" />
+              <time-cost
+                :name="timeCostName"
+                :item-list="itemList"
+              />
+              <tag-list
+                style="margin-left: 33px"
+                :data="tagData"
+              />
             </div>
-            <div class="view-question" @click="lookOriginal">
+            <div
+              class="view-question"
+              @click="lookOriginal"
+            >
               <a-icon type="eye" /> 查看原文
             </div>
           </div>
           <a-divider style="margin: 8px 0" />
           <div>
-            <topic :flod="true" :showType="false" :border="false" :topicData="topicData" />
+            <topic
+              :flod="true"
+              :show-type="false"
+              :border="false"
+              :topic-data="topicData"
+            />
           </div>
         </div>
-        <div style="flex: 1" class="margin-top-10">
-          <subjective-item ref="subjectiveItem" :question-info="questionInfo" />
+        <div
+          style="flex: 1"
+          class="margin-top-10"
+        >
+          <subjective-item
+            ref="subjectiveItem"
+            :question-info="questionInfo"
+          />
         </div>
       </div>
       <div class="sidebar">
-        <div class="read-over" @click="readOver">
+        <div
+          class="read-over"
+          @click="readOver"
+        >
           <span>完成</span>
           <span>批阅</span>
         </div>
         <!-- 待批阅 -->
-        <div class="selected-box" :class="{ 'radius-bottom': questionType === 6 && showReview }" v-if="toRead.length">
+        <div
+          class="selected-box"
+          :class="{ 'radius-bottom': questionType === 6 && showReview }"
+          v-if="toRead.length"
+        >
           <span class="selected-work-number">{{ toRead.length }}</span>
           <span class="selected-text">待批阅</span>
         </div>
         <!-- 我的评分 -->
-        <div class="subjective-read-over" v-if="questionType === 6 && showReview">
-          <subjective-read-over v-if="questionInfo.hasRewive == 2" :value="-1" @on-change="submitReadOver" />
-          <subjective-read-over v-else :value="questionInfo.score === undefined ? -1 : questionInfo.score" @on-change="submitReadOver" />
+        <div
+          class="subjective-read-over"
+          v-if="questionType === 6 && showReview"
+        >
+          <subjective-read-over
+            v-if="questionInfo.hasRewive == 2"
+            :value="-1"
+            @on-change="submitReadOver"
+          />
+          <subjective-read-over
+            v-else
+            :value="questionInfo.score === undefined ? -1 : questionInfo.score"
+            @on-change="submitReadOver"
+          />
         </div>
         <!-- 留言 -->
-        <div class="leave-message" v-if="questionType === 6 && showReview">
-          <recorder @on-remove="recorderRemove" @on-success="recorderSuccess" ref="recorder" />
+        <div
+          class="leave-message"
+          v-if="questionType === 6 && showReview"
+        >
+          <recorder
+            @on-remove="recorderRemove"
+            @on-success="recorderSuccess"
+            ref="recorder"
+          />
         </div>
       </div>
       <!-- 下一个学生 -->
-      <div class="next-student" @click="nextStudent" v-if="
+      <div
+        class="next-student"
+        @click="nextStudent"
+        v-if="
           toReadStudent.length &&
             !lastToReadStudentIsCurrentStudent &&
             !toRead.length &&
             showNextStudent
-        ">
+        "
+      >
         <!-- <div class="next-student" @click="nextStudent"> -->
         <p>下个</p>
         <p>学生</p>
       </div>
       <!-- 还有多少学生没有批阅完 -->
-      <a-modal title="提示" :visible="readVisible" @ok="readVisible = false" @cancel="readVisible = false" :footer="null">
+      <a-modal
+        title="提示"
+        :visible="readVisible"
+        @ok="readVisible = false"
+        @cancel="readVisible = false"
+        :footer="null"
+      >
         <div class="read-over-modal-body">
           <template v-if="appealList.length">
             <p>
@@ -339,8 +454,10 @@
               </span>
               个重批申请未处理
             </p>
-            <p>是否将未重批的题按照
-              <span style="color:red">做对</span> 处理</p>
+            <p>
+              是否将未重批的题按照
+              <span style="color:red">做对</span> 处理
+            </p>
           </template>
           <template v-else>
             <p>
@@ -354,13 +471,22 @@
             </p>
           </template>
           <div>
-            <button @click="hanldeReadOver">完成批阅</button>
-            <button @click="readVisible = false">继续批阅</button>
+            <button @click="hanldeReadOver">
+              完成批阅
+            </button>
+            <button @click="readVisible = false">
+              继续批阅
+            </button>
           </div>
         </div>
       </a-modal>
       <!-- 没有要批阅的学生了 -->
-      <a-modal title="提示" :visible="noToReadStudent" @cancel="noToReadStudent = false" :footer="null">
+      <a-modal
+        title="提示"
+        :visible="noToReadStudent"
+        @cancel="noToReadStudent = false"
+        :footer="null"
+      >
         <div class="read-over-modal-body">
           <h3>恭喜你，没有待处理的学生了</h3>
           <p class="homework-name-box">
@@ -379,18 +505,27 @@
         </div>
       </a-modal>
       <!-- 还有几名学生 -->
-      <a-modal title="提示" :visible="nextReviewStudent" @ok="nextReviewStudent = false" @cancel="nextReviewStudentCancel" :footer="null">
+      <a-modal
+        title="提示"
+        :visible="nextReviewStudent"
+        @ok="nextReviewStudent = false"
+        @cancel="nextReviewStudentCancel"
+        :footer="null"
+      >
         <div class="read-over-modal-body">
           <h4>还有{{ toReadStudent.length }}名学生的作业待批阅</h4>
           <div>
             <button @click="retreat">
               退出批阅
             </button>
-            <button @click="nextStudent" v-if="
+            <button
+              @click="nextStudent"
+              v-if="
                 toReadStudent.length &&
                   !lastToReadStudentIsCurrentStudent &&
                   !toRead.length
-              ">
+              "
+            >
               下一个学生
             </button>
           </div>
@@ -428,7 +563,7 @@ import FillInTheBlanks from '../../components/answerDetails/FillInTheBlanks'
 import MultipleChoiceQuestion from '../../components/answerDetails/MultipleChoiceQuestion'
 import Recorder from '../../components/answerDetails/Recorder'
 export default {
-  name: 'read-item-details',
+  name: 'ReadItemDetails',
   components: {
     topic,
     TagList,
@@ -705,7 +840,7 @@ export default {
     // 提交录音
     async submitRecorder() {
       let uploadFileRes
-      let fileUrl // 图片地址
+      let fileUrl =  '' // 图片地址
       if (this.file) {
         uploadFileRes = await this.uploadFile(this.file)
       }
