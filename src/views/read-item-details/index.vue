@@ -263,25 +263,13 @@
           ref="subtopicList"
         />
       </div>
-      <div
-        class="details-right card"
-        v-if="questionType !== 6"
-      >
+      <div class="details-right card" v-if="questionType !== 6">
         <div class="details-info">
           <div style="flex: 1">
-            <time-cost
-              :name="timeCostName"
-              :item-list="itemList"
-            />
-            <tag-list
-              style="margin-left: 33px"
-              :data="tagData"
-            />
+            <time-cost :name="timeCostName" :item-list="itemList" />
+            <tag-list style="margin-left: 33px" :data="tagData" />
           </div>
-          <div
-            class="view-question"
-            @click="lookOriginal"
-          >
+          <div class="view-question" @click="lookOriginal">
             <a-icon type="eye" /> 查看原文
           </div>
         </div>
@@ -335,26 +323,14 @@
           </div>
         </div>
       </div>
-      <div
-        v-else
-        class="details-right"
-      >
+      <div v-else class="details-right">
         <div class="subjective-item">
           <div class="subjective-item-info">
             <div style="flex: 1">
-              <time-cost
-                :name="timeCostName"
-                :item-list="itemList"
-              />
-              <tag-list
-                style="margin-left: 33px"
-                :data="tagData"
-              />
+              <time-cost :name="timeCostName" :item-list="itemList" />
+              <tag-list style="margin-left: 33px" :data="tagData" />
             </div>
-            <div
-              class="view-question"
-              @click="lookOriginal"
-            >
+            <div class="view-question" @click="lookOriginal">
               <a-icon type="eye" /> 查看原文
             </div>
           </div>
@@ -368,21 +344,12 @@
             />
           </div>
         </div>
-        <div
-          style="flex: 1"
-          class="margin-top-10"
-        >
-          <subjective-item
-            ref="subjectiveItem"
-            :question-info="questionInfo"
-          />
+        <div style="flex: 1" class="margin-top-10">
+          <subjective-item ref="subjectiveItem" :question-info="questionInfo" />
         </div>
       </div>
       <div class="sidebar">
-        <div
-          class="read-over"
-          @click="readOver"
-        >
+        <div class="read-over" @click="readOver">
           <span>完成</span>
           <span>批阅</span>
         </div>
@@ -412,10 +379,7 @@
           />
         </div>
         <!-- 留言 -->
-        <div
-          class="leave-message"
-          v-if="questionType === 6 && showReview"
-        >
+        <div class="leave-message" v-if="questionType === 6 && showReview">
           <recorder
             @on-remove="recorderRemove"
             @on-success="recorderSuccess"
@@ -450,8 +414,7 @@
           <template v-if="appealList.length">
             <p>
               <span>{{ studentInfo.name }}同学的作业</span>， 还有
-              <span>{{ appealList.length }}
-              </span>
+              <span>{{ appealList.length }} </span>
               个重批申请未处理
             </p>
             <p>
@@ -462,8 +425,7 @@
           <template v-else>
             <p>
               <span>{{ studentInfo.name }}同学的作业</span>， 还有
-              <span>{{ toRead.length }}
-              </span>道题未批阅哦 ～
+              <span>{{ toRead.length }} </span>道题未批阅哦 ～
             </p>
             <p>
               若点击“完成批阅”，未批阅的题将按照
@@ -840,7 +802,7 @@ export default {
     // 提交录音
     async submitRecorder() {
       let uploadFileRes
-      let fileUrl =  '' // 图片地址
+      let fileUrl = '' // 图片地址
       if (this.file) {
         uploadFileRes = await this.uploadFile(this.file)
       }
