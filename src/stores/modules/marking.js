@@ -44,13 +44,11 @@ const actions = {
       .then(({ data }) => {
         if (data.flag === 1) {
           commit('QUESTIONINFO', data.infos)
-
           let voice =
             (data.infos.reviewList &&
               data.infos.reviewList.filter(item => item.reviewUserType === 2)[0]
                 .reviewVoiceStr) ||
             null
-
           commit('UPDATEREVIEWVOICESRC', voice)
         }
         return data
