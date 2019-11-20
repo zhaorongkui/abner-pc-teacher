@@ -189,12 +189,7 @@ export default {
       }
       return result
     },
-    studentInfoId() {
-      return this.$store.state.marking
-    }
-
   },
-  
   data() {
     return {
       picIndex: 1,
