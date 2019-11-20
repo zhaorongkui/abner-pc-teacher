@@ -87,9 +87,9 @@
     <div class="canvas">
         <div class="share" @click="share()">
           <img src="../../assets/img/shareNormal.png" alt="" v-if="ifShare===0"/>
-          <img src="../../assets/img/shareOut.png" alt=""  v-if="ifShare===1"/>
+          <img src="../../assets/img/shareOut.png" alt=""  v-else/>
           <span  v-if="ifShare===0">分享全班</span>
-          <span class="hover-span"  v-if="ifShare===1">分享全班</span>
+          <span class="hover-span"  v-else>分享全班</span>
         </div>
       <template
         v-if="techerReviewList.length > 0 && techerReviewList[0].reviewFileStr"
@@ -150,6 +150,7 @@
 </template>
 <script>
 // 主观题
+import localforage from 'localforage'
 import ReadPeerGrading from './ReadPeerGrading'
 import EditCanvas from '../../views/work-marking/components/EditCanvas'
 export default {
@@ -194,7 +195,7 @@ export default {
     return {
       picIndex: 1,
       blob: null,
-      ifShare:0
+      ifShare: 0
     }
   },
   watch: {
@@ -213,7 +214,7 @@ export default {
     // }
   },
   mounted() {
-    this.questionInfo.ifShare === 0 ? this.ifShare = 1 : this.ifShare = 0
+    this.questionInfo.ifShare === 0 ? (this.ifShare = 1) : (this.ifShare = 0)
   },
   methods: {
     handleImportImg(blob) {
@@ -235,7 +236,7 @@ export default {
       return this.blob
     },
     share() {
-      console.log(this.$parent)
+      // console.log(this.$store.state.marking.questionInfo)
       if (
         (this.questionInfo.hasRewive == 1 ||
           this.questionInfo.hasRewive == 4) &&
@@ -248,14 +249,20 @@ export default {
           })
           .then(({ data }) => {
             if (data.flag === 1) {
-              if (  this.ifShare == 0) {
+              if (this.ifShare == 0) {
                 this.$message.success('分享成功')
               } else {
                 this.$message.success('取消分享成功')
               }
+              localforage.getItem('student').then(student => {
+                this.$store.commit('marking/STUDENTINFOID', student.studentId)
+              })
+              this.$store.commit(
+                'marking/UPDATEHOMEWORKQUESTIONID',
+                this.questionInfo.homeworkQuestionId
+              )
               this.$store.dispatch('marking/questionInfo')
-              console.log(this.$store.state.marking.questionInfo)
-              this.updateIfShare();
+              this.updateIfShare()
             }
           })
           .catch(error => {
@@ -266,7 +273,7 @@ export default {
       }
     },
     updateIfShare() {
-      this.ifShare === 0 ? this.ifShare = 1 : this.ifShare = 0
+      this.ifShare === 0 ? (this.ifShare = 1) : (this.ifShare = 0)
     }
   }
 }

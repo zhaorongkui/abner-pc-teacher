@@ -1310,7 +1310,7 @@ export default {
           if (res.data.flag === 1) {
             let remote = res.data.infos
             this.$store.commit('marking/QUESTIONINFO', remote)
-            console.log(this.$store.state.marking.questionInfo)
+            // console.log(this.$store.state.marking.questionInfo)
             this.questionInfo = this.$store.state.marking.questionInfo
             this.$set(this.tagData[0], 'value', remote.workbookName)
             this.$set(this.tagData[1], 'value', remote.workbookChapterPage)
