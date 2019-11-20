@@ -1,4 +1,30 @@
 <style scoped lang="scss">
+.share {
+  position: absolute;
+  right: 1%;
+  top: 3%;
+  z-index: 999;
+  color: #999;
+  padding: 6px 20px;
+  background: #f7f7f7;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  img {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+  }
+  span {
+    color: #8493a8;
+    font-size: 14px;
+  }
+  span.hover-span {
+    color: #ff971d;
+  }
+}
 .subjective {
   flex: auto;
   height: 100%;
@@ -60,6 +86,12 @@
     <ReadPeerGrading :questionInfo="questionInfo"></ReadPeerGrading>
 
     <div class="canvas">
+        <div class="share" @click="share()">
+          <img src="../../assets/img/shareNormal.png" alt="" v-if="ifShare===0"/>
+          <img src="../../assets/img/shareOut.png" alt=""  v-if="ifShare===1"/>
+          <span  v-if="ifShare===0">分享全班</span>
+          <span class="hover-span"  v-if="ifShare===1">分享全班</span>
+        </div>
       <template
         v-if="techerReviewList.length > 0 && techerReviewList[0].reviewFileStr"
       >
@@ -127,6 +159,12 @@ export default {
     ReadPeerGrading,
     EditCanvas
   },
+  props: {
+    questionInfo: {
+      type: Object,
+      required: true
+    }
+  },
   computed: {
     // 教师批阅列表
     techerReviewList() {
@@ -151,18 +189,13 @@ export default {
         result = this.questionInfo.fileList || []
       }
       return result
-    }
-  },
-  props: {
-    questionInfo: {
-      type: Object,
-      required: true
-    }
+    },
   },
   data() {
     return {
       picIndex: 1,
-      blob: null
+      blob: null,
+      ifShare:0
     }
   },
   watch: {
@@ -171,7 +204,9 @@ export default {
       this.blob = null
     }
   },
-  mounted() {},
+  mounted() {
+    this.questionInfo.ifShare === 0 ? this.ifShare = 1 : this.ifShare = 0
+  },
   methods: {
     handleImportImg(blob) {
       this.blob = blob
@@ -190,6 +225,38 @@ export default {
     },
     getFile() {
       return this.blob
+    },
+    share() {
+      if (
+        (this.questionInfo.hasRewive == 1 ||
+          this.questionInfo.hasRewive == 4) &&
+        this.questionInfo.isTrue == 0
+      ) {
+        this.$http
+          .post('/api/teacher/homework/shareStudentAnswer', {
+            ifShare: this.ifShare,
+            studentAnswerId: this.questionInfo.studentAnswerId
+          })
+          .then(({ data }) => {
+            if (data.flag === 1) {
+              if (  this.ifShare == 0) {
+                this.$message.success('分享成功')
+              } else {
+                this.$message.success('取消分享成功')
+              }
+              this.$store.dispatch('marking/questionInfo')
+              this.updateIfShare();
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      } else {
+        this.$message.error('正确答案才能分享全班哦～')
+      }
+    },
+    updateIfShare() {
+      this.ifShare === 0 ? this.ifShare = 1 : this.ifShare = 0
     }
   }
 }
