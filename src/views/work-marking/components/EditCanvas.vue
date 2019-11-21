@@ -222,7 +222,7 @@ export default {
   margin: 0 auto;
   position: relative;
   left: 0;
-  top: 0;
+  top: 30px;
   overflow: hidden;
   // cursor: url('https://lochi.oss-cn-beijing.aliyuncs.com/pc/edit.ico'), auto;
 }
