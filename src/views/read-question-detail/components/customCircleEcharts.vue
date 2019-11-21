@@ -1,5 +1,5 @@
 <style scoped lang="scss">
-@import "@/styles/variable.scss";
+@import '@/styles/variable.scss';
 .statistic_area {
   height: calc(100% - 50px);
   flex-direction: column;
@@ -127,13 +127,7 @@
   <div class="statistic_area">
     <div id="myChart" :style="{ width: '440px', height: '260px' }"></div>
     <!-- <div id="myCharts" :style="{ width: '440px', height: '260px' }"></div> -->
-    <div
-      id="myCharts"
-      :style="{ width: '440px', height: '260px' }"
-      v-if="
-        questionTypeCode == 1 || questionTypeCode == 2 || questionTypeCode == 4
-      "
-    ></div>
+    <div id="myCharts" :style="{ width: '440px', height: '260px' }"></div>
     <el-dialog
       class="custom_dialog"
       :visible.sync="showUnfinishedStdModal"
@@ -215,15 +209,15 @@
 </template>
 
 <script>
-import Dialog from "../../../components/Dialog";
-import localforage from "localforage";
+import Dialog from '../../../components/Dialog'
+import localforage from 'localforage'
 export default {
-  name: "customCircleEcharts",
+  name: 'customCircleEcharts',
   data() {
     return {
       item1: {},
-      questionTypeCode: "",
-      param: "",
+      questionTypeCode: '',
+      param: '',
       paramXx: [],
       showdialogFlagXx: false,
       showUnfinishedStdModal: false,
@@ -235,14 +229,14 @@ export default {
       charts: null,
       options: {
         tooltip: {
-          trigger: "item",
-          formatter: "{b}:{c}人 {d}%"
+          trigger: 'item',
+          formatter: '{b}:{c}人 {d}%'
         },
         color: [],
         series: [
           {
-            type: "pie",
-            radius: ["0%", "57%"],
+            type: 'pie',
+            radius: ['0%', '57%'],
             label: {
               show: false,
               padding: 10
@@ -254,12 +248,12 @@ export default {
             data: []
           },
           {
-            type: "pie",
-            radius: ["60%", "62%"],
+            type: 'pie',
+            radius: ['60%', '62%'],
             data: [],
             label: {
               show: true,
-              formatter: "{b}:{c}人 {d}%",
+              formatter: '{b}:{c}人 {d}%',
               fontSize: 12
             },
             labelLine: {
@@ -269,43 +263,43 @@ export default {
           }
         ]
       }
-    };
+    }
   },
-  props: ["questiondata"],
+  props: ['questiondata'],
   computed: {
     errorStudentList() {
       if (this.questiondata.errorStudentList.length == 0) {
-        return [];
+        return []
       } else {
-        return this.questiondata.errorStudentList;
+        return this.questiondata.errorStudentList
       }
     },
     trueStudentList() {
       if (this.questiondata.trueStudentList.length == 0) {
-        return [];
+        return []
       } else {
-        return this.questiondata.trueStudentList;
+        return this.questiondata.trueStudentList
       }
     },
     halfStudentList() {
       if (this.questiondata.halfStudentList.length == 0) {
-        return [];
+        return []
       } else {
-        return this.questiondata.halfStudentList;
+        return this.questiondata.halfStudentList
       }
     },
     pendingStudentList() {
       if (this.questiondata.pendingStudentList.length == 0) {
-        return [];
+        return []
       } else {
-        return this.questiondata.pendingStudentList;
+        return this.questiondata.pendingStudentList
       }
     },
     unSubmitStudentList() {
       if (this.questiondata.unSubmitStudentList.length == 0) {
-        return [];
+        return []
       } else {
-        return this.questiondata.unSubmitStudentList;
+        return this.questiondata.unSubmitStudentList
       }
     }
   },
@@ -318,159 +312,172 @@ export default {
       handler(newVal, oldVal) {
         if (this.chart) {
           if (newVal) {
-            this.chart.setOption(newVal);
+            this.chart.setOption(newVal)
           } else {
-            this.chart.setOption(oldVal);
+            this.chart.setOption(oldVal)
           }
         } else {
-          this.init();
+          this.init()
         }
+      },
+      deep: true
+    },
+    questiondata: {
+      handler(val) {
+        this.questionTypeCode = val.questionTypeCode
       },
       deep: true
     }
   },
   mounted() {
     this.questionTypeCode = JSON.parse(
-      localStorage.getItem("questionData")
-    ).questionTypeCode;
+      localStorage.getItem('questionData')
+    ).questionTypeCode
 
     if (this.$route.params.item) {
-      this.item1 = this.$route.params.item1;
-      this.init();
+      this.item1 = this.$route.params.item1
+      this.init()
     } else {
-      localforage.getItem("workListItem").then(value => {
-        this.item1 = value;
-        this.init();
-      });
+      localforage.getItem('workListItem').then(value => {
+        this.item1 = value
+        this.init()
+      })
     }
   },
   methods: {
     closes(val) {
-      this.showDialog1 = val;
+      this.showDialog1 = val
     },
     close() {
-      this.showdialogFlagXx = false;
+      this.showdialogFlagXx = false
     },
     init() {
-      this.chart = this.$echarts.init(document.getElementById("myChart"));
-      this.charts = this.$echarts.init(document.getElementById("myCharts"));
-      this.chart.setOption(this.options);
-      this.chart.on("click", param => {
-        if (param.name === "做错") {
-          this.param = "做错";
-          this.showUnfinishedStdModal = true;
+      this.chart = this.$echarts.init(document.getElementById('myChart'))
+      if (
+        this.questionTypeCode == 1 ||
+        this.questionTypeCode == 2 ||
+        this.questionTypeCode == 4
+      ) {
+        this.charts = this.$echarts.init(document.getElementById('myCharts'))
+      }
+
+      this.chart.setOption(this.options)
+      this.chart.on('click', param => {
+        if (param.name === '做错') {
+          this.param = '做错'
+          this.showUnfinishedStdModal = true
         }
-        if (param.name === "半对") {
-          this.param = "半对";
-          this.showUnfinishedStdModal = true;
+        if (param.name === '半对') {
+          this.param = '半对'
+          this.showUnfinishedStdModal = true
         }
-        if (param.name === "做对") {
-          this.param = "做对";
-          this.showUnfinishedStdModal = true;
+        if (param.name === '做对') {
+          this.param = '做对'
+          this.showUnfinishedStdModal = true
         }
-        if (param.name === "未批阅") {
-          this.param = "未批阅";
-          this.showUnfinishedStdModal = true;
+        if (param.name === '未批阅') {
+          this.param = '未批阅'
+          this.showUnfinishedStdModal = true
         }
-        if (param.name == "未提交") {
-          this.showDialog1 = true;
+        if (param.name == '未提交') {
+          this.showDialog1 = true
         }
         // this.getUnfinishedStd();
-      });
-      var self = this;
-      this.charts.on("click", function(param) {
-        let obj = JSON.parse(localStorage.getItem("objs"));
+      })
+      var self = this
+      this.charts.on('click', function(param) {
+        let obj = JSON.parse(localStorage.getItem('objs'))
         Object.keys(obj).forEach(function(key) {
           if (param.name == key) {
-            self.param = key;
-            self.showdialogFlagXx = true;
-            self.paramXx = obj[key];
+            self.param = key
+            self.showdialogFlagXx = true
+            self.paramXx = obj[key]
           }
-        });
-      });
+        })
+      })
     },
     drawPieTop(truerate, errorrate, unsubmit, half, pend) {
-      this.options.color = [];
-      (this.options.legend = {
-        top: "top",
-        data: ["做对", "做错", "未提交", "半对", "未批阅"]
+      this.options.color = []
+      ;(this.options.legend = {
+        top: 'top',
+        data: ['做对', '做错', '未提交', '半对', '未批阅']
       }),
-        (this.options.series[0].data = []);
-      this.options.series[1].data = [];
+        (this.options.series[0].data = [])
+      this.options.series[1].data = []
       this.options.color.push(
-        truerate ? "#13A99F" : "",
-        errorrate ? "#FD6265" : "",
-        unsubmit ? "#ccc" : "",
-        half ? "#FBA057" : "",
-        pend != undefined && pend != 0 ? "#FF8D12" : ""
-      );
+        truerate ? '#13A99F' : '',
+        errorrate ? '#FD6265' : '',
+        unsubmit ? '#ccc' : '',
+        half ? '#FBA057' : '',
+        pend != undefined && pend != 0 ? '#FF8D12' : ''
+      )
       this.options.series[0].data.push(
         truerate != undefined && truerate != 0
           ? {
               value: truerate,
-              name: "做对"
+              name: '做对'
             }
           : {},
         errorrate != undefined && errorrate != 0
           ? {
               value: errorrate,
-              name: "做错",
+              name: '做错',
               label: {
-                formatter: "{b}:{c}人 {d}"
+                formatter: '{b}:{c}人 {d}'
               }
             }
           : {},
         unsubmit != undefined && unsubmit != 0
           ? {
               value: unsubmit,
-              name: "未提交"
+              name: '未提交'
             }
           : {},
         half != undefined && half != 0
           ? {
               value: half,
-              name: "半对"
+              name: '半对'
             }
           : {},
         pend != undefined && pend != 0
           ? {
               value: pend,
-              name: "未批阅"
+              name: '未批阅'
             }
           : {}
-      );
+      )
       this.options.series[1].data.push(
         truerate != undefined && truerate != 0
           ? {
               value: truerate,
-              name: "做对"
+              name: '做对'
             }
           : {},
         errorrate != undefined && errorrate != 0
           ? {
               value: errorrate,
-              name: "做错"
+              name: '做错'
             }
           : {},
         unsubmit != undefined && unsubmit != 0
           ? {
               value: unsubmit,
-              name: "未提交"
+              name: '未提交'
             }
           : {},
         half != undefined && half != 0
           ? {
               value: half,
-              name: "半对"
+              name: '半对'
             }
           : {},
         pend != undefined && pend != 0
           ? {
               value: pend,
-              name: "未批阅"
+              name: '未批阅'
             }
           : {}
-      );
+      )
       // // 基于准备好的dom，初始化echarts实例
       // let myChart = this.$echarts.init(document.getElementById('myChart'))
       // // 绘制图表
@@ -484,87 +491,87 @@ export default {
       // })
     },
     drawPieBottom(truerate, errorrate, unsubmit, half, pend) {
-      this.options.color = [];
-      (this.options.legend = {
-        bottom: "bottom",
-        data: ["做对", "做错", "未提交", "半对", "未批阅"]
+      this.options.color = []
+      ;(this.options.legend = {
+        bottom: 'bottom',
+        data: ['做对', '做错', '未提交', '半对', '未批阅']
       }),
-        (this.options.series[0].data = []);
-      this.options.series[1].data = [];
+        (this.options.series[0].data = [])
+      this.options.series[1].data = []
       this.options.color.push(
-        truerate ? "#13A99F" : "",
-        errorrate ? "#FD6265" : "",
-        unsubmit ? "#ccc" : "",
-        half ? "#FBA057" : "",
-        pend != undefined && pend != 0 ? "#FF8D12" : ""
-      );
+        truerate ? '#13A99F' : '',
+        errorrate ? '#FD6265' : '',
+        unsubmit ? '#ccc' : '',
+        half ? '#FBA057' : '',
+        pend != undefined && pend != 0 ? '#FF8D12' : ''
+      )
       this.options.series[0].data.push(
         truerate != undefined && truerate != 0
           ? {
               value: truerate,
-              name: "做对"
+              name: '做对'
             }
           : {},
         errorrate != undefined && errorrate != 0
           ? {
               value: errorrate,
-              name: "做错",
+              name: '做错',
               label: {
-                formatter: "{b}:{c}人 {d}"
+                formatter: '{b}:{c}人 {d}'
               }
             }
           : {},
         unsubmit != undefined && unsubmit != 0
           ? {
               value: unsubmit,
-              name: "未提交"
+              name: '未提交'
             }
           : {},
         half != undefined && half != 0
           ? {
               value: half,
-              name: "半对"
+              name: '半对'
             }
           : {},
         pend != undefined && pend != 0
           ? {
               value: pend,
-              name: "未批阅"
+              name: '未批阅'
             }
           : {}
-      );
+      )
       this.options.series[1].data.push(
         truerate != undefined && truerate != 0
           ? {
               value: truerate,
-              name: "做对"
+              name: '做对'
             }
           : {},
         errorrate != undefined && errorrate != 0
           ? {
               value: errorrate,
-              name: "做错"
+              name: '做错'
             }
           : {},
         unsubmit != undefined && unsubmit != 0
           ? {
               value: unsubmit,
-              name: "未提交"
+              name: '未提交'
             }
           : {},
         half != undefined && half != 0
           ? {
               value: half,
-              name: "半对"
+              name: '半对'
             }
           : {},
         pend != undefined && pend != 0
           ? {
               value: pend,
-              name: "未批阅"
+              name: '未批阅'
             }
           : {}
-      );
+      )
       // // 基于准备好的dom，初始化echarts实例
       // let myChart = this.$echarts.init(document.getElementById('myChart'))
       // // 绘制图表
@@ -580,26 +587,26 @@ export default {
     drawBar(oArr, D, error) {
       //color: ["#13A99F", "#FD6265"],
       // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(document.getElementById("myCharts"));
+      let myChart = this.$echarts.init(document.getElementById('myCharts'))
       // 绘制图表
       myChart.setOption({
         legend: {
-          data: ["正确选项", "错误选项"],
-          bottom: "bottom"
+          data: ['正确选项', '错误选项'],
+          bottom: 'bottom'
         },
-        color: ["#13A99F", "#FD6265"],
+        color: ['#13A99F', '#FD6265'],
         xAxis: {
-          type: "category",
+          type: 'category',
           splitLine: { show: false },
           data: oArr,
-          name: "选项",
+          name: '选项',
           nameGap: 5,
           axisTick: {
             show: false
           },
           axisLine: {
             lineStyle: {
-              color: "#666"
+              color: '#666'
             }
           },
           splitLine: {
@@ -607,25 +614,25 @@ export default {
           }
         },
         yAxis: {
-          type: "value",
+          type: 'value',
           minInterval: 1,
-          name: "人数",
+          name: '人数',
           max: function(val) {
-            let value = val.max;
-            let prec = 2;
-            let ceil = true;
-            let number;
+            let value = val.max
+            let prec = 2
+            let ceil = true
+            let number
 
-            const mult = Math.pow(10, 1);
-            number = Math.ceil(Number(value) / mult) * mult;
-            return number;
+            const mult = Math.pow(10, 1)
+            number = Math.ceil(Number(value) / mult) * mult
+            return number
           },
           axisTick: {
             show: false
           },
           axisLine: {
             lineStyle: {
-              color: "#666"
+              color: '#666'
             }
           },
           splitLine: {
@@ -634,59 +641,59 @@ export default {
         },
         series: [
           {
-            name: "正确选项",
-            type: "bar",
-            stack: "总数",
+            name: '正确选项',
+            type: 'bar',
+            stack: '总数',
             label: {
               normal: {
                 show: true,
-                position: "top"
+                position: 'top'
               }
             },
             data: D,
             barWidth: 20
           },
           {
-            name: "错误选项",
-            type: "bar",
-            stack: "总数",
+            name: '错误选项',
+            type: 'bar',
+            stack: '总数',
             label: {
               normal: {
                 show: true,
-                position: "top"
+                position: 'top'
               }
             },
             barWidth: 20,
             data: error
           }
         ]
-      });
+      })
     },
     // 未完成作业学生列表
     getUnfinishedStd() {
       this.$http
-        .get("/api/teacher/homework/unfinish/students", {
+        .get('/api/teacher/homework/unfinish/students', {
           params: {
             homeworkClassId: this.item1.homeworkClassId
           }
         })
         .then(res => {
           if (res.data.infos.studentList && res.data.infos.studentList.length) {
-            this.isSendRemind = !res.data.infos.remind;
+            this.isSendRemind = !res.data.infos.remind
             this.compositionStd.splice(
               0,
               this.compositionStd.length,
               ...res.data.infos.studentList
-            );
-            this.showUnfinishedStdModal = true;
+            )
+            this.showUnfinishedStdModal = true
           } else {
-            this.$message.error("已无未完成学生！");
-            return false;
+            this.$message.error('已无未完成学生！')
+            return false
           }
         })
         .catch(err => {
-          console.log(err);
-        });
+          console.log(err)
+        })
     }
     // 作文提醒
     // handleRemindStd() {
@@ -712,5 +719,5 @@ export default {
     //   })
     // },
   }
-};
+}
 </script>

@@ -96,7 +96,7 @@ export default {
           key: 'answer',
           dataIndex: 'answer',
           align: 'center',
-          customRender: (text, record, index) => {
+          customRender: (text, record) => {
             return <span style="color: #1059FF;">{record.answer.join('')}</span>
           }
         },
