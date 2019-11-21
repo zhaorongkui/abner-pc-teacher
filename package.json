@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
+    "lint": "eslint --fix --ext .js --ext .vue src/components/answerDetails/SubjectiveItem.vue",
     "prod": "vue-cli-service build --mode prod",
     "plan": "vue-cli-service build --mode plan",
     "test": "vue-cli-service build --mode test"

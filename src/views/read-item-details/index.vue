@@ -240,14 +240,18 @@
     <div class="breadcrumb-box">
       <a-breadcrumb separator=">">
         <a-breadcrumb-item>
-          <router-link to="/work">作业</router-link>
+          <router-link to="/work">
+            作业
+          </router-link>
         </a-breadcrumb-item>
         <a-breadcrumb-item>
-          <router-link to="/work-grading-assignment">学生列表</router-link>
+          <router-link to="/work-grading-assignment">
+            学生列表
+          </router-link>
         </a-breadcrumb-item>
-        <a-breadcrumb-item>{{
-          studentInfo && studentInfo.name
-        }}</a-breadcrumb-item>
+        <a-breadcrumb-item>
+          {{ studentInfo && studentInfo.name }}
+        </a-breadcrumb-item>
       </a-breadcrumb>
     </div>
     <div class="read-item-details">
@@ -262,7 +266,7 @@
       <div class="details-right card" v-if="questionType !== 6">
         <div class="details-info">
           <div style="flex: 1">
-            <time-cost :name="timeCostName" :itemList="itemList" />
+            <time-cost :name="timeCostName" :item-list="itemList" />
             <tag-list style="margin-left: 33px" :data="tagData" />
           </div>
           <div class="view-question" @click="lookOriginal">
@@ -272,9 +276,9 @@
         <div class="details-main">
           <div class="details-topic">
             <topic
-              :titleToMain="true"
+              :title-to-main="true"
               :value="currentChildQuestionId"
-              :topicData="topicData"
+              :topic-data="topicData"
             />
           </div>
           <div class="details-reply margin-left-10">
@@ -306,7 +310,7 @@
                 style="margin: 10px 0 0 10px;"
                 v-model="multipleChoiceQuestionValue"
                 v-else-if="questionType === 4"
-                :questionGroupList="questionGroupList"
+                :question-group-list="questionGroupList"
                 @on-change="multipleChoiceQuestionChange"
               />
               <fill-in-the-blanks
@@ -323,7 +327,7 @@
         <div class="subjective-item">
           <div class="subjective-item-info">
             <div style="flex: 1">
-              <time-cost :name="timeCostName" :itemList="itemList" />
+              <time-cost :name="timeCostName" :item-list="itemList" />
               <tag-list style="margin-left: 33px" :data="tagData" />
             </div>
             <div class="view-question" @click="lookOriginal">
@@ -334,14 +338,14 @@
           <div>
             <topic
               :flod="true"
-              :showType="false"
+              :show-type="false"
               :border="false"
-              :topicData="topicData"
+              :topic-data="topicData"
             />
           </div>
         </div>
         <div style="flex: 1" class="margin-top-10">
-          <subjective-item ref="subjectiveItem" :questionInfo="questionInfo" />
+          <subjective-item ref="subjectiveItem" :question-info="questionInfo" />
         </div>
       </div>
       <div class="sidebar">
@@ -409,19 +413,19 @@
         <div class="read-over-modal-body">
           <template v-if="appealList.length">
             <p>
-              <span>{{ studentInfo.name }}同学的作业</span>， 还有<span>{{
-                appealList.length
-              }}</span>
+              <span>{{ studentInfo.name }}同学的作业</span>， 还有
+              <span>{{ appealList.length }} </span>
               个重批申请未处理
             </p>
-            <p>是否将未重批的题按照 <span style="color:red">做对</span> 处理</p>
+            <p>
+              是否将未重批的题按照
+              <span style="color:red">做对</span> 处理
+            </p>
           </template>
           <template v-else>
             <p>
-              <span>{{ studentInfo.name }}同学的作业</span>， 还有<span>{{
-                toRead.length
-              }}</span
-              >道题未批阅哦 ～
+              <span>{{ studentInfo.name }}同学的作业</span>， 还有
+              <span>{{ toRead.length }} </span>道题未批阅哦 ～
             </p>
             <p>
               若点击“完成批阅”，未批阅的题将按照
@@ -429,8 +433,12 @@
             </p>
           </template>
           <div>
-            <button @click="hanldeReadOver">完成批阅</button
-            ><button @click="readVisible = false">继续批阅</button>
+            <button @click="hanldeReadOver">
+              完成批阅
+            </button>
+            <button @click="readVisible = false">
+              继续批阅
+            </button>
           </div>
         </div>
       </a-modal>
@@ -444,13 +452,17 @@
         <div class="read-over-modal-body">
           <h3>恭喜你，没有待处理的学生了</h3>
           <p class="homework-name-box">
-            <span>作业名称</span><span>{{ item.homeworkName }}</span>
+            <span>作业名称</span>
+            <span>{{ item.homeworkName }}</span>
           </p>
           <p class="homework-name-box">
-            <span>作业班级</span><span>{{ item.gradeClassname }}</span>
+            <span>作业班级</span>
+            <span>{{ item.gradeClassname }}</span>
           </p>
           <div>
-            <button @click="retreat">知道了</button>
+            <button @click="retreat">
+              知道了
+            </button>
           </div>
         </div>
       </a-modal>
@@ -465,7 +477,9 @@
         <div class="read-over-modal-body">
           <h4>还有{{ toReadStudent.length }}名学生的作业待批阅</h4>
           <div>
-            <button @click="retreat">退出批阅</button>
+            <button @click="retreat">
+              退出批阅
+            </button>
             <button
               @click="nextStudent"
               v-if="
@@ -511,7 +525,7 @@ import FillInTheBlanks from '../../components/answerDetails/FillInTheBlanks'
 import MultipleChoiceQuestion from '../../components/answerDetails/MultipleChoiceQuestion'
 import Recorder from '../../components/answerDetails/Recorder'
 export default {
-  name: 'read-item-details',
+  name: 'ReadItemDetails',
   components: {
     topic,
     TagList,
@@ -739,8 +753,8 @@ export default {
           this.studentInfo = student
           this.reviewType = this.studentInfo.reviewType
           this.homeworkAppealType = this.studentInfo.homeworkAppealType
-          console.log(list)
-          console.log(student)
+          // console.log(list)
+          // console.log(student)
         })
       })
     })
@@ -788,7 +802,9 @@ export default {
     // 提交录音
     async submitRecorder() {
       let uploadFileRes
-      let fileUrl // 图片地址
+      // 因为下一行报错，fileUrl定义了并切也使用了，所以将下一行eslint校验关闭掉
+      // eslint-disable-next-line
+      let fileUrl = '' // 图片地址
       if (this.file) {
         uploadFileRes = await this.uploadFile(this.file)
       }
@@ -852,7 +868,7 @@ export default {
       let fd = new FormData()
       fd.append('file', file)
       return this.$http.post(
-        `/teacherApi/upload/uploadCommonFile/voice/homework/yuwen`,
+        '/teacherApi/upload/uploadCommonFile/voice/homework/yuwen',
         fd,
         {
           headers: {
@@ -866,7 +882,7 @@ export default {
       let fd = new FormData()
       fd.append('file', file)
       return this.$http.post(
-        `/teacherApi/upload/uploadCommonFile/img/homework/yuwen`,
+        '/teacherApi/upload/uploadCommonFile/img/homework/yuwen',
         fd,
         {
           headers: {
@@ -1129,7 +1145,7 @@ export default {
         if (this.file) {
           uploadFileRes = await this.uploadFile(this.file)
           var type = 0
-          resultJsonArray.forEach((item, index) => {
+          resultJsonArray.forEach(item => {
             if (item.homeworkQuestionId == this.homeworkQuestionId) {
               type = 1
             }
@@ -1186,23 +1202,23 @@ export default {
           }
         } // 查看当前主观题是否需要上传涂鸦和语音
 
-        resultJsonArray = resultJsonArray.map((item, index) => {
+        resultJsonArray = resultJsonArray.map(item => {
           let obj = {
             ...item
           }
           var reviewResult = 2
-             if (
-                item.hasRewive == 1 ||
-                item.hasRewive == 4 ||
-                (item.hasRewive == 2 &&
-                  (item.questionIsappeal == undefined ||
-                    item.questionIsappeal == 2))
-              ) {
-                reviewResult = item.score
-              }
-              var isTrue = reviewResult == 2 ? 0 : reviewResult == 0 ? 1 : 2
-              obj.reviewResult=reviewResult 
-              obj.isTrue=isTrue 
+          if (
+            item.hasRewive == 1 ||
+            item.hasRewive == 4 ||
+            (item.hasRewive == 2 &&
+              (item.questionIsappeal == undefined ||
+                item.questionIsappeal == 2))
+          ) {
+            reviewResult = item.score
+          }
+          var isTrue = reviewResult == 2 ? 0 : reviewResult == 0 ? 1 : 2
+          obj.reviewResult = reviewResult
+          obj.isTrue = isTrue
           if (
             item.homeworkQuestionId === this.questionInfo.homeworkQuestionId
           ) {
@@ -1361,7 +1377,7 @@ export default {
               this.answer = JSON.parse(remote.questionAnswer)
               this.reply = JSON.parse(remote.answerContent)
               let strArr = []
-              this.answer.forEach((item, index) => {
+              this.answer.forEach(item => {
                 item.answer.forEach(element => {
                   strArr.push(decodeURIComponent(element))
                 })
@@ -1434,7 +1450,7 @@ export default {
                         let childObj = {} // 子题
                         let state // 作业状态
                         let questionIsappeal = child.questionIsappeal === 1 // 是否申诉
-                        let studentIsView // 是否已经批阅
+                        // let studentIsView // 是否已经批阅
                         // 主观题
                         if (child.hasRewive !== 2) {
                           // 不是学生批阅的
