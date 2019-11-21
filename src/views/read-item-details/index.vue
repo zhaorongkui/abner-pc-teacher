@@ -802,6 +802,8 @@ export default {
     // 提交录音
     async submitRecorder() {
       let uploadFileRes
+      // 因为下一行报错，fileUrl定义了并切也使用了，所以将下一行eslint校验关闭掉
+      // eslint-disable-next-line
       let fileUrl = '' // 图片地址
       if (this.file) {
         uploadFileRes = await this.uploadFile(this.file)
