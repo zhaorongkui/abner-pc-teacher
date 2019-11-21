@@ -154,21 +154,21 @@
 </template>
 
 <script>
-import localforage from "localforage";
-import customCircleEcharts from "./components/customCircleEcharts";
-import customTableList from "./components/customTableList";
-import TagList1 from "./components/TagList1";
-import TimeCost1 from "./components/TimeCost1";
-import topic1 from "./components/topic1";
-import LookOriginal from "../../components/LookOriginal";
-import SubtopicList1 from "./components/SubtopicList1";
-import TopicItem from "../../components/problem/topic-item";
+import localforage from 'localforage'
+import customCircleEcharts from './components/customCircleEcharts'
+import customTableList from './components/customTableList'
+import TagList1 from './components/TagList1'
+import TimeCost1 from './components/TimeCost1'
+import topic1 from './components/topic1'
+import LookOriginal from '../../components/LookOriginal'
+import SubtopicList1 from './components/SubtopicList1'
+import TopicItem from '../../components/problem/topic-item'
 // import TrueOfFalse from '../../components/answerDetails/TrueOfFalse'
 // import QuestionGroup from '../../components/answerDetails/QuestionGroup'
 // import FillInTheBlanks from '../../components/answerDetails/FillInTheBlanks'
 // import MultipleChoiceQuestion from '../../components/answerDetails/MultipleChoiceQuestion'
 export default {
-  name: "read-question-details",
+  name: 'read-question-details',
   components: {
     customCircleEcharts,
     customTableList,
@@ -194,39 +194,39 @@ export default {
       questionData: {},
       isTable: false,
       parentQuestionId: 0,
-      avageAnswerTime: "",
-      avageReadTime: "",
+      avageAnswerTime: '',
+      avageReadTime: '',
       labeltitle: 1,
       dailyhomeworkInfos: []
-    };
+    }
   },
   mounted() {
     if (this.$route.params.item) {
-      this.questionId = this.$route.params.item.questionId;
-      this.item1 = this.$route.params.item1;
-      this.getQuestionInfo();
+      this.questionId = this.$route.params.item.questionId
+      this.item1 = this.$route.params.item1
+      this.getQuestionInfo()
     } else {
-      this.questionId = localStorage.getItem("questionId");
-      localforage.getItem("workListItem").then(value => {
-        this.item1 = value;
-        this.getQuestionInfo();
-      });
+      this.questionId = localStorage.getItem('questionId')
+      localforage.getItem('workListItem').then(value => {
+        this.item1 = value
+        this.getQuestionInfo()
+      })
     }
   },
   compouted: {},
   methods: {
     getChartData(data) {
-      this.selecThtype = 0;
-      this.dailyhomeworkInfos = data;
+      this.selecThtype = 0
+      this.dailyhomeworkInfos = data
 
       this.$nextTick(() => {
-        let optionsList = [];
-        let arrLength = [];
-        let errorLength = [];
-        let trueLength = [];
-        let obj = {};
+        let optionsList = []
+        let arrLength = []
+        let errorLength = []
+        let trueLength = []
+        let obj = {}
         if (data.questionTypeCode == 4) {
-          this.selecTh(0, 1);
+          this.selecTh(0, 1)
           // this.$refs.customCircleEcharts.drawPie(
           //   data.childInfoList[0].trueStudentCount || 0,
           //   data.childInfoList[0].errorStudentList != undefined
@@ -262,7 +262,7 @@ export default {
                 ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
                     .pendingStudentList.length
                 : 0
-            );
+            )
           } else {
             this.$refs.customCircleEcharts.drawPieBottom(
               this.dailyhomeworkInfos.childInfoList[this.selecThtype]
@@ -290,7 +290,7 @@ export default {
                 ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
                     .pendingStudentList.length
                 : 0
-            );
+            )
           }
 
           if (
@@ -298,14 +298,14 @@ export default {
               .optionStaticals != undefined
           ) {
             obj = this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-              .optionStaticals;
-            localStorage.setItem("objs", JSON.stringify(obj));
+              .optionStaticals
+            localStorage.setItem('objs', JSON.stringify(obj))
             Object.keys(obj).forEach(function(key) {
-              optionsList.push(key);
-              arrLength.push(obj[key].length);
-            });
-            errorLength = arrLength.slice();
-            trueLength = arrLength.slice();
+              optionsList.push(key)
+              arrLength.push(obj[key].length)
+            })
+            errorLength = arrLength.slice()
+            trueLength = arrLength.slice()
 
             for (
               let i = 0;
@@ -323,16 +323,16 @@ export default {
                     .questionAnswer[i]
                 ) != -1
               ) {
-                errorLength[i] = "-";
+                errorLength[i] = '-'
               } else {
-                trueLength[i] = "-";
+                trueLength[i] = '-'
               }
             }
             this.$refs.customCircleEcharts.drawBar(
               optionsList,
               trueLength,
               errorLength
-            );
+            )
           }
         } else {
           // this.$refs.customCircleEcharts.drawPie(
@@ -360,7 +360,7 @@ export default {
               this.dailyhomeworkInfos.pendingStudentList != undefined
                 ? this.dailyhomeworkInfos.pendingStudentList.length
                 : 0
-            );
+            )
           } else {
             this.$refs.customCircleEcharts.drawPieBottom(
               this.dailyhomeworkInfos.trueStudentList != undefined
@@ -378,18 +378,18 @@ export default {
               this.dailyhomeworkInfos.pendingStudentList != undefined
                 ? this.dailyhomeworkInfos.pendingStudentList.length
                 : 0
-            );
+            )
           }
 
           if (this.dailyhomeworkInfos.optionStaticals != undefined) {
-            obj = this.dailyhomeworkInfos.optionStaticals;
-            localStorage.setItem("objs", JSON.stringify(obj));
+            obj = this.dailyhomeworkInfos.optionStaticals
+            localStorage.setItem('objs', JSON.stringify(obj))
             Object.keys(obj).forEach(function(key) {
-              optionsList.push(key);
-              arrLength.push(obj[key].length);
-            });
-            errorLength = arrLength.slice();
-            trueLength = arrLength.slice();
+              optionsList.push(key)
+              arrLength.push(obj[key].length)
+            })
+            errorLength = arrLength.slice()
+            trueLength = arrLength.slice()
 
             for (
               let i = 0;
@@ -404,9 +404,9 @@ export default {
                   this.dailyhomeworkInfos.questionAnswer[i]
                 ) != -1
               ) {
-                errorLength[i] = "-";
+                errorLength[i] = '-'
               } else {
-                trueLength[i] = "-";
+                trueLength[i] = '-'
               }
             }
 
@@ -414,16 +414,16 @@ export default {
               optionsList,
               trueLength,
               errorLength
-            );
+            )
           }
         }
-      });
+      })
     },
     getTableData(data) {
       let tableData = data.fullQuestionStatistical
         ? JSON.parse(data.fullQuestionStatistical)
-        : [];
-      let result = [];
+        : []
+      let result = []
       tableData.map((val, index) => {
         result.push({
           index: index,
@@ -432,17 +432,17 @@ export default {
           errorStudentCount: val.errorStudentList.length,
           trueStudentCount: val.trueStudentCount,
           unSubmitStudentCount: val.unSubmitStudentCount
-        });
-      });
+        })
+      })
       this.$nextTick(() => {
-        this.$refs.customTableList.readQuestionTableData = [];
-        this.$refs.customTableList.readQuestionTableData.push(...result);
-      });
+        this.$refs.customTableList.readQuestionTableData = []
+        this.$refs.customTableList.readQuestionTableData.push(...result)
+      })
     },
     // 获取试题信息
     getQuestionInfo() {
       this.$http
-        .get("/api/teacher/homework/statistical/article/question/list", {
+        .get('/api/teacher/homework/statistical/article/question/list', {
           params: {
             homeworkClassId: this.item1.homeworkClassId
           }
@@ -453,31 +453,31 @@ export default {
               0,
               this.questionTypeList.length,
               ...res.data.infos
-            );
+            )
             this.questionTypeList.map(val => {
               if (val.questionId === Number(this.questionId)) {
-                this.handleQuestionTypeSelect(val.childQuestion[0]);
-                this.$refs.subtopicList.setValue(val, 1);
+                this.handleQuestionTypeSelect(val.childQuestion[0])
+                this.$refs.subtopicList.setValue(val, 1)
               }
-            });
+            })
           } else {
             res.data.message
               ? this.$message.error(res.data.message)
-              : this.$message.error("获取试题类型失败！");
+              : this.$message.error('获取试题类型失败！')
           }
         })
         .catch(err => {
-          this.$message.error("获取试题类型失败！");
-          console.log(err);
-        });
+          this.$message.error('获取试题类型失败！')
+          console.log(err)
+        })
     },
     lookOriginal() {
-      this.$refs["original"].id = this.questionId;
-      this.$refs["original"].visible = true;
+      this.$refs['original'].id = this.questionId
+      this.$refs['original'].visible = true
     },
     handleQuestionTypeSelect(val) {
       this.$http
-        .get("/api/teacher/homework/statistical/question/info", {
+        .get('/api/teacher/homework/statistical/question/info', {
           params: {
             homeworkClassId: this.item1.homeworkClassId,
             homeworkQuestionId: val.homeworkQuestionId,
@@ -486,63 +486,63 @@ export default {
         })
         .then(res => {
           if (res.data.flag === 1) {
-            let data = res.data.infos;
+            let data = res.data.infos
             if (data.questionTypeCode === 3) {
-              let answer = data.questionAnswer;
+              let answer = data.questionAnswer
               data.questionAnswer = answer
-                ? answer === "N"
-                  ? "错误"
-                  : "正确"
-                : null;
+                ? answer === 'N'
+                  ? '错误'
+                  : '正确'
+                : null
             }
             this.questionData = {
               ...data
-            };
+            }
             localStorage.setItem(
-              "questionData",
+              'questionData',
               JSON.stringify(this.questionData)
-            );
-            let arr = [];
+            )
+            let arr = []
             this.questionTypeList.map(value => {
               if (value.homeworkQuestionId === val.homeworkQuestionParentId) {
-                arr.push(value);
+                arr.push(value)
               }
-            });
+            })
             arr = this.questionTypeList.filter(
               value => value.homeworkQuestionId === val.homeworkQuestionParentId
-            );
-            this.questionId = arr[0].questionId;
-            this.avageAnswerTime = arr[0].avageAnswerTime;
-            this.avageReadTime = arr[0].avageReadTime;
-            this.labeltitle = arr[0].homeworkQuestionSort;
+            )
+            this.questionId = arr[0].questionId
+            this.avageAnswerTime = arr[0].avageAnswerTime
+            this.avageReadTime = arr[0].avageReadTime
+            this.labeltitle = arr[0].homeworkQuestionSort
             // 主观题
             if (val.questionTypeCode === 6) {
-              this.isTable = false;
+              this.isTable = false
               // 渲染图表
-              this.getChartData(data);
+              this.getChartData(data)
             }
             // 填空题
             if (val.questionTypeCode === 5) {
-              this.isTable = true;
+              this.isTable = true
               // 渲染表格
-              this.getTableData(data);
+              this.getTableData(data)
             }
             // 非填空非主观
             if (val.questionTypeCode !== 5 && val.questionTypeCode !== 6) {
-              this.isTable = false;
+              this.isTable = false
               // 渲染图表
-              this.getChartData(data);
+              this.getChartData(data)
             }
           } else {
             res.data.message
               ? this.$message.error(res.data.message)
-              : this.$message.error("获取分析数据失败！");
+              : this.$message.error('获取分析数据失败！')
           }
         })
         .catch(err => {
-          this.$message.error("获取分析数据失败！");
-          console.log(err);
-        });
+          this.$message.error('获取分析数据失败！')
+          console.log(err)
+        })
     },
     // 题组选择
     questionGroupCheck(index, time) {
@@ -550,20 +550,20 @@ export default {
         this.questionData.childInfoList &&
         this.questionData.childInfoList[index]
       ) {
-        let currentId = this.questionData.childInfoList[index].questionInfoId;
-        this.tagListValue = currentId;
-        this.$refs.topic.setValue(this.tagListValue, time);
+        let currentId = this.questionData.childInfoList[index].questionInfoId
+        this.tagListValue = currentId
+        this.$refs.topic.setValue(this.tagListValue, time)
       }
     },
     // 选题号
     selecTh(t, time) {
-      this.selecThtype = t;
-      this.questionGroupCheck(t, time);
-      let optionsList = [];
-      let arrLength = [];
-      let errorLength = [];
-      let trueLength = [];
-      let obj = {};
+      this.selecThtype = t
+      this.questionGroupCheck(t, time)
+      let optionsList = []
+      let arrLength = []
+      let errorLength = []
+      let trueLength = []
+      let obj = {}
       this.$refs.customCircleEcharts.drawPieTop(
         this.dailyhomeworkInfos.childInfoList[this.selecThtype]
           .trueStudentList != undefined
@@ -590,21 +590,21 @@ export default {
           ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
               .pendingStudentList.length
           : 0
-      );
+      )
 
       if (
         this.dailyhomeworkInfos.childInfoList[this.selecThtype]
           .optionStaticals != undefined
       ) {
         obj = this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-          .optionStaticals;
-        localStorage.setItem("objs", JSON.stringify(obj));
+          .optionStaticals
+        localStorage.setItem('objs', JSON.stringify(obj))
         Object.keys(obj).forEach(function(key) {
-          optionsList.push(key);
-          arrLength.push(obj[key].length);
-        });
-        errorLength = arrLength.slice();
-        trueLength = arrLength.slice();
+          optionsList.push(key)
+          arrLength.push(obj[key].length)
+        })
+        errorLength = arrLength.slice()
+        trueLength = arrLength.slice()
 
         for (
           let i = 0;
@@ -622,9 +622,9 @@ export default {
                 .questionAnswer[i]
             ) != -1
           ) {
-            errorLength[i] = "-";
+            errorLength[i] = '-'
           } else {
-            trueLength[i] = "-";
+            trueLength[i] = '-'
           }
         }
 
@@ -632,9 +632,9 @@ export default {
           optionsList,
           trueLength,
           errorLength
-        );
+        )
       }
     }
   }
-};
+}
 </script>
