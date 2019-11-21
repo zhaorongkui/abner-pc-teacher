@@ -753,8 +753,8 @@ export default {
           this.studentInfo = student
           this.reviewType = this.studentInfo.reviewType
           this.homeworkAppealType = this.studentInfo.homeworkAppealType
-          console.log(list)
-          console.log(student)
+          // console.log(list)
+          // console.log(student)
         })
       })
     })
