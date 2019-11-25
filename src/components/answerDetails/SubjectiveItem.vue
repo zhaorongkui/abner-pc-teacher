@@ -84,49 +84,40 @@
 <template>
   <div class="subjective card" style="box-shadow: none">
     <ReadPeerGrading :questionInfo="questionInfo"></ReadPeerGrading>
-
     <div class="canvas">
-      <template
-        v-if="techerReviewList.length > 0 && techerReviewList[0].reviewFileStr"
-      >
-        <EditCanvas
-          :src="techerReviewList[0].reviewFileStr.split(',')[picIndex - 1]"
-          @importImg="handleImportImg"
-          :picIndex="picIndex"
-        ></EditCanvas>
+      <div class="share" @click="share()">
+        <img src="../../assets/img/shareNormal.png" alt="" v-if="ifShare===0" />
+        <img src="../../assets/img/shareOut.png" alt="" v-else/>
+        <span v-if="ifShare===0">分享全班</span>
+        <span class="hover-span" v-else>分享全班</span>
+      </div>
+      <template v-if="techerReviewList.length > 0 && techerReviewList[0].reviewFileStr">
+        <EditCanvas :src="techerReviewList[0].reviewFileStr.split(',')[picIndex - 1]" @importImg="handleImportImg" :picIndex="picIndex"></EditCanvas>
         <div class="pagination">
           <ul>
             <li @click="handleLeft">
               <a-icon type="caret-left" />
             </li>
             <li>
-              <span>{{ picIndex }}</span
-              >/{{ techerReviewList[0].reviewFileStr.split(',').length }}
+              <span>{{ picIndex }}</span>/{{ techerReviewList[0].reviewFileStr.split(',').length }}
             </li>
-            <li
-              @click="
+            <li @click="
                 handleRight(techerReviewList[0].reviewFileStr.split(',').length)
-              "
-            >
+              ">
               <a-icon type="caret-right" />
             </li>
           </ul>
         </div>
       </template>
       <template v-else-if="fileList.length > 0">
-        <EditCanvas
-          :src="fileList[picIndex - 1].answerFileUrlStr"
-          :picIndex="picIndex"
-          @importImg="handleImportImg"
-        ></EditCanvas>
+        <EditCanvas :src="fileList[picIndex - 1].answerFileUrlStr" :picIndex="picIndex" @importImg="handleImportImg"></EditCanvas>
         <div class="pagination">
           <ul>
             <li @click="handleLeft">
               <a-icon type="caret-left" />
             </li>
             <li>
-              <span>{{ picIndex }}</span
-              >/{{ fileList.length }}
+              <span>{{ picIndex }}</span>/{{ fileList.length }}
             </li>
             <li @click="handleRight(fileList.length)">
               <a-icon type="caret-right" />
@@ -136,8 +127,7 @@
       </template>
       <template v-else>
         <div class="default-pic">
-          <img src="../../assets/img/pic_homepage_empty@2x.png" alt="" />
-          没有上传答案图片
+          <img src="../../assets/img/pic_homepage_empty@2x.png" alt="" /> 没有上传答案图片
         </div>
       </template>
     </div>
@@ -182,6 +172,17 @@ export default {
         })
       if (result.length === 0) {
         result = this.questionInfo.fileList || []
+        if (
+          (this.questionInfo.hasRewive == 1 ||
+            this.questionInfo.hasRewive == 4) &&
+          this.questionInfo.isTrue == 0
+        ) {
+          console.log('正确')
+          // this.ifShare = 1;
+        } else {
+          console.log('正确才能分享哦')
+          // this.ifShare = 0;
+        }
       }
       return result
     }
@@ -248,6 +249,7 @@ export default {
                 this.questionInfo.homeworkQuestionId
               )
               this.$store.dispatch('marking/questionInfo')
+              // console.log(this.questionInfo)
               this.updateIfShare()
             }
           })
