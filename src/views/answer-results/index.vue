@@ -82,7 +82,7 @@
                     id="myChart"
                     :style="{
                       width: '460px',
-                      height: '200px',
+                      height: '260px',
                       margin: '10px auto 0 '
                     }"
                   ></div>
@@ -90,8 +90,8 @@
                   <div
                     id="myCharts"
                     :style="{
-                      width: '450px',
-                      height: '200px',
+                      width: '420px',
+                      height: '260px',
                       margin: '0px auto 0 '
                     }"
                   ></div>
@@ -111,7 +111,7 @@
                     id="myChart"
                     :style="{
                       width: '460px',
-                      height: '200px',
+                      height: '260px',
                       margin: '10px auto 0 '
                     }"
                   ></div>
@@ -135,7 +135,7 @@
                     id="myChart"
                     :style="{
                       width: '460px',
-                      height: '200px',
+                      height: '260px',
                       margin: '10px auto 0 '
                     }"
                   ></div>
@@ -147,8 +147,8 @@
                         dailyhomeworkInfos.questionTypeCode == 1
                     "
                     :style="{
-                      width: '450px',
-                      height: '200px',
+                      width: '420px',
+                      height: '260px',
                       margin: '0px auto 0 '
                     }"
                   ></div>
@@ -171,7 +171,7 @@
                     id="myChart"
                     :style="{
                       width: '460px',
-                      height: '200px',
+                      height: '260px',
                       margin: '10px auto 0 '
                     }"
                   ></div>
@@ -1033,12 +1033,13 @@ export default {
           name: '人数',
           max: function(val) {
             let value = val.max
-            let prec = 2
-            let ceil = true
             let number
 
             const mult = Math.pow(10, 1)
             number = Math.ceil(Number(value) / mult) * mult
+            if (number <= 10) {
+              number = 10
+            }
             return number
           },
           axisTick: {
@@ -1473,5 +1474,6 @@ export default {
   justify-content: space-around !important;
   flex-direction: column !important;
   align-items: center !important;
+  overflow: scroll;
 }
 </style>
