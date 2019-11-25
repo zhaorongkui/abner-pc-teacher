@@ -1457,7 +1457,8 @@ export default {
           this.publishPageWorkHomeProgress === '' ||
           this.publishPageWorkHomeProgress === undefined
         ) {
-          this.workbookPageInfoList = this.workbookChaptersAllList[0].workbookChapters[0].workbookPageInfoList //接收第一组数据
+           
+          this.workbookPageInfoList = this.workbookChaptersListTree[0].workbookPageInfoList //接收第一组数据
           for (var j = 0; j < this.workbookPageInfoList.length; j++) {
             if (
               this.workbookPageInfoList[j].workbookPageQuestionnum +
