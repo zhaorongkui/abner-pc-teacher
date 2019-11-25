@@ -536,6 +536,7 @@ export default {
       }
     },
     selectId(id) {
+      this.selecThtype = 0
       this.homeworkQuestionId = id
       this.dailyhomeworkInfo()
     },
