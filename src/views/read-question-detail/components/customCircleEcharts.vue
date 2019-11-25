@@ -409,7 +409,7 @@ export default {
         errorrate ? '#FD6265' : '',
         unsubmit ? '#ccc' : '',
         half ? '#FBA057' : '',
-        pend != undefined && pend != 0 ? '#FF8D12' : ''
+        pend != undefined && pend != 0 ? '#8493A8' : ''
       )
       this.options.series[0].data.push(
         truerate != undefined && truerate != 0
@@ -503,7 +503,7 @@ export default {
         errorrate ? '#FD6265' : '',
         unsubmit ? '#ccc' : '',
         half ? '#FBA057' : '',
-        pend != undefined && pend != 0 ? '#FF8D12' : ''
+        pend != undefined && pend != 0 ? '#8493A8' : ''
       )
       this.options.series[0].data.push(
         truerate != undefined && truerate != 0
@@ -619,8 +619,7 @@ export default {
           name: '人数',
           max: function(val) {
             let value = val.max
-            let prec = 2
-            let ceil = true
+
             let number
 
             const mult = Math.pow(10, 1)
