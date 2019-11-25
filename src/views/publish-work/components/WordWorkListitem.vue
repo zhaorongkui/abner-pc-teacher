@@ -20,7 +20,7 @@
         <span class="choice-count">已选数量{{ pageCount }}</span>
         <span class="line"></span>
         <el-checkbox v-model="checked" @change="onChange"
-          >P{{ pageIndex + 1 }}</el-checkbox
+          >P{{ item.page }}</el-checkbox
         >
       </div>
     </header>
