@@ -153,6 +153,9 @@ export default {
   computed: {
     // 教师批阅列表
     techerReviewList() {
+      this.$store.state.marking.questionInfo.ifShare === 0
+        ? (this.ifShare = 1)
+        : (this.ifShare = 0)
       return (
         (this.questionInfo.reviewList &&
           this.questionInfo.reviewList.filter(
@@ -172,17 +175,6 @@ export default {
         })
       if (result.length === 0) {
         result = this.questionInfo.fileList || []
-        if (
-          (this.questionInfo.hasRewive == 1 ||
-            this.questionInfo.hasRewive == 4) &&
-          this.questionInfo.isTrue == 0
-        ) {
-          console.log('正确')
-          // this.ifShare = 1;
-        } else {
-          console.log('正确才能分享哦')
-          // this.ifShare = 0;
-        }
       }
       return result
     }
@@ -200,9 +192,7 @@ export default {
       this.blob = null
     }
   },
-  mounted() {
-    this.questionInfo.ifShare === 0 ? (this.ifShare = 1) : (this.ifShare = 0)
-  },
+  mounted() {},
   methods: {
     handleImportImg(blob) {
       this.blob = blob
@@ -249,7 +239,6 @@ export default {
                 this.questionInfo.homeworkQuestionId
               )
               this.$store.dispatch('marking/questionInfo')
-              // console.log(this.questionInfo)
               this.updateIfShare()
             }
           })
