@@ -82,8 +82,8 @@
                     id="myChart"
                     :style="{
                       width: '460px',
-                      height: '260px',
-                      margin: '0px auto 0 '
+                      height: '200px',
+                      margin: '10px auto 0 '
                     }"
                   ></div>
 
@@ -91,7 +91,7 @@
                     id="myCharts"
                     :style="{
                       width: '450px',
-                      height: '260px',
+                      height: '200px',
                       margin: '0px auto 0 '
                     }"
                   ></div>
@@ -111,8 +111,8 @@
                     id="myChart"
                     :style="{
                       width: '460px',
-                      height: '260px',
-                      margin: '20px auto 0 '
+                      height: '200px',
+                      margin: '10px auto 0 '
                     }"
                   ></div>
                 </div>
@@ -135,8 +135,8 @@
                     id="myChart"
                     :style="{
                       width: '460px',
-                      height: '260px',
-                      margin: '20px auto 0 '
+                      height: '200px',
+                      margin: '10px auto 0 '
                     }"
                   ></div>
 
@@ -148,7 +148,7 @@
                     "
                     :style="{
                       width: '450px',
-                      height: '260px',
+                      height: '200px',
                       margin: '0px auto 0 '
                     }"
                   ></div>
@@ -171,8 +171,8 @@
                     id="myChart"
                     :style="{
                       width: '460px',
-                      height: '260px',
-                      margin: '20px auto 0 '
+                      height: '200px',
+                      margin: '10px auto 0 '
                     }"
                   ></div>
                 </div>
@@ -1092,6 +1092,7 @@ export default {
 .answer-results-wrap {
   @include wh(100%, 100%);
 }
+
 .single-items-wrap {
   .dialog-wrap {
     @include wh(100%, 100%);
@@ -1465,5 +1466,12 @@ export default {
   > div.zd-tongji-pd
   > div:nth-child(1) {
   justify-content: start;
+}
+.echart {
+  height: 90% !important;
+  display: flex;
+  justify-content: space-around !important;
+  flex-direction: column !important;
+  align-items: center !important;
 }
 </style>
