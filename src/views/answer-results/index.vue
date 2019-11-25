@@ -211,9 +211,21 @@
                         >
                       </span>
                     </span>
-                    <span>{{ item.trueStudentCount }}</span>
-                    <span>{{ item.errorStudentList.length }}</span>
-                    <span>{{ item.unSubmitStudentCount }}</span>
+                    <span>{{
+                      item.trueStudentList != undefined
+                        ? item.trueStudentList.length
+                        : 0
+                    }}</span>
+                    <span>{{
+                      item.errorStudentList != undefined
+                        ? item.errorStudentList.length
+                        : 0
+                    }}</span>
+                    <span>{{
+                      item.unSubmitStudentList != undefined
+                        ? item.unSubmitStudentList.length
+                        : 0
+                    }}</span>
                   </p>
                 </div>
               </div>
@@ -790,7 +802,7 @@ export default {
           errorrate != undefined && errorrate != 0 ? '#FD6265' : '',
           unsubmit != undefined && unsubmit != 0 ? '#ccc' : '',
           half != undefined && half != 0 ? '#FBA057' : '',
-          pend != undefined && pend != 0 ? '#FF8D12' : ''
+          pend != undefined && pend != 0 ? '#8493A8' : ''
         ],
         series: [
           {
@@ -903,7 +915,7 @@ export default {
           errorrate != undefined && errorrate != 0 ? '#FD6265' : '',
           unsubmit != undefined && unsubmit != 0 ? '#ccc' : '',
           half != undefined && half != 0 ? '#FBA057' : '',
-          pend != undefined && pend != 0 ? '#FF8D12' : ''
+          pend != undefined && pend != 0 ? '#8493A8' : ''
         ],
         series: [
           {
