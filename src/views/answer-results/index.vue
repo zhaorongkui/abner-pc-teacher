@@ -1499,7 +1499,8 @@ export default {
             > span {
               @include fj(center);
               align-items: center;
-              @include wh(64px, 24px);
+              display: inline-block;
+              padding: 3px 10px;
               @include sc(12px, #fff);
               background: rgba(86, 172, 255, 1);
               border-radius: 12px;
@@ -1551,7 +1552,8 @@ export default {
           > span {
             @include fj(center);
             align-items: center;
-            @include wh(64px, 24px);
+            display: inline-block;
+            padding: 3px 10px;
             @include sc(12px, #fff);
             background: rgba(86, 172, 255, 1);
             border-radius: 12px;
@@ -1646,7 +1648,8 @@ export default {
             > span {
               @include fj(center);
               align-items: center;
-              @include wh(64px, 24px);
+              display: inline-block;
+              padding: 3px 10px;
               @include sc(12px, #fff);
               background: rgba(86, 172, 255, 1);
               border-radius: 12px;
