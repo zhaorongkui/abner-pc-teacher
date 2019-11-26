@@ -606,7 +606,6 @@ const actions = {
   // 听说--课本章节
   async getEnglishWork({ commit, dispatch, rootGetters }) {
     let result = await dispatch('publishPageWorkHomeProgress')
-    // console.log(rootGetters);
     return http
       .get('/api/textbook/getTextbookChapter/video', {
         params: {
@@ -615,11 +614,18 @@ const actions = {
       })
       .then(({ data }) => {
         if (data.flag === 1) {
-          data.infos.forEach(item => {
+          data.infos.forEach((item, index) => {
+            if (item.textbookChapterLevel === 1) {
+              data.infos.splice(index, 1)
+            }
             if (item.unitModelList) {
-              item.unitModelList.forEach((item1, index1) => {
+              item.unitModelList.forEach((item1) => {
                 if (item1.unitModelId === 0) {
-                  item.unitModelList.splice(index1, 1);
+                  item.unitModelList.forEach((item1, index1) => {
+                    if (item1.unitModelId !== 0) {
+                      item.unitModelList.splice(index1, 1);
+                    }
+                  })
                 }
               })
             }

@@ -84,7 +84,6 @@
 <template>
   <div class="subjective card" style="box-shadow: none">
     <ReadPeerGrading :questionInfo="questionInfo"></ReadPeerGrading>
-
     <div class="canvas">
       <div class="share" @click="share()">
         <img
@@ -92,9 +91,9 @@
           alt=""
           v-if="ifShare === 0"
         />
-        <img src="../../assets/img/shareOut.png" alt="" v-if="ifShare === 1" />
+        <img src="../../assets/img/shareOut.png" alt="" v-else />
         <span v-if="ifShare === 0">分享全班</span>
-        <span class="hover-span" v-if="ifShare === 1">分享全班</span>
+        <span class="hover-span" v-else>分享全班</span>
       </div>
       <template
         v-if="techerReviewList.length > 0 && techerReviewList[0].reviewFileStr"
@@ -155,6 +154,7 @@
 </template>
 <script>
 // 主观题
+import localforage from 'localforage'
 import ReadPeerGrading from './ReadPeerGrading'
 import EditCanvas from '../../views/work-marking/components/EditCanvas'
 export default {
@@ -172,6 +172,11 @@ export default {
   computed: {
     // 教师批阅列表
     techerReviewList() {
+    /* eslint-disable */
+      this.$store.state.marking.questionInfo.ifShare === 0
+        ? (this.ifShare = 1)
+        : (this.ifShare = 0)
+    /* eslint-enable */
       return (
         (this.questionInfo.reviewList &&
           this.questionInfo.reviewList.filter(
@@ -208,9 +213,7 @@ export default {
       this.blob = null
     }
   },
-  mounted() {
-    this.questionInfo.ifShare === 0 ? (this.ifShare = 1) : (this.ifShare = 0)
-  },
+  mounted() {},
   methods: {
     handleImportImg(blob) {
       this.blob = blob
@@ -231,6 +234,7 @@ export default {
       return this.blob
     },
     share() {
+      // console.log(this.$store.state.marking.questionInfo)
       if (
         (this.questionInfo.hasRewive == 1 ||
           this.questionInfo.hasRewive == 4) &&
@@ -248,6 +252,13 @@ export default {
               } else {
                 this.$message.success('取消分享成功')
               }
+              localforage.getItem('student').then(student => {
+                this.$store.commit('marking/STUDENTINFOID', student.studentId)
+              })
+              this.$store.commit(
+                'marking/UPDATEHOMEWORKQUESTIONID',
+                this.questionInfo.homeworkQuestionId
+              )
               this.$store.dispatch('marking/questionInfo')
               this.updateIfShare()
             }

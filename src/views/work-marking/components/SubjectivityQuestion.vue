@@ -893,7 +893,9 @@ export default {
           fd.append('file', self.reviewVoice)
           self.$http
             .post(
-              `/teacherApi/upload/uploadCommonFile/voice/homework/${self.subjectAbbreviation}`,
+              `/teacherApi/upload/uploadCommonFile/voice/homework/${
+                self.subjectAbbreviation
+              }`,
               fd,
               {
                 headers: {
@@ -910,7 +912,9 @@ export default {
                 fd.append('file', self.blob[key])
                 self.$http
                   .post(
-                    `/teacherApi/upload/uploadCommonFile/img/homework/${self.subjectAbbreviation}`,
+                    `/teacherApi/upload/uploadCommonFile/img/homework/${
+                      self.subjectAbbreviation
+                    }`,
                     fd,
                     {
                       headers: {
@@ -1036,7 +1040,9 @@ export default {
           fd.append('file', self.reviewVoice)
           self.$http
             .post(
-              `/teacherApi/upload/uploadCommonFile/voice/homework/${self.subjectAbbreviation}`,
+              `/teacherApi/upload/uploadCommonFile/voice/homework/${
+                self.subjectAbbreviation
+              }`,
               fd,
               {
                 headers: {
@@ -1114,7 +1120,9 @@ export default {
             fd.append('file', self.blob[key])
             self.$http
               .post(
-                `/teacherApi/upload/uploadCommonFile/img/homework/${self.subjectAbbreviation}`,
+                `/teacherApi/upload/uploadCommonFile/img/homework/${
+                  self.subjectAbbreviation
+                }`,
                 fd,
                 {
                   headers: {
@@ -1339,7 +1347,9 @@ export default {
           fd.append('file', self.reviewVoice)
           self.$http
             .post(
-              `/teacherApi/upload/uploadCommonFile/voice/homework/${self.subjectAbbreviation}`,
+              `/teacherApi/upload/uploadCommonFile/voice/homework/${
+                self.subjectAbbreviation
+              }`,
               fd,
               {
                 headers: {
@@ -1356,7 +1366,9 @@ export default {
                 fd.append('file', self.blob[key])
                 self.$http
                   .post(
-                    `/teacherApi/upload/uploadCommonFile/img/homework/${self.subjectAbbreviation}`,
+                    `/teacherApi/upload/uploadCommonFile/img/homework/${
+                      self.subjectAbbreviation
+                    }`,
                     fd,
                     {
                       headers: {
@@ -1428,7 +1440,9 @@ export default {
           fd.append('file', self.reviewVoice)
           self.$http
             .post(
-              `/teacherApi/upload/uploadCommonFile/voice/homework/${self.subjectAbbreviation}`,
+              `/teacherApi/upload/uploadCommonFile/voice/homework/${
+                self.subjectAbbreviation
+              }`,
               fd,
               {
                 headers: {
@@ -1466,7 +1480,9 @@ export default {
             fd.append('file', self.blob[key])
             self.$http
               .post(
-                `/teacherApi/upload/uploadCommonFile/img/homework/${self.subjectAbbreviation}`,
+                `/teacherApi/upload/uploadCommonFile/img/homework/${
+                  self.subjectAbbreviation
+                }`,
                 fd,
                 {
                   headers: {
