@@ -2,37 +2,20 @@
   <div class="item">
     <header>
       <div class="toggle">
-        <img
-          @click="handleToggle"
-          v-show="!toggle"
-          src="../../../assets/img/publish/zk.png"
-          alt=""
-        />
-        <img
-          @click="handleToggle"
-          v-show="toggle"
-          src="../../../assets/img/publish/sq.png"
-          alt=""
-        />
+        <img @click="handleToggle" v-show="!toggle" src="../../../assets/img/publish/zk.png" alt="" />
+        <img @click="handleToggle" v-show="toggle" src="../../../assets/img/publish/sq.png" alt="" />
       </div>
       <div class="count">
         <span class="word-count">单词数量{{ item.wordInfoList.length }}</span>
         <span class="choice-count">已选数量{{ pageCount }}</span>
         <span class="line"></span>
-        <el-checkbox v-model="checked" @change="onChange"
-          >P{{ pageIndex + 1 }}</el-checkbox
-        >
+        <el-checkbox v-model="checked" @change="onChange">P{{ item.page }}</el-checkbox>
       </div>
     </header>
     <div class="content" v-show="toggle">
       <ul>
         <template v-for="(item, wordIndex) of item.wordInfoList">
-          <WordItem
-            :wordIndex="wordIndex"
-            :pageIndex="pageIndex"
-            :key="item.wordId"
-            :item="item"
-          ></WordItem>
+          <WordItem :wordIndex="wordIndex" :pageIndex="pageIndex" :key="item.wordId" :item="item"></WordItem>
         </template>
       </ul>
     </div>
