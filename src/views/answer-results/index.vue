@@ -60,6 +60,7 @@
             <div
               class="zd-tongji-tz"
               v-if="dailyhomeworkInfos.questionTypeCode == 4"
+              style="overflow: scroll;"
             >
               <div style="overflow:scroll;display:block">
                 <span style="margin-top:10px">作答分析</span>
@@ -103,6 +104,7 @@
             <div
               class="zd-tongji-pd"
               v-if="dailyhomeworkInfos.questionTypeCode == 3"
+              style="overflow: scroll;"
             >
               <div style="overflow:scroll;display:block">
                 <span>作答分析</span>
@@ -127,6 +129,7 @@
                   dailyhomeworkInfos.questionTypeCode == 1 ||
                   dailyhomeworkInfos.questionTypeCode == 2
               "
+              style="overflow: scroll;"
             >
               <div style="overflow:scroll;display:block">
                 <span>作答分析</span>
@@ -163,6 +166,7 @@
                 dailyhomeworkInfos.questionTypeCode == 5 &&
                   dailyhomeworkInfos.questionProperty == 1
               "
+              style="overflow: scroll;"
             >
               <div style="overflow:scroll;display:block">
                 <span>作答分析</span>
@@ -187,6 +191,7 @@
                 dailyhomeworkInfos.questionTypeCode == 5 &&
                   dailyhomeworkInfos.questionProperty == 2
               "
+              style="overflow: scroll;"
             >
               <span>作答分析</span>
               <div>
@@ -1698,7 +1703,8 @@ export default {
   justify-content: start;
 }
 .echart {
-  height: 540px !important;
+  height: auto !important;
+  padding-bottom: 20px;
   display: flex;
   justify-content: space-around !important;
   flex-direction: column !important;
