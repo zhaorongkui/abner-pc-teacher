@@ -127,7 +127,15 @@
   <div class="statistic_area">
     <div id="myChart" :style="{ width: '440px', height: '260px' }"></div>
     <!-- <div id="myCharts" :style="{ width: '440px', height: '260px' }"></div> -->
-    <div id="myCharts" :style="{ width: '440px', height: '260px' }"></div>
+    <div
+      id="myCharts"
+      :style="{ width: '440px', height: '260px' }"
+      v-if="
+        this.questionTypeCode == 1 ||
+          this.questionTypeCode == 2 ||
+          this.questionTypeCode == 4
+      "
+    ></div>
     <el-dialog
       class="custom_dialog"
       :visible.sync="showUnfinishedStdModal"
@@ -359,6 +367,17 @@ export default {
         this.questionTypeCode == 4
       ) {
         this.charts = this.$echarts.init(document.getElementById('myCharts'))
+        var self = this
+        this.charts.on('click', function(param) {
+          let obj = JSON.parse(localStorage.getItem('objs'))
+          Object.keys(obj).forEach(function(key) {
+            if (param.name == key) {
+              self.param = key
+              self.showdialogFlagXx = true
+              self.paramXx = obj[key]
+            }
+          })
+        })
       }
 
       this.chart.setOption(this.options)
@@ -383,17 +402,6 @@ export default {
           this.showDialog1 = true
         }
         // this.getUnfinishedStd();
-      })
-      var self = this
-      this.charts.on('click', function(param) {
-        let obj = JSON.parse(localStorage.getItem('objs'))
-        Object.keys(obj).forEach(function(key) {
-          if (param.name == key) {
-            self.param = key
-            self.showdialogFlagXx = true
-            self.paramXx = obj[key]
-          }
-        })
       })
     },
     drawPieTop(truerate, errorrate, unsubmit, half, pend) {

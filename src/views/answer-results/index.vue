@@ -60,8 +60,9 @@
             <div
               class="zd-tongji-tz"
               v-if="dailyhomeworkInfos.questionTypeCode == 4"
+              style="overflow: scroll;"
             >
-              <div style="overflow:auto">
+              <div style="overflow:scroll;display:block">
                 <span style="margin-top:10px">作答分析</span>
                 <div style="margin-top:10px">
                   <div>
@@ -103,8 +104,9 @@
             <div
               class="zd-tongji-pd"
               v-if="dailyhomeworkInfos.questionTypeCode == 3"
+              style="overflow: scroll;"
             >
-              <div>
+              <div style="overflow:scroll;display:block">
                 <span>作答分析</span>
                 <div class="echart">
                   <div
@@ -127,8 +129,9 @@
                   dailyhomeworkInfos.questionTypeCode == 1 ||
                   dailyhomeworkInfos.questionTypeCode == 2
               "
+              style="overflow: scroll;"
             >
-              <div>
+              <div style="overflow:scroll;display:block">
                 <span>作答分析</span>
                 <div class="echart">
                   <div
@@ -163,8 +166,9 @@
                 dailyhomeworkInfos.questionTypeCode == 5 &&
                   dailyhomeworkInfos.questionProperty == 1
               "
+              style="overflow: scroll;"
             >
-              <div>
+              <div style="overflow:scroll;display:block">
                 <span>作答分析</span>
                 <div class="echart">
                   <div
@@ -187,6 +191,7 @@
                 dailyhomeworkInfos.questionTypeCode == 5 &&
                   dailyhomeworkInfos.questionProperty == 2
               "
+              style="overflow: scroll;"
             >
               <span>作答分析</span>
               <div>
@@ -710,23 +715,22 @@ export default {
           let i = 0;
           i <
           this.dailyhomeworkInfos.childInfoList[this.selecThtype].questionAnswer
-            .length +
-            optionsList.length -
-            this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-              .questionAnswer.length;
+            .length;
           i++
         ) {
-          if (
-            optionsList.indexOf(
+          optionsList.forEach((item, index) => {
+            if (
+              item !=
               this.dailyhomeworkInfos.childInfoList[this.selecThtype]
                 .questionAnswer[i]
-            ) != -1
-          ) {
-            errorLength[i] = '-'
-          } else {
-            trueLength[i] = '-'
-          }
+            ) {
+              trueLength[index] = '-'
+            } else {
+              errorLength[index] = '-'
+            }
+          })
         }
+
         this.drawBar(optionsList, trueLength, errorLength)
 
         if (
@@ -772,7 +776,7 @@ export default {
             let trueLength = []
             let obj = {}
             if (this.dailyhomeworkInfos.questionTypeCode == 4) {
-              if (this.dailyhomeworkInfos.optionStaticals != undefined) {
+              if (this.dailyhomeworkInfos.childInfoList != undefined) {
                 this.drawPieTop(
                   this.dailyhomeworkInfos.childInfoList[this.selecThtype]
                     .trueStudentList != undefined
@@ -847,22 +851,20 @@ export default {
                   let i = 0;
                   i <
                   this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                    .questionAnswer.length +
-                    optionsList.length -
-                    this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                      .questionAnswer.length;
+                    .questionAnswer.length;
                   i++
                 ) {
-                  if (
-                    optionsList.indexOf(
+                  optionsList.forEach((item, index) => {
+                    if (
+                      item !=
                       this.dailyhomeworkInfos.childInfoList[this.selecThtype]
                         .questionAnswer[i]
-                    ) != -1
-                  ) {
-                    errorLength[i] = '-'
-                  } else {
-                    trueLength[i] = '-'
-                  }
+                    ) {
+                      trueLength[index] = '-'
+                    } else {
+                      errorLength[index] = '-'
+                    }
+                  })
                 }
                 this.drawBar(optionsList, trueLength, errorLength)
               }
@@ -917,10 +919,7 @@ export default {
 
                 for (
                   let i = 0;
-                  i <
-                  this.dailyhomeworkInfos.questionAnswer.length +
-                    optionsList.length -
-                    this.dailyhomeworkInfos.questionAnswer.length;
+                  i < this.dailyhomeworkInfos.questionAnswer.length;
                   i++
                 ) {
                   if (
@@ -928,11 +927,18 @@ export default {
                       this.dailyhomeworkInfos.questionAnswer[i]
                     ) != -1
                   ) {
-                    errorLength[i] = '-'
-                  } else {
-                    trueLength[i] = '-'
+                    errorLength[
+                      optionsList.indexOf(
+                        this.dailyhomeworkInfos.questionAnswer[i]
+                      )
+                    ] = '-'
                   }
                 }
+                errorLength.forEach((item, index) => {
+                  if (item != '-') {
+                    trueLength[index] = '-'
+                  }
+                })
                 this.drawBar(optionsList, trueLength, errorLength)
               }
             }
@@ -1123,7 +1129,7 @@ export default {
           formatter: '{b}:{c}人 {d}%  '
         },
         legend: {
-          top: 'top',
+          top: 'auto',
           data: ['做对', '做错', '未提交', '半对', '未批阅']
         },
         color: [
@@ -1697,7 +1703,8 @@ export default {
   justify-content: start;
 }
 .echart {
-  height: 90% !important;
+  height: auto !important;
+  padding-bottom: 20px;
   display: flex;
   justify-content: space-around !important;
   flex-direction: column !important;

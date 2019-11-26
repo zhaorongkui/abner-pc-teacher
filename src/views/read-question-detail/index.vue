@@ -235,7 +235,7 @@ export default {
           //   data.childInfoList[0].unSubmitStudentCount || 0,
           //   data.childInfoList[0].halfTrueStudentCount || 0
           // );
-          if (this.dailyhomeworkInfos.optionStaticals != undefined) {
+          if (this.dailyhomeworkInfos.childInfoList != undefined) {
             this.$refs.customCircleEcharts.drawPieTop(
               this.dailyhomeworkInfos.childInfoList[this.selecThtype]
                 .trueStudentList != undefined
@@ -311,22 +311,20 @@ export default {
               let i = 0;
               i <
               this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                .questionAnswer.length +
-                optionsList.length -
-                this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                  .questionAnswer.length;
+                .questionAnswer.length;
               i++
             ) {
-              if (
-                optionsList.indexOf(
+              optionsList.forEach((item, index) => {
+                if (
+                  item !=
                   this.dailyhomeworkInfos.childInfoList[this.selecThtype]
                     .questionAnswer[i]
-                ) != -1
-              ) {
-                errorLength[i] = '-'
-              } else {
-                trueLength[i] = '-'
-              }
+                ) {
+                  trueLength[index] = '-'
+                } else {
+                  errorLength[index] = '-'
+                }
+              })
             }
             this.$refs.customCircleEcharts.drawBar(
               optionsList,
@@ -393,10 +391,7 @@ export default {
 
             for (
               let i = 0;
-              i <
-              this.dailyhomeworkInfos.questionAnswer.length +
-                optionsList.length -
-                this.dailyhomeworkInfos.questionAnswer.length;
+              i < this.dailyhomeworkInfos.questionAnswer.length;
               i++
             ) {
               if (
@@ -404,11 +399,16 @@ export default {
                   this.dailyhomeworkInfos.questionAnswer[i]
                 ) != -1
               ) {
-                errorLength[i] = '-'
-              } else {
-                trueLength[i] = '-'
+                errorLength[
+                  optionsList.indexOf(this.dailyhomeworkInfos.questionAnswer[i])
+                ] = '-'
               }
             }
+            errorLength.forEach((item, index) => {
+              if (item != '-') {
+                trueLength[index] = '-'
+              }
+            })
 
             this.$refs.customCircleEcharts.drawBar(
               optionsList,
@@ -430,8 +430,8 @@ export default {
           answer: val.answer,
           errorStudentList: val.errorStudentList,
           errorStudentCount: val.errorStudentList.length,
-          trueStudentCount: val.trueStudentCount,
-          unSubmitStudentCount: val.unSubmitStudentCount
+          trueStudentList: val.trueStudentList.length,
+          unSubmitStudentList: val.unSubmitStudentList.length
         })
       })
       this.$nextTick(() => {
@@ -610,22 +610,20 @@ export default {
           let i = 0;
           i <
           this.dailyhomeworkInfos.childInfoList[this.selecThtype].questionAnswer
-            .length +
-            optionsList.length -
-            this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-              .questionAnswer.length;
+            .length;
           i++
         ) {
-          if (
-            optionsList.indexOf(
+          optionsList.forEach((item, index) => {
+            if (
+              item !=
               this.dailyhomeworkInfos.childInfoList[this.selecThtype]
                 .questionAnswer[i]
-            ) != -1
-          ) {
-            errorLength[i] = '-'
-          } else {
-            trueLength[i] = '-'
-          }
+            ) {
+              trueLength[index] = '-'
+            } else {
+              errorLength[index] = '-'
+            }
+          })
         }
 
         this.$refs.customCircleEcharts.drawBar(

@@ -81,11 +81,11 @@ Vue.directive('anchor', {
       if (binding.value == 0) {
         document.querySelectorAll('.work-stem')[0].scrollTop =
           document.querySelectorAll('#anchor-' + (binding.value - 0))[0]
-            .offsetTop - 120
+            .offsetTop - 200
       } else {
         document.querySelectorAll('.work-stem')[0].scrollTop =
           document.querySelectorAll('#anchor-' + (binding.value - 1))[0]
-            .offsetTop + 60
+            .offsetTop + 120
       }
     }
   }
