@@ -14,6 +14,10 @@
             :isToggles="isToggle"
           ></EnglishWorkList>
         </template>
+        <div class="null" v-if="EnglishWorkList.length === 0">
+          <img src="../../../assets/img/publish/nulldata.png" alt="" />
+          <span>当前章节中暂无数据</span>
+        </div>
       </ul>
     </div>
   </div>
@@ -63,7 +67,7 @@ export default {
               ? data.result.infos.textbookChapterCode
               : null
           this.unitModelId = null
-            // localStorage.getItem('EnglishWorkUnitModelId') || null
+          // localStorage.getItem('EnglishWorkUnitModelId') || null
           this.EnglishWork.forEach((item, index) => {
             //注释 //if (item.unitModelList && item.unitModelList.length > 0) {
             if (this.textbookChapterId != null) {
@@ -104,7 +108,9 @@ export default {
             for (let i = num - 1; i > 0; i--) {
               if (this.EnglishWork[i].questionCount != undefined) {
                 this.textbookChapterId = this.EnglishWork[i].textbookChapterId
-                this.textbookChapterCode = this.EnglishWork[i].textbookChapterCode
+                this.textbookChapterCode = this.EnglishWork[
+                  i
+                ].textbookChapterCode
                 if (this.EnglishWork[i].unitModelList != undefined) {
                   for (
                     let j = 0;
@@ -132,7 +138,9 @@ export default {
               ) {
                 if (!textbookChapterIds) {
                   this.textbookChapterId = this.EnglishWork[i].textbookChapterId
-                  this.textbookChapterCode = this.EnglishWork[i].textbookChapterCode
+                  this.textbookChapterCode = this.EnglishWork[
+                    i
+                  ].textbookChapterCode
                   textbookChapterIds = this.EnglishWork[i].textbookChapterId
                 }
                 for (
@@ -172,6 +180,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import '@/styles/variable.scss';
 .english-work {
   width: 1200px;
   height: 700px;
@@ -200,6 +209,19 @@ export default {
       padding: 10px;
       overflow-y: auto;
     }
+  }
+}
+.null {
+  @include wh(100%, 100%);
+  @include fj(center);
+  flex-direction: column;
+  align-items: center;
+  img {
+    @include wh(215px, 188px);
+  }
+  span {
+    @include sc(14px, #6181ca);
+    margin-top: 23px;
   }
 }
 </style>
