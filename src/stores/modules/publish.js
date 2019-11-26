@@ -227,7 +227,10 @@ const actions = {
       .then(({ data }) => {
         if (data.flag === 1) {
           commit('WORKHOMEPROGRESS', data.infos.textbookChapterCode)
-          commit('ENGLISHWORKTEXTBOOKCHAPTERCODE', data.infos.textbookChapterCode)
+          commit(
+            'ENGLISHWORKTEXTBOOKCHAPTERCODE',
+            data.infos.textbookChapterCode
+          )
         }
         return data
       })
@@ -614,20 +617,35 @@ const actions = {
       })
       .then(({ data }) => {
         if (data.flag === 1) {
-          data.infos.forEach((item, index) => {
-            if (item.textbookChapterLevel === 1) {
-              data.infos.splice(index, 1)
-            }
+          data.infos.forEach((item) => {
+            data.infos.forEach((item2, index2) => {
+              if (item2.textbookChapterLevel === 3 && item2.textbookChapterParentid === item.textbookChapterId) {
+                item2.unitModelName = item2.textbookChapterName
+                item2.unitModelId = 0
+                if (item.unitModelList) {
+                  item.unitModelList.push(item2)
+                } else {
+                  item.unitModelList = [];
+                  item.unitModelList.push(item2)
+                }
+                data.infos.splice(index2, 1)
+              }
+            })
             if (item.unitModelList) {
-              item.unitModelList.forEach((item1) => {
+              item.unitModelList.forEach(item1 => {
                 if (item1.unitModelId === 0) {
                   item.unitModelList.forEach((item1, index1) => {
                     if (item1.unitModelId !== 0) {
-                      item.unitModelList.splice(index1, 1);
+                      item.unitModelList.splice(index1, 1)
                     }
                   })
                 }
               })
+            }
+          })
+          data.infos.forEach((item, index)=>{
+            if (item.textbookChapterLevel === 1) {
+              data.infos.splice(index, 1)
             }
           })
           commit('ENGLISHWORK', data.infos)
@@ -1028,10 +1046,10 @@ const mutations = {
   HIDESELECTEDITEMLIST(state) {
     let list = state.selectedItemList.filter(item => item.active)
     localforage.setItem('selectedItemList', list).then(() => {
-      state.selectedItemList = list;
-    });
+      state.selectedItemList = list
+    })
   }
-};
+}
 
 export default {
   namespaced: true,
@@ -1039,4 +1057,4 @@ export default {
   getters,
   actions,
   mutations
-};
+}
