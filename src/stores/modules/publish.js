@@ -606,7 +606,6 @@ const actions = {
   // 听说--课本章节
   async getEnglishWork({ commit, dispatch, rootGetters }) {
     let result = await dispatch('publishPageWorkHomeProgress')
-    // console.log(rootGetters);
     return http
       .get('/api/textbook/getTextbookChapter/video', {
         params: {
