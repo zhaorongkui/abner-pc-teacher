@@ -1481,7 +1481,7 @@ export default {
       > div:nth-child(2) {
         display: flex;
         flex: auto;
-        @include wh(96%, 100%);
+        @include wh(96%, 90%);
         margin: 0 auto;
         > div {
           height: 100%;
@@ -1499,7 +1499,8 @@ export default {
             > span {
               @include fj(center);
               align-items: center;
-              @include wh(64px, 24px);
+              display: inline-block;
+              padding: 3px 10px;
               @include sc(12px, #fff);
               background: rgba(86, 172, 255, 1);
               border-radius: 12px;
@@ -1551,7 +1552,8 @@ export default {
           > span {
             @include fj(center);
             align-items: center;
-            @include wh(64px, 24px);
+            display: inline-block;
+            padding: 3px 10px;
             @include sc(12px, #fff);
             background: rgba(86, 172, 255, 1);
             border-radius: 12px;
@@ -1646,7 +1648,8 @@ export default {
             > span {
               @include fj(center);
               align-items: center;
-              @include wh(64px, 24px);
+              display: inline-block;
+              padding: 3px 10px;
               @include sc(12px, #fff);
               background: rgba(86, 172, 255, 1);
               border-radius: 12px;
@@ -1710,5 +1713,8 @@ export default {
   flex-direction: column !important;
   align-items: center !important;
   overflow: scroll;
+}
+.single-items-wrap > div:nth-child(2) {
+  overflow: auto !important;
 }
 </style>
