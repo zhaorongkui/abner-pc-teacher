@@ -617,15 +617,18 @@ const actions = {
       })
       .then(({ data }) => {
         if (data.flag === 1) {
-          data.infos.forEach((item) => {
+          data.infos.forEach(item => {
             data.infos.forEach((item2, index2) => {
-              if (item2.textbookChapterLevel === 3 && item2.textbookChapterParentid === item.textbookChapterId) {
+              if (
+                item2.textbookChapterLevel === 3 &&
+                item2.textbookChapterParentid === item.textbookChapterId
+              ) {
                 item2.unitModelName = item2.textbookChapterName
                 item2.unitModelId = 0
                 if (item.unitModelList) {
                   item.unitModelList.push(item2)
                 } else {
-                  item.unitModelList = [];
+                  item.unitModelList = []
                   item.unitModelList.push(item2)
                 }
                 data.infos.splice(index2, 1)
@@ -643,7 +646,7 @@ const actions = {
               })
             }
           })
-          data.infos.forEach((item, index)=>{
+          data.infos.forEach((item, index) => {
             if (item.textbookChapterLevel === 1) {
               data.infos.splice(index, 1)
             }
