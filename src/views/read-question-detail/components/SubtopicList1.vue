@@ -10,9 +10,7 @@
   align-items: center;
   width: 94px;
   height: 46px;
-  background: rgba(255, 255, 255, 1);
-  border: 1px solid rgba(185, 185, 185, 1);
-  box-shadow: 0px 8px 38px 0px rgba(186, 213, 238, 0.29);
+  border: 1px solid #b9b9b9;
   border-radius: 5px 23px 23px 5px;
   transition: 0.2s;
 }
@@ -22,7 +20,7 @@
   text-align: center;
   font-size: 14px;
   font-weight: 400;
-  color: rgba(102, 102, 102, 1);
+  color: #666;
 }
 
 .item-state {

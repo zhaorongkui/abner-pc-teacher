@@ -102,9 +102,9 @@ export default {
         },
         {
           title: '做对人数',
-          key: 'trueStudentCount',
+          key: 'trueStudentList',
           align: 'center',
-          dataIndex: 'trueStudentCount'
+          dataIndex: 'trueStudentList'
         },
         {
           title: '做错人数',
@@ -115,9 +115,9 @@ export default {
         },
         {
           title: '未提交人数',
-          key: 'unSubmitStudentCount',
+          key: 'unSubmitStudentList',
           align: 'center',
-          dataIndex: 'unSubmitStudentCount'
+          dataIndex: 'unSubmitStudentList'
         }
       ]
     }

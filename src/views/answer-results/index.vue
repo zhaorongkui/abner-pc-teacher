@@ -61,7 +61,7 @@
               class="zd-tongji-tz"
               v-if="dailyhomeworkInfos.questionTypeCode == 4"
             >
-              <div style="overflow:auto">
+              <div style="overflow:scroll;display:block">
                 <span style="margin-top:10px">作答分析</span>
                 <div style="margin-top:10px">
                   <div>
@@ -104,7 +104,7 @@
               class="zd-tongji-pd"
               v-if="dailyhomeworkInfos.questionTypeCode == 3"
             >
-              <div>
+              <div style="overflow:scroll;display:block">
                 <span>作答分析</span>
                 <div class="echart">
                   <div
@@ -128,7 +128,7 @@
                   dailyhomeworkInfos.questionTypeCode == 2
               "
             >
-              <div>
+              <div style="overflow:scroll;display:block">
                 <span>作答分析</span>
                 <div class="echart">
                   <div
@@ -164,7 +164,7 @@
                   dailyhomeworkInfos.questionProperty == 1
               "
             >
-              <div>
+              <div style="overflow:scroll;display:block">
                 <span>作答分析</span>
                 <div class="echart">
                   <div
@@ -771,7 +771,7 @@ export default {
             let trueLength = []
             let obj = {}
             if (this.dailyhomeworkInfos.questionTypeCode == 4) {
-              if (this.dailyhomeworkInfos.optionStaticals != undefined) {
+              if (this.dailyhomeworkInfos.childInfoList != undefined) {
                 this.drawPieTop(
                   this.dailyhomeworkInfos.childInfoList[this.selecThtype]
                     .trueStudentList != undefined
@@ -1124,7 +1124,7 @@ export default {
           formatter: '{b}:{c}人 {d}%  '
         },
         legend: {
-          top: 'top',
+          top: 'auto',
           data: ['做对', '做错', '未提交', '半对', '未批阅']
         },
         color: [
@@ -1698,7 +1698,7 @@ export default {
   justify-content: start;
 }
 .echart {
-  height: 90% !important;
+  height: 540px !important;
   display: flex;
   justify-content: space-around !important;
   flex-direction: column !important;
