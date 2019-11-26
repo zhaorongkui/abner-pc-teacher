@@ -7,11 +7,14 @@
       <EnglishWorkToolbar></EnglishWorkToolbar>
       <ul class="list">
         <template v-for="(item, index) of EnglishWorkList">
-          <EnglishWorkList :index="index" :key="index" :item="item" :isToggles="isToggle"></EnglishWorkList>
+          <EnglishWorkList
+            :index="index"
+            :key="index"
+            :item="item"
+            :isToggles="isToggle"
+          ></EnglishWorkList>
         </template>
-        <div class="null" v-if="
-          EnglishWorkList.length === 0
-        ">
+        <div class="null" v-if="EnglishWorkList.length === 0">
           <img src="../../../assets/img/publish/nulldata.png" alt="" />
           <span>当前章节中暂无数据</span>
         </div>
