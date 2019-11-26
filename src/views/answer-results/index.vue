@@ -710,23 +710,22 @@ export default {
           let i = 0;
           i <
           this.dailyhomeworkInfos.childInfoList[this.selecThtype].questionAnswer
-            .length +
-            optionsList.length -
-            this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-              .questionAnswer.length;
+            .length;
           i++
         ) {
-          if (
-            optionsList.indexOf(
+          optionsList.forEach((item, index) => {
+            if (
+              item !=
               this.dailyhomeworkInfos.childInfoList[this.selecThtype]
                 .questionAnswer[i]
-            ) != -1
-          ) {
-            errorLength[i] = '-'
-          } else {
-            trueLength[i] = '-'
-          }
+            ) {
+              trueLength[index] = '-'
+            } else {
+              errorLength[index] = '-'
+            }
+          })
         }
+
         this.drawBar(optionsList, trueLength, errorLength)
 
         if (
@@ -847,22 +846,20 @@ export default {
                   let i = 0;
                   i <
                   this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                    .questionAnswer.length +
-                    optionsList.length -
-                    this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                      .questionAnswer.length;
+                    .questionAnswer.length;
                   i++
                 ) {
-                  if (
-                    optionsList.indexOf(
+                  optionsList.forEach((item, index) => {
+                    if (
+                      item !=
                       this.dailyhomeworkInfos.childInfoList[this.selecThtype]
                         .questionAnswer[i]
-                    ) != -1
-                  ) {
-                    errorLength[i] = '-'
-                  } else {
-                    trueLength[i] = '-'
-                  }
+                    ) {
+                      trueLength[index] = '-'
+                    } else {
+                      errorLength[index] = '-'
+                    }
+                  })
                 }
                 this.drawBar(optionsList, trueLength, errorLength)
               }
@@ -917,10 +914,7 @@ export default {
 
                 for (
                   let i = 0;
-                  i <
-                  this.dailyhomeworkInfos.questionAnswer.length +
-                    optionsList.length -
-                    this.dailyhomeworkInfos.questionAnswer.length;
+                  i < this.dailyhomeworkInfos.questionAnswer.length;
                   i++
                 ) {
                   if (
@@ -928,11 +922,18 @@ export default {
                       this.dailyhomeworkInfos.questionAnswer[i]
                     ) != -1
                   ) {
-                    errorLength[i] = '-'
-                  } else {
-                    trueLength[i] = '-'
+                    errorLength[
+                      optionsList.indexOf(
+                        this.dailyhomeworkInfos.questionAnswer[i]
+                      )
+                    ] = '-'
                   }
                 }
+                errorLength.forEach((item, index) => {
+                  if (item != '-') {
+                    trueLength[index] = '-'
+                  }
+                })
                 this.drawBar(optionsList, trueLength, errorLength)
               }
             }
