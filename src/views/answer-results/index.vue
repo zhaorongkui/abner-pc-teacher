@@ -1481,7 +1481,7 @@ export default {
       > div:nth-child(2) {
         display: flex;
         flex: auto;
-        @include wh(96%, 100%);
+        @include wh(96%, 90%);
         margin: 0 auto;
         > div {
           height: 100%;
@@ -1710,5 +1710,8 @@ export default {
   flex-direction: column !important;
   align-items: center !important;
   overflow: scroll;
+}
+.single-items-wrap > div:nth-child(2) {
+  overflow: auto !important;
 }
 </style>
