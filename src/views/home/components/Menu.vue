@@ -172,10 +172,10 @@ export default {
         })
     },
     handleLeave() {
-      this.isShow = false
+      this.isShow = true
     },
     handleHide() {
-      this.isShow = false
+      this.isShow = true
     }
   }
 }
@@ -184,7 +184,7 @@ export default {
 <style lang="scss" scoped>
 .wrap-menu {
   flex: auto;
-  height: 100%;
+  height: 86%;
   position: relative;
   top: 0px;
   left: 0;
