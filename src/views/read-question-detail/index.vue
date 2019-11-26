@@ -430,8 +430,8 @@ export default {
           answer: val.answer,
           errorStudentList: val.errorStudentList,
           errorStudentCount: val.errorStudentList.length,
-          trueStudentCount: val.trueStudentCount,
-          unSubmitStudentCount: val.unSubmitStudentCount
+          trueStudentList: val.trueStudentList.length,
+          unSubmitStudentList: val.unSubmitStudentList.length
         })
       })
       this.$nextTick(() => {
