@@ -1,18 +1,8 @@
 <template>
   <div class="EnglishWorkToolbar">
     <span>全部听说次数</span>
-    <el-input-number
-      :value="count"
-      size="small"
-      @change="handleChange"
-      :min="1"
-      :max="10"
-      label="描述文字"
-      :disabled="!checked"
-    ></el-input-number>
-    <a-checkbox class="check" :checked="checked" @change="handleCheckedChange"
-      >全选</a-checkbox
-    >
+    <el-input-number :value="count" size="small" @change="handleChange" :min="1" :max="10" label="描述文字" :disabled="!checked"></el-input-number>
+    <a-checkbox class="check" :checked="checked" @change="handleCheckedChange">全选</a-checkbox>
   </div>
 </template>
 
@@ -44,7 +34,9 @@ export default {
   },
   watch: {
     EnglishWorkList(value) {
-      this.checked = value.every(item => item.active)
+      if (value.length > 0) {
+        this.checked = value.every(item => item.active)
+      }
     }
   },
   methods: {
