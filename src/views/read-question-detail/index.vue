@@ -142,6 +142,7 @@
                 ref="customCircleEcharts"
                 :questiondata="questionData"
                 @questionGroupCheck="questionGroupCheck"
+                :selecThtype="selecThtype"
               ></custom-circle-echarts>
             </template>
             <custom-table-list v-else ref="customTableList"></custom-table-list>
@@ -237,34 +238,6 @@ export default {
           // );
           if (this.dailyhomeworkInfos.childInfoList != undefined) {
             this.$refs.customCircleEcharts.drawPieTop(
-              this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                .trueStudentList != undefined
-                ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                    .trueStudentList.length
-                : 0,
-              this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                .errorStudentList != undefined
-                ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                    .errorStudentList.length
-                : 0,
-              this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                .unSubmitStudentList != undefined
-                ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                    .unSubmitStudentList.length
-                : 0,
-              this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                .halfStudentList != undefined
-                ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                    .halfStudentList.length
-                : 0,
-              this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                .pendingStudentList != undefined
-                ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]
-                    .pendingStudentList.length
-                : 0
-            )
-          } else {
-            this.$refs.customCircleEcharts.drawPieBottom(
               this.dailyhomeworkInfos.childInfoList[this.selecThtype]
                 .trueStudentList != undefined
                 ? this.dailyhomeworkInfos.childInfoList[this.selecThtype]

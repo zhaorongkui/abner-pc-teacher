@@ -232,7 +232,7 @@ export default {
       showDialog1: false,
       compositionStd: [],
       isSendRemind: false,
-      selecThtype: 0,
+      //selecThtype: 0,
       chart: null,
       charts: null,
       options: {
@@ -273,41 +273,101 @@ export default {
       }
     }
   },
-  props: ['questiondata'],
+  props: ['questiondata', 'selecThtype'],
   computed: {
     errorStudentList() {
-      if (this.questiondata.errorStudentList.length == 0) {
-        return []
+      if (this.questiondata.questionTypeCode != 4) {
+        if (this.questiondata.errorStudentList.length == 0) {
+          return []
+        } else {
+          return this.questiondata.errorStudentList
+        }
       } else {
-        return this.questiondata.errorStudentList
+        if (
+          this.questiondata.childInfoList[this.selecThtype].errorStudentList
+            .length == 0
+        ) {
+          return []
+        } else {
+          return this.questiondata.childInfoList[this.selecThtype]
+            .errorStudentList
+        }
       }
     },
     trueStudentList() {
-      if (this.questiondata.trueStudentList.length == 0) {
-        return []
+      if (this.questiondata.questionTypeCode != 4) {
+        if (this.questiondata.trueStudentList.length == 0) {
+          return []
+        } else {
+          return this.questiondata.trueStudentList
+        }
       } else {
-        return this.questiondata.trueStudentList
+        if (
+          this.questiondata.childInfoList[this.selecThtype].trueStudentList
+            .length == 0
+        ) {
+          return []
+        } else {
+          return this.questiondata.childInfoList[this.selecThtype]
+            .trueStudentList
+        }
       }
     },
     halfStudentList() {
-      if (this.questiondata.halfStudentList.length == 0) {
-        return []
+      if (this.questiondata.questionTypeCode != 4) {
+        if (this.questiondata.halfStudentList.length == 0) {
+          return []
+        } else {
+          return this.questiondata.halfStudentList
+        }
       } else {
-        return this.questiondata.halfStudentList
+        if (
+          this.questiondata.childInfoList[this.selecThtype].halfStudentList
+            .length == 0
+        ) {
+          return []
+        } else {
+          return this.questiondata.childInfoList[this.selecThtype]
+            .halfStudentList
+        }
       }
     },
     pendingStudentList() {
-      if (this.questiondata.pendingStudentList.length == 0) {
-        return []
+      if (this.questiondata.questionTypeCode != 4) {
+        if (this.questiondata.pendingStudentList.length == 0) {
+          return []
+        } else {
+          return this.questiondata.pendingStudentList
+        }
       } else {
-        return this.questiondata.pendingStudentList
+        if (
+          this.questiondata.childInfoList[this.selecThtype].pendingStudentList
+            .length == 0
+        ) {
+          return []
+        } else {
+          return this.questiondata.childInfoList[this.selecThtype]
+            .pendingStudentList
+        }
       }
     },
     unSubmitStudentList() {
-      if (this.questiondata.unSubmitStudentList.length == 0) {
-        return []
+      if (this.questiondata.questionTypeCode != 4) {
+        if (this.questiondata.unSubmitStudentList.length == 0) {
+          return []
+        } else {
+          return this.questiondata.unSubmitStudentList
+        }
       } else {
-        return this.questiondata.unSubmitStudentList
+        if (
+          this.questiondata.childInfoList[this.selecThtype].unSubmitStudentList
+            .length == 0
+        ) {
+          return []
+        } else {
+          return this.questiondata.childInfoList[this.selecThtype]
+            .unSubmitStudentList
+        }
       }
     }
   },
@@ -383,6 +443,7 @@ export default {
       this.chart.setOption(this.options)
       this.chart.on('click', param => {
         if (param.name === '做错') {
+          console.log(this.errorStudentList)
           this.param = '做错'
           this.showUnfinishedStdModal = true
         }
@@ -626,13 +687,19 @@ export default {
           minInterval: 1,
           name: '人数',
           max: function(val) {
-            let value = val.max
-
-            let number
-
-            const mult = Math.pow(10, 1)
-            number = Math.ceil(Number(value) / mult) * mult
-            return number
+            // console.log(val)
+            // let value = val.max
+            let number = val.max
+            //const mult = Math.pow(10, 1)
+            // number = Math.ceil(Number(value) / mult) * mult
+            if (number < 10) {
+              number = 10
+            }
+            if (number % 10 == 0) return number + 5
+            if (number % 10 > 0) {
+              let num = (number % 10) + 5 - (number % 10)
+              return num + number
+            }
           },
           axisTick: {
             show: false
