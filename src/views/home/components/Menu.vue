@@ -172,10 +172,10 @@ export default {
         })
     },
     handleLeave() {
-      this.isShow = true
+      this.isShow = false
     },
     handleHide() {
-      this.isShow = true
+      this.isShow = false
     }
   }
 }
