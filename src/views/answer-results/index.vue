@@ -1266,15 +1266,19 @@ export default {
           minInterval: 1,
           name: '人数',
           max: function(val) {
-            let value = val.max
-            let number
-
-            const mult = Math.pow(10, 1)
-            number = Math.ceil(Number(value) / mult) * mult
-            if (number <= 10) {
+            // console.log(val)
+            // let value = val.max
+            let number = val.max
+            //const mult = Math.pow(10, 1)
+            // number = Math.ceil(Number(value) / mult) * mult
+            if (number < 10) {
               number = 10
             }
-            return number
+            if (number % 10 == 0) return number + 5
+            if (number % 10 > 0) {
+              let num = (number % 10) + 5 - (number % 10)
+              return num + number
+            }
           },
           axisTick: {
             show: false
@@ -1499,8 +1503,7 @@ export default {
             > span {
               @include fj(center);
               align-items: center;
-              display: inline-block;
-              padding: 3px 10px;
+              @include wh(64px, 24px);
               @include sc(12px, #fff);
               background: rgba(86, 172, 255, 1);
               border-radius: 12px;
@@ -1552,8 +1555,7 @@ export default {
           > span {
             @include fj(center);
             align-items: center;
-            display: inline-block;
-            padding: 3px 10px;
+            @include wh(64px, 24px);
             @include sc(12px, #fff);
             background: rgba(86, 172, 255, 1);
             border-radius: 12px;
@@ -1648,8 +1650,7 @@ export default {
             > span {
               @include fj(center);
               align-items: center;
-              display: inline-block;
-              padding: 3px 10px;
+              @include wh(64px, 24px);
               @include sc(12px, #fff);
               background: rgba(86, 172, 255, 1);
               border-radius: 12px;

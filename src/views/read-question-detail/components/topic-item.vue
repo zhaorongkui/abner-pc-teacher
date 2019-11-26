@@ -7,6 +7,7 @@
   display: inline-block; 
   padding: 0 8px;
   height:24px;
+  width: 70px;
   line-height: 24px;
   color: #ffffff;
   background:rgba(86,172,255,1);

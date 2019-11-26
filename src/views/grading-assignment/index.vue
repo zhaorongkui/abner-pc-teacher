@@ -370,7 +370,7 @@ export default {
   .float_button {
     position: fixed !important;
     right: 25px !important;
-    top: 145px !important;
+    top: 300px !important;
   }
 }
 </style>

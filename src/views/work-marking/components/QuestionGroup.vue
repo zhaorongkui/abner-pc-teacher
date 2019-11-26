@@ -160,6 +160,8 @@ export default {
         // display: flex;
         align-items: center;
         word-break: break-all;
+        display: flex;
+        padding: 5px;
         span {
           margin-right: 10px;
         }
