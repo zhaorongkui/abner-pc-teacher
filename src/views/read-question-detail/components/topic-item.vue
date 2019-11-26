@@ -5,7 +5,7 @@
 .item-title span {
   margin-bottom: 11px;
   display: inline-block; 
-  padding: 0 6px;
+  padding: 0 8px;
   height:24px;
   line-height: 24px;
   color: #ffffff;
