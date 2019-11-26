@@ -20,6 +20,9 @@ module.exports = {
     open: true,
     proxy: {
       '/api': {
+        //target: 'http://192.168.7.254:18084/',
+        //target: 'http://192.168.7.157/',
+        //target: 'https://plan-teacher-api.abnertech.com',
         target: 'https://sit-teacher-api.abnertech.com',
         ws: true,
         changeOrigin: true,
