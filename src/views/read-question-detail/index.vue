@@ -235,7 +235,7 @@ export default {
           //   data.childInfoList[0].unSubmitStudentCount || 0,
           //   data.childInfoList[0].halfTrueStudentCount || 0
           // );
-          if (this.dailyhomeworkInfos.optionStaticals != undefined) {
+          if (this.dailyhomeworkInfos.childInfoList != undefined) {
             this.$refs.customCircleEcharts.drawPieTop(
               this.dailyhomeworkInfos.childInfoList[this.selecThtype]
                 .trueStudentList != undefined
