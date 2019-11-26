@@ -83,14 +83,14 @@
                     :style="{
                       width: '460px',
                       height: '260px',
-                      margin: '0px auto 0 '
+                      margin: '10px auto 0 '
                     }"
                   ></div>
 
                   <div
                     id="myCharts"
                     :style="{
-                      width: '450px',
+                      width: '420px',
                       height: '260px',
                       margin: '0px auto 0 '
                     }"
@@ -112,7 +112,7 @@
                     :style="{
                       width: '460px',
                       height: '260px',
-                      margin: '20px auto 0 '
+                      margin: '10px auto 0 '
                     }"
                   ></div>
                 </div>
@@ -136,7 +136,7 @@
                     :style="{
                       width: '460px',
                       height: '260px',
-                      margin: '20px auto 0 '
+                      margin: '10px auto 0 '
                     }"
                   ></div>
 
@@ -147,7 +147,7 @@
                         dailyhomeworkInfos.questionTypeCode == 1
                     "
                     :style="{
-                      width: '450px',
+                      width: '420px',
                       height: '260px',
                       margin: '0px auto 0 '
                     }"
@@ -172,7 +172,7 @@
                     :style="{
                       width: '460px',
                       height: '260px',
-                      margin: '20px auto 0 '
+                      margin: '10px auto 0 '
                     }"
                   ></div>
                 </div>
@@ -211,9 +211,25 @@
                         >
                       </span>
                     </span>
-                    <span>{{ item.trueStudentCount }}</span>
-                    <span>{{ item.errorStudentList.length }}</span>
-                    <span>{{ item.unSubmitStudentCount }}</span>
+                    <span>{{
+                      item.trueStudentList != undefined
+                        ? item.trueStudentList.length
+                        : 0
+                    }}</span>
+                    <span
+                      @click="tkBtn(item.errorStudentList)"
+                      style="cursor: pointer;text-decoration: underline"
+                      >{{
+                        item.errorStudentList != undefined
+                          ? item.errorStudentList.length
+                          : 0
+                      }}</span
+                    >
+                    <span>{{
+                      item.unSubmitStudentList != undefined
+                        ? item.unSubmitStudentList.length
+                        : 0
+                    }}</span>
                   </p>
                 </div>
               </div>
@@ -225,7 +241,24 @@
       <div class="dialog-wrap" v-if="showdialogFlag">
         <div class="dialog">
           <p>
-            <span v-if="param == '做错'"
+            <span
+              v-if="
+                param == '做错' && dailyhomeworkInfos.childInfoList != undefined
+              "
+              >错题学生 -
+              {{
+                dailyhomeworkInfos.childInfoList[selecThtype]
+                  .errorStudentList != undefined
+                  ? dailyhomeworkInfos.childInfoList[selecThtype]
+                      .errorStudentList.length
+                  : 0
+              }}
+              人</span
+            >
+            <span
+              v-if="
+                param == '做错' && dailyhomeworkInfos.childInfoList == undefined
+              "
               >错题学生 -
               {{
                 dailyhomeworkInfos.errorStudentList != undefined
@@ -234,7 +267,25 @@
               }}
               人</span
             >
-            <span v-if="param == '半对'"
+
+            <span
+              v-if="
+                param == '半对' && dailyhomeworkInfos.childInfoList != undefined
+              "
+              >半对学生 -
+              {{
+                dailyhomeworkInfos.childInfoList[selecThtype].halfStudentList !=
+                undefined
+                  ? dailyhomeworkInfos.childInfoList[selecThtype]
+                      .halfStudentList.length
+                  : 0
+              }}
+              人</span
+            >
+            <span
+              v-if="
+                param == '半对' && dailyhomeworkInfos.childInfoList == undefined
+              "
               >半对学生 -
               {{
                 dailyhomeworkInfos.halfStudentList != undefined
@@ -243,7 +294,27 @@
               }}
               人</span
             >
-            <span v-if="param == '未批阅'"
+
+            <span
+              v-if="
+                param == '未批阅' &&
+                  dailyhomeworkInfos.childInfoList != undefined
+              "
+              >未批阅学生-
+              {{
+                dailyhomeworkInfos.childInfoList[selecThtype]
+                  .pendingStudentList != undefined
+                  ? dailyhomeworkInfos.childInfoList[selecThtype]
+                      .pendingStudentList.length
+                  : 0
+              }}
+              人</span
+            >
+            <span
+              v-if="
+                param == '未批阅' &&
+                  dailyhomeworkInfos.childInfoList == undefined
+              "
               >未批阅学生-
               {{
                 dailyhomeworkInfos.pendingStudentList != undefined
@@ -252,7 +323,25 @@
               }}
               人</span
             >
-            <span v-if="param == '做对'"
+
+            <span
+              v-if="
+                param == '做对' && dailyhomeworkInfos.childInfoList != undefined
+              "
+              >做对学生-
+              {{
+                dailyhomeworkInfos.childInfoList[selecThtype].trueStudentList !=
+                undefined
+                  ? dailyhomeworkInfos.childInfoList[selecThtype]
+                      .trueStudentList.length
+                  : 0
+              }}
+              人</span
+            >
+            <span
+              v-if="
+                param == '做对' && dailyhomeworkInfos.childInfoList == undefined
+              "
               >做对学生-
               {{
                 dailyhomeworkInfos.trueStudentList != undefined
@@ -261,34 +350,109 @@
               }}
               人</span
             >
+
             <img
               src="../../assets/img/publish/close.png"
               alt=""
               @click="close"
             />
           </p>
-          <div v-if="param == '做错'">
+          <div
+            v-if="
+              param == '做错' && dailyhomeworkInfos.childInfoList != undefined
+            "
+          >
+            <span
+              v-for="(item, index) in dailyhomeworkInfos.childInfoList[
+                selecThtype
+              ].errorStudentList"
+              :key="index"
+              >{{ item }}</span
+            >
+          </div>
+          <div
+            v-if="
+              param == '做错' && dailyhomeworkInfos.childInfoList == undefined
+            "
+          >
             <span
               v-for="(item, index) in dailyhomeworkInfos.errorStudentList"
               :key="index"
               >{{ item }}</span
             >
           </div>
-          <div v-if="param == '半对'">
+
+          <div
+            v-if="
+              param == '半对' && dailyhomeworkInfos.childInfoList != undefined
+            "
+          >
+            <span
+              v-for="(item, index) in dailyhomeworkInfos.childInfoList[
+                selecThtype
+              ].halfStudentList"
+              :key="index"
+              >{{ item }}</span
+            >
+          </div>
+
+          <div
+            v-if="
+              param == '半对' && dailyhomeworkInfos.childInfoList == undefined
+            "
+          >
             <span
               v-for="(item, index) in dailyhomeworkInfos.halfStudentList"
               :key="index"
               >{{ item }}</span
             >
           </div>
-          <div v-if="param == '未批阅'">
+
+          <div
+            v-if="
+              param == '未批阅' && dailyhomeworkInfos.childInfoList != undefined
+            "
+          >
+            <span
+              v-for="(item, index) in dailyhomeworkInfos.childInfoList[
+                selecThtype
+              ].pendingStudentList"
+              :key="index"
+              >{{ item }}</span
+            >
+          </div>
+
+          <div
+            v-if="
+              param == '未批阅' && dailyhomeworkInfos.childInfoList == undefined
+            "
+          >
             <span
               v-for="(item, index) in dailyhomeworkInfos.pendingStudentList"
               :key="index"
               >{{ item }}</span
             >
           </div>
-          <div v-if="param == '做对'">
+
+          <div
+            v-if="
+              param == '做对' && dailyhomeworkInfos.childInfoList != undefined
+            "
+          >
+            <span
+              v-for="(item, index) in dailyhomeworkInfos.childInfoList[
+                selecThtype
+              ].trueStudentList"
+              :key="index"
+              >{{ item }}</span
+            >
+          </div>
+
+          <div
+            v-if="
+              param == '做对' && dailyhomeworkInfos.childInfoList == undefined
+            "
+          >
             <span
               v-for="(item, index) in dailyhomeworkInfos.trueStudentList"
               :key="index"
@@ -314,6 +478,28 @@
 
           <div>
             <span v-for="(item, index) in paramXx" :key="index">{{
+              item
+            }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="dialog-wrap" v-if="showdialogFlagTk">
+        <div class="dialog">
+          <p>
+            <span
+              >错题学生-
+              {{ tkErrorList.length }}
+              人</span
+            >
+            <img
+              src="../../assets/img/publish/close.png"
+              alt=""
+              @click="close"
+            />
+          </p>
+
+          <div>
+            <span v-for="(item, index) in tkErrorList" :key="index">{{
               item
             }}</span>
           </div>
@@ -352,6 +538,8 @@ export default {
       dailyhomeworkInfos: [],
       showdialogFlag: false,
       showdialogFlagXx: false,
+      showdialogFlagTk: false,
+      tkErrorList: 0,
       dataItem: '',
       showDialog: false,
       collectonGroupId: 0,
@@ -403,6 +591,11 @@ export default {
     })
   },
   methods: {
+    //控制错题人数的弹框
+    tkBtn(list) {
+      this.showdialogFlagTk = true
+      this.tkErrorList = list
+    },
     //未提交弹框的事件
     showDialogBtn() {
       this.showDialog1 = true
@@ -462,8 +655,10 @@ export default {
     close() {
       this.showdialogFlag = false
       this.showdialogFlagXx = false
+      this.showdialogFlagTk = false
     },
     selecTh(t) {
+      var self = this
       this.selecThtype = t
       let optionsList = []
       let arrLength = []
@@ -533,9 +728,27 @@ export default {
           }
         }
         this.drawBar(optionsList, trueLength, errorLength)
+
+        if (
+          this.dailyhomeworkInfos.optionStaticals != undefined ||
+          this.dailyhomeworkInfos.childInfoList != undefined
+        ) {
+          let myCharts = this.$echarts.init(document.getElementById('myCharts'))
+
+          myCharts.on('click', function(param) {
+            Object.keys(obj).forEach(function(key) {
+              if (param.name == key) {
+                self.param = key
+                self.showdialogFlagXx = true
+                self.paramXx = obj[key]
+              }
+            })
+          })
+        }
       }
     },
     selectId(id) {
+      this.selecThtype = 0
       this.homeworkQuestionId = id
       this.dailyhomeworkInfo()
     },
@@ -694,6 +907,7 @@ export default {
 
               if (this.dailyhomeworkInfos.optionStaticals != undefined) {
                 obj = this.dailyhomeworkInfos.optionStaticals
+
                 Object.keys(obj).forEach(function(key) {
                   optionsList.push(key)
                   arrLength.push(obj[key].length)
@@ -728,25 +942,37 @@ export default {
             myChart.on('click', function(param) {
               if (param.name == '做错') {
                 self.param = '做错'
-                if (self.dailyhomeworkInfos.errorStudentList != undefined) {
+                if (
+                  self.dailyhomeworkInfos.errorStudentList != undefined ||
+                  self.dailyhomeworkInfos.childInfoList != undefined
+                ) {
                   self.showdialogFlag = true
                 }
               }
               if (param.name == '做对') {
                 self.param = '做对'
-                if (self.dailyhomeworkInfos.trueStudentList != undefined) {
+                if (
+                  self.dailyhomeworkInfos.trueStudentList != undefined ||
+                  self.dailyhomeworkInfos.childInfoList != undefined
+                ) {
                   self.showdialogFlag = true
                 }
               }
               if (param.name == '半对') {
                 self.param = '半对'
-                if (self.dailyhomeworkInfos.halfStudentList != undefined) {
+                if (
+                  self.dailyhomeworkInfos.halfStudentList != undefined ||
+                  self.dailyhomeworkInfos.childInfoList != undefined
+                ) {
                   self.showdialogFlag = true
                 }
               }
               if (param.name == '未批阅') {
                 self.param = '未批阅'
-                if (self.dailyhomeworkInfos.pendingStudentList != undefined) {
+                if (
+                  self.dailyhomeworkInfos.pendingStudentList != undefined ||
+                  self.dailyhomeworkInfos.childInfoList != undefined
+                ) {
                   self.showdialogFlag = true
                 }
               }
@@ -754,7 +980,10 @@ export default {
                 self.showDialog1 = true
               }
             })
-            if (this.dailyhomeworkInfos.optionStaticals != undefined) {
+            if (
+              this.dailyhomeworkInfos.optionStaticals != undefined ||
+              this.dailyhomeworkInfos.childInfoList != undefined
+            ) {
               let myCharts = this.$echarts.init(
                 document.getElementById('myCharts')
               )
@@ -789,7 +1018,7 @@ export default {
           errorrate != undefined && errorrate != 0 ? '#FD6265' : '',
           unsubmit != undefined && unsubmit != 0 ? '#ccc' : '',
           half != undefined && half != 0 ? '#FBA057' : '',
-          pend != undefined && pend != 0 ? '#FF8D12' : ''
+          pend != undefined && pend != 0 ? '#8493A8' : ''
         ],
         series: [
           {
@@ -902,7 +1131,7 @@ export default {
           errorrate != undefined && errorrate != 0 ? '#FD6265' : '',
           unsubmit != undefined && unsubmit != 0 ? '#ccc' : '',
           half != undefined && half != 0 ? '#FBA057' : '',
-          pend != undefined && pend != 0 ? '#FF8D12' : ''
+          pend != undefined && pend != 0 ? '#8493A8' : ''
         ],
         series: [
           {
@@ -1032,12 +1261,13 @@ export default {
           name: '人数',
           max: function(val) {
             let value = val.max
-            let prec = 2
-            let ceil = true
             let number
 
             const mult = Math.pow(10, 1)
             number = Math.ceil(Number(value) / mult) * mult
+            if (number <= 10) {
+              number = 10
+            }
             return number
           },
           axisTick: {
@@ -1091,6 +1321,7 @@ export default {
 .answer-results-wrap {
   @include wh(100%, 100%);
 }
+
 .single-items-wrap {
   .dialog-wrap {
     @include wh(100%, 100%);
@@ -1464,5 +1695,13 @@ export default {
   > div.zd-tongji-pd
   > div:nth-child(1) {
   justify-content: start;
+}
+.echart {
+  height: 90% !important;
+  display: flex;
+  justify-content: space-around !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  overflow: scroll;
 }
 </style>
