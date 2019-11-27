@@ -7,12 +7,13 @@
   display: inline-block;
   padding: 0 8px;
   height: 24px;
-  width: 70px;
+  width: 74px;
   line-height: 24px;
   color: #ffffff;
   background: rgba(86, 172, 255, 1);
   border-radius: 12px;
   margin-right: 5px;
+  text-align: center;
 }
 .item-htmlStr {
   word-break: break-all;

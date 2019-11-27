@@ -4,15 +4,16 @@
 }
 .item-title span {
   margin-bottom: 11px;
-  display: inline-block; 
+  display: inline-block;
   padding: 0 8px;
-  height:24px;
-  width: 70px;
+  height: 24px;
+  width: 74px;
   line-height: 24px;
   color: #ffffff;
-  background:rgba(86,172,255,1);
-  border-radius:12px;
+  background: rgba(86, 172, 255, 1);
+  border-radius: 12px;
   margin-right: 5px;
+  text-align: center;
 }
 </style>
 
@@ -21,10 +22,15 @@
     <!-- <div class="item-htmlStr" v-html="getdata"></div> -->
     <div class="item-title" style="word-wrap: break-word;word-break: normal;">
       <span>
-        {{title}}
+        {{ title }}
       </span>
     </div>
-    <div v-if="htmlStr" class="item-htmlStr" v-html="htmlStr" style="word-wrap: break-word;word-break: normal;"></div>
+    <div
+      v-if="htmlStr"
+      class="item-htmlStr"
+      v-html="htmlStr"
+      style="word-wrap: break-word;word-break: normal;"
+    ></div>
     <slot v-else></slot>
   </div>
 </template>
