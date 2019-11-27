@@ -302,10 +302,10 @@
 
             <span
               v-if="
-                param == '未批阅' &&
+                param == '待批阅' &&
                   dailyhomeworkInfos.childInfoList != undefined
               "
-              >未批阅学生-
+              >待批阅学生-
               {{
                 dailyhomeworkInfos.childInfoList[selecThtype]
                   .pendingStudentList != undefined
@@ -317,10 +317,10 @@
             >
             <span
               v-if="
-                param == '未批阅' &&
+                param == '待批阅' &&
                   dailyhomeworkInfos.childInfoList == undefined
               "
-              >未批阅学生-
+              >待批阅学生-
               {{
                 dailyhomeworkInfos.pendingStudentList != undefined
                   ? dailyhomeworkInfos.pendingStudentList.length
@@ -415,7 +415,7 @@
 
           <div
             v-if="
-              param == '未批阅' && dailyhomeworkInfos.childInfoList != undefined
+              param == '待批阅' && dailyhomeworkInfos.childInfoList != undefined
             "
           >
             <span
@@ -429,7 +429,7 @@
 
           <div
             v-if="
-              param == '未批阅' && dailyhomeworkInfos.childInfoList == undefined
+              param == '待批阅' && dailyhomeworkInfos.childInfoList == undefined
             "
           >
             <span
@@ -973,8 +973,8 @@ export default {
                   self.showdialogFlag = true
                 }
               }
-              if (param.name == '未批阅') {
-                self.param = '未批阅'
+              if (param.name == '待批阅') {
+                self.param = '待批阅'
                 if (
                   self.dailyhomeworkInfos.pendingStudentList != undefined ||
                   self.dailyhomeworkInfos.childInfoList != undefined
@@ -1017,7 +1017,7 @@ export default {
         },
         legend: {
           bottom: 'bottom',
-          data: ['做对', '做错', '未提交', '半对', '未批阅']
+          data: ['做对', '做错', '未提交', '半对', '待批阅']
         },
         color: [
           truerate != undefined && truerate != 0 ? '#13A99F' : '',
@@ -1067,7 +1067,7 @@ export default {
               pend != undefined && pend != 0
                 ? {
                     value: pend,
-                    name: '未批阅'
+                    name: '待批阅'
                   }
                 : {}
             ]
@@ -1103,7 +1103,7 @@ export default {
               pend != undefined && pend != 0
                 ? {
                     value: pend,
-                    name: '未批阅'
+                    name: '待批阅'
                   }
                 : {}
             ],
@@ -1130,7 +1130,7 @@ export default {
         },
         legend: {
           top: 'top',
-          data: ['做对', '做错', '未提交', '半对', '未批阅']
+          data: ['做对', '做错', '未提交', '半对', '待批阅']
         },
         color: [
           truerate != undefined && truerate != 0 ? '#13A99F' : '',
@@ -1180,7 +1180,7 @@ export default {
               pend != undefined && pend != 0
                 ? {
                     value: pend,
-                    name: '未批阅'
+                    name: '待批阅'
                   }
                 : {}
             ]
@@ -1216,7 +1216,7 @@ export default {
               pend != undefined && pend != 0
                 ? {
                     value: pend,
-                    name: '未批阅'
+                    name: '待批阅'
                   }
                 : {}
             ],
