@@ -151,7 +151,7 @@
       <div slot="title" v-if="param == '做对'">
         <h4>本题{{ param }}学生{{ trueStudentList.length }}人</h4>
       </div>
-      <div slot="title" v-if="param == '未批阅'">
+      <div slot="title" v-if="param == '待批阅'">
         <h4>本题{{ param }}学生{{ pendingStudentList.length }}人</h4>
       </div>
 
@@ -170,7 +170,7 @@
           <li v-for="std in trueStudentList" :key="std">{{ std }}</li>
         </ul>
       </div>
-      <div class="composition_student_list" v-if="param == '未批阅'">
+      <div class="composition_student_list" v-if="param == '待批阅'">
         <ul>
           <li v-for="std in pendingStudentList" :key="std">{{ std }}</li>
         </ul>
@@ -430,6 +430,7 @@ export default {
         var self = this
         this.charts.on('click', function(param) {
           let obj = JSON.parse(localStorage.getItem('objs'))
+          //console.log(obj)
           Object.keys(obj).forEach(function(key) {
             if (param.name == key) {
               self.param = key
@@ -455,8 +456,8 @@ export default {
           this.param = '做对'
           this.showUnfinishedStdModal = true
         }
-        if (param.name === '未批阅') {
-          this.param = '未批阅'
+        if (param.name === '待批阅') {
+          this.param = '待批阅'
           this.showUnfinishedStdModal = true
         }
         if (param.name == '未提交') {
@@ -469,7 +470,7 @@ export default {
       this.options.color = []
       ;(this.options.legend = {
         top: 'top',
-        data: ['做对', '做错', '未提交', '半对', '未批阅']
+        data: ['做对', '做错', '未提交', '半对', '待批阅']
       }),
         (this.options.series[0].data = [])
       this.options.series[1].data = []
@@ -511,7 +512,7 @@ export default {
         pend != undefined && pend != 0
           ? {
               value: pend,
-              name: '未批阅'
+              name: '待批阅'
             }
           : {}
       )
@@ -543,7 +544,7 @@ export default {
         pend != undefined && pend != 0
           ? {
               value: pend,
-              name: '未批阅'
+              name: '待批阅'
             }
           : {}
       )
@@ -563,7 +564,7 @@ export default {
       this.options.color = []
       ;(this.options.legend = {
         bottom: 'bottom',
-        data: ['做对', '做错', '未提交', '半对', '未批阅']
+        data: ['做对', '做错', '未提交', '半对', '待批阅']
       }),
         (this.options.series[0].data = [])
       this.options.series[1].data = []
@@ -605,7 +606,7 @@ export default {
         pend != undefined && pend != 0
           ? {
               value: pend,
-              name: '未批阅'
+              name: '待批阅'
             }
           : {}
       )
@@ -637,7 +638,7 @@ export default {
         pend != undefined && pend != 0
           ? {
               value: pend,
-              name: '未批阅'
+              name: '待批阅'
             }
           : {}
       )
@@ -687,16 +688,13 @@ export default {
           minInterval: 1,
           name: '人数',
           max: function(val) {
-            // console.log(val)
-            // let value = val.max
             let number = val.max
-            //const mult = Math.pow(10, 1)
-            // number = Math.ceil(Number(value) / mult) * mult
             if (number < 10) {
               number = 10
+              return number
             }
-            if (number % 10 == 0) return number + 5
-            if (number % 10 > 0) {
+            if (number > 10 && number % 10 == 0) return number + 5
+            if (number > 10 && number % 10 > 0) {
               let num = (number % 10) + 5 - (number % 10)
               return num + number
             }
