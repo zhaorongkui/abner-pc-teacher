@@ -127,16 +127,16 @@ export default {
           //   })
           // }
 
-          canvas.toBlob(function(blob) {
-            _this.blob = blob
-            _this.picJson[_this.picIndex] = blob
-            var image = new Image()
-            image.src = canvas.toDataURL('image/png')
-            //_this.imgJson[_this.picIndex] = image.src
+          // canvas.toBlob(function(blob) {
+          //   _this.blob = blob
+          //   _this.picJson[_this.picIndex] = blob
+          //   var image = new Image()
+          //   image.src = canvas.toDataURL('image/png')
+          //   //_this.imgJson[_this.picIndex] = image.src
 
-            //_this.$store.commit('marking/IMGURL', _this.imgJson)
-            _this.$emit('importImg', _this.picJson)
-          })
+          //   //_this.$store.commit('marking/IMGURL', _this.imgJson)
+          //   _this.$emit('importImg', _this.picJson)
+          // })
         }
       }
     },
