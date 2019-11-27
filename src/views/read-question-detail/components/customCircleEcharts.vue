@@ -430,6 +430,7 @@ export default {
         var self = this
         this.charts.on('click', function(param) {
           let obj = JSON.parse(localStorage.getItem('objs'))
+          //console.log(obj)
           Object.keys(obj).forEach(function(key) {
             if (param.name == key) {
               self.param = key
