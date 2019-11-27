@@ -172,11 +172,11 @@ export default {
   computed: {
     // 教师批阅列表
     techerReviewList() {
-    /* eslint-disable */
+      /* eslint-disable */
       this.$store.state.marking.questionInfo.ifShare === 0
         ? (this.ifShare = 1)
         : (this.ifShare = 0)
-    /* eslint-enable */
+      /* eslint-enable */
       return (
         (this.questionInfo.reviewList &&
           this.questionInfo.reviewList.filter(
