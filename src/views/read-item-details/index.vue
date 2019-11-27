@@ -1091,7 +1091,7 @@ export default {
       this.studentInfo.reviewType = 1
       this.studentInfo.homeworkAppealType = 3
       localforage.setItem('student', this.studentInfo)
-      console.log(this.toReadStudent)
+      // console.log(this.toReadStudent)
       for (let i = 0, count = this.studentList.length; i < count; i++) {
         if (this.studentList[i].studentId === this.$route.query.studentId) {
           this.studentList[i].reviewType = 1
