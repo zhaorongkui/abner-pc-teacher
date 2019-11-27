@@ -688,16 +688,13 @@ export default {
           minInterval: 1,
           name: '人数',
           max: function(val) {
-            // console.log(val)
-            // let value = val.max
             let number = val.max
-            //const mult = Math.pow(10, 1)
-            // number = Math.ceil(Number(value) / mult) * mult
             if (number < 10) {
               number = 10
+              return number
             }
-            if (number % 10 == 0) return number + 5
-            if (number % 10 > 0) {
+            if (number > 10 && number % 10 == 0) return number + 5
+            if (number > 10 && number % 10 > 0) {
               let num = (number % 10) + 5 - (number % 10)
               return num + number
             }
