@@ -154,11 +154,6 @@ export default {
   computed: {
     // 教师批阅列表
     techerReviewList() {
-      /* eslint-disable */
-      // this.$store.state.marking.questionInfo.ifShare === 0
-      //   ? (this.ifShare = 1)
-      //   : (this.ifShare = 0)
-      /* eslint-enable */
       return (
         (this.questionInfo.reviewList &&
           this.questionInfo.reviewList.filter(
@@ -196,10 +191,7 @@ export default {
     }
   },
   mounted() {
-    // console.log(this.questionInfo.ifShare)
-    // console.log(this.$store.state.marking.questionInfo.ifShare)
     //  this.$store.state.marking.questionInfo.ifShare === 0 ? this.questionInfo.ifShare = 1 : this.questionInfo.ifShare = 0
-    //  console.log(this.questionInfo.ifShare)
   },
   methods: {
     handleImportImg(blob) {
@@ -254,7 +246,6 @@ export default {
               this.$store.dispatch('marking/questionInfo')
               // this.questionInfo.ifShare = this.$store.state.marking.questionInfo.ifShare
               this.$store.state.marking.questionInfo.ifShare === 0 ? this.questionInfo.ifShare = 1 : this.questionInfo.ifShare = 0
-              // console.log(this.questionInfo.ifShare)
               
             }
           })
@@ -264,61 +255,6 @@ export default {
       } else {
         this.$message.error('正确答案才能分享全班哦～')
       }
-    },
-    share2() {
-      // let p = new Promise(resolve => {
-      //   localforage.getItem('student').then(student => {
-      //     this.$store.commit('marking/STUDENTINFOID', student.studentId)
-      //   })
-      //   this.$store.commit(
-      //     'marking/UPDATEHOMEWORKQUESTIONID',
-      //     this.questionInfo.homeworkQuestionId
-      //   )
-      //   this.$store.dispatch('marking/questionInfo')
-      // })
-      // return p
-      // p.then(() => {
-      //   this.questionInfo.ifShare = this.$store.state.marking.questionInfo.ifShare
-      //   console.log(this.questionInfo.ifShare)
-      // })
-      // console.log(this.$store.state.marking.questionInfo)
-      if (
-        (this.questionInfo.hasRewive == 1 ||
-          this.questionInfo.hasRewive == 4) &&
-        this.questionInfo.isTrue == 0
-      ) {
-        this.$http
-          .post('/api/teacher/homework/shareStudentAnswer', {
-            ifShare: this.ifShare,
-            studentAnswerId: this.questionInfo.studentAnswerId
-          })
-          .then(({ data }) => {
-            if (data.flag === 1) {
-              if (this.ifShare == 0) {
-                this.$message.success('分享成功')
-              } else {
-                this.$message.success('取消分享成功')
-              }
-              localforage.getItem('student').then(student => {
-                this.$store.commit('marking/STUDENTINFOID', student.studentId)
-              })
-              this.$store.commit(
-                'marking/UPDATEHOMEWORKQUESTIONID',
-                this.questionInfo.homeworkQuestionId
-              )
-              this.$store.dispatch('marking/questionInfo')
-              this.updateIfShare()
-            }
-          })
-          .catch(error => {
-            console.log(error)
-          })
-      } else {
-        this.$message.error('正确答案才能分享全班哦～')
-      }
-    },
-    updateIfShare() {
-      this.ifShare === 0 ? (this.ifShare = 1) : (this.ifShare = 0)
     }
   }
 }
