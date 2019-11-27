@@ -86,56 +86,38 @@
     <ReadPeerGrading :questionInfo="questionInfo"></ReadPeerGrading>
     <div class="canvas">
       <div class="share" @click="share()">
-        <img
-          src="../../assets/img/shareNormal.png"
-          alt=""
-          v-if="ifShare === 0"
-        />
+        <img src="../../assets/img/shareNormal.png" alt="" v-if="questionInfo.ifShare == 1" />
         <img src="../../assets/img/shareOut.png" alt="" v-else />
-        <span v-if="ifShare === 0">分享全班</span>
+        <span v-if="questionInfo.ifShare == 1">分享全班</span>
         <span class="hover-span" v-else>分享全班</span>
       </div>
-      <template
-        v-if="techerReviewList.length > 0 && techerReviewList[0].reviewFileStr"
-      >
-        <EditCanvas
-          :src="techerReviewList[0].reviewFileStr.split(',')[picIndex - 1]"
-          @importImg="handleImportImg"
-          :picIndex="picIndex"
-        ></EditCanvas>
+      <template v-if="techerReviewList.length > 0 && techerReviewList[0].reviewFileStr">
+        <EditCanvas :src="techerReviewList[0].reviewFileStr.split(',')[picIndex - 1]" @importImg="handleImportImg" :picIndex="picIndex"></EditCanvas>
         <div class="pagination">
           <ul>
             <li @click="handleLeft">
               <a-icon type="caret-left" />
             </li>
             <li>
-              <span>{{ picIndex }}</span
-              >/{{ techerReviewList[0].reviewFileStr.split(',').length }}
+              <span>{{ picIndex }}</span>/{{ techerReviewList[0].reviewFileStr.split(',').length }}
             </li>
-            <li
-              @click="
+            <li @click="
                 handleRight(techerReviewList[0].reviewFileStr.split(',').length)
-              "
-            >
+              ">
               <a-icon type="caret-right" />
             </li>
           </ul>
         </div>
       </template>
       <template v-else-if="fileList.length > 0">
-        <EditCanvas
-          :src="fileList[picIndex - 1].answerFileUrlStr"
-          :picIndex="picIndex"
-          @importImg="handleImportImg"
-        ></EditCanvas>
+        <EditCanvas :src="fileList[picIndex - 1].answerFileUrlStr" :picIndex="picIndex" @importImg="handleImportImg"></EditCanvas>
         <div class="pagination">
           <ul>
             <li @click="handleLeft">
               <a-icon type="caret-left" />
             </li>
             <li>
-              <span>{{ picIndex }}</span
-              >/{{ fileList.length }}
+              <span>{{ picIndex }}</span>/{{ fileList.length }}
             </li>
             <li @click="handleRight(fileList.length)">
               <a-icon type="caret-right" />
@@ -145,8 +127,7 @@
       </template>
       <template v-else>
         <div class="default-pic">
-          <img src="../../assets/img/pic_homepage_empty@2x.png" alt="" />
-          没有上传答案图片
+          <img src="../../assets/img/pic_homepage_empty@2x.png" alt="" /> 没有上传答案图片
         </div>
       </template>
     </div>
@@ -157,6 +138,7 @@
 import localforage from 'localforage'
 import ReadPeerGrading from './ReadPeerGrading'
 import EditCanvas from '../../views/work-marking/components/EditCanvas'
+import { async } from 'q'
 export default {
   name: 'SubjectiveItem',
   components: {
@@ -172,11 +154,11 @@ export default {
   computed: {
     // 教师批阅列表
     techerReviewList() {
-    /* eslint-disable */
-      this.$store.state.marking.questionInfo.ifShare === 0
-        ? (this.ifShare = 1)
-        : (this.ifShare = 0)
-    /* eslint-enable */
+      /* eslint-disable */
+      // this.$store.state.marking.questionInfo.ifShare === 0
+      //   ? (this.ifShare = 1)
+      //   : (this.ifShare = 0)
+      /* eslint-enable */
       return (
         (this.questionInfo.reviewList &&
           this.questionInfo.reviewList.filter(
@@ -204,7 +186,7 @@ export default {
     return {
       picIndex: 1,
       blob: null,
-      ifShare: 0
+      ifShare: null
     }
   },
   watch: {
@@ -213,7 +195,12 @@ export default {
       this.blob = null
     }
   },
-  mounted() {},
+  mounted() {
+    console.log(this.questionInfo.ifShare)
+    console.log(this.$store.state.marking.questionInfo.ifShare)
+    //  this.$store.state.marking.questionInfo.ifShare === 0 ? this.questionInfo.ifShare = 1 : this.questionInfo.ifShare = 0
+    //  console.log(this.questionInfo.ifShare)
+  },
   methods: {
     handleImportImg(blob) {
       this.blob = blob
@@ -234,6 +221,64 @@ export default {
       return this.blob
     },
     share() {
+      this.ifShare = 0
+      if (
+        (this.questionInfo.hasRewive == 1 ||
+          this.questionInfo.hasRewive == 4) &&
+        this.questionInfo.isTrue == 0
+      ) {
+        if (this.$store.state.marking.questionInfo.ifShare == 0) {
+          this.ifShare = 1
+        }
+        this.$http
+          .post('/api/teacher/homework/shareStudentAnswer', {
+            ifShare: this.ifShare,
+            studentAnswerId: this.questionInfo.studentAnswerId
+          })
+          .then(({ data }) => {
+            if (data.flag === 1) {
+              if (this.ifShare == 0) {
+                this.$message.success('分享成功')
+              } else {
+                this.$message.success('取消分享成功')
+              }
+
+              // 这有一个回调
+              localforage.getItem('student').then(student => {
+                this.$store.commit('marking/STUDENTINFOID', student.studentId)
+              })
+              this.$store.commit(
+                'marking/UPDATEHOMEWORKQUESTIONID',
+                this.questionInfo.homeworkQuestionId
+              )
+              this.$store.dispatch('marking/questionInfo')
+              this.questionInfo.ifShare = this.$store.state.marking.questionInfo.ifShare
+              console.log(this.questionInfo.ifShare)
+              // let p = new Promise(resolve => {
+              //   localforage.getItem('student').then(student => {
+              //     this.$store.commit('marking/STUDENTINFOID', student.studentId)
+              //   })
+              //   this.$store.commit(
+              //     'marking/UPDATEHOMEWORKQUESTIONID',
+              //     this.questionInfo.homeworkQuestionId
+              //   )
+              //   this.$store.dispatch('marking/questionInfo')
+              // })
+              // return p
+              // p.then(() => {
+              //   this.questionInfo.ifShare = this.$store.state.marking.questionInfo.ifShare
+              //   console.log(this.questionInfo.ifShare)
+              // })
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      } else {
+        this.$message.error('正确答案才能分享全班哦～')
+      }
+    },
+    share2() {
       // console.log(this.$store.state.marking.questionInfo)
       if (
         (this.questionInfo.hasRewive == 1 ||
