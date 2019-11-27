@@ -196,8 +196,8 @@ export default {
     }
   },
   mounted() {
-    console.log(this.questionInfo.ifShare)
-    console.log(this.$store.state.marking.questionInfo.ifShare)
+    // console.log(this.questionInfo.ifShare)
+    // console.log(this.$store.state.marking.questionInfo.ifShare)
     //  this.$store.state.marking.questionInfo.ifShare === 0 ? this.questionInfo.ifShare = 1 : this.questionInfo.ifShare = 0
     //  console.log(this.questionInfo.ifShare)
   },
@@ -252,23 +252,10 @@ export default {
                 this.questionInfo.homeworkQuestionId
               )
               this.$store.dispatch('marking/questionInfo')
-              this.questionInfo.ifShare = this.$store.state.marking.questionInfo.ifShare
-              console.log(this.questionInfo.ifShare)
-              // let p = new Promise(resolve => {
-              //   localforage.getItem('student').then(student => {
-              //     this.$store.commit('marking/STUDENTINFOID', student.studentId)
-              //   })
-              //   this.$store.commit(
-              //     'marking/UPDATEHOMEWORKQUESTIONID',
-              //     this.questionInfo.homeworkQuestionId
-              //   )
-              //   this.$store.dispatch('marking/questionInfo')
-              // })
-              // return p
-              // p.then(() => {
-              //   this.questionInfo.ifShare = this.$store.state.marking.questionInfo.ifShare
-              //   console.log(this.questionInfo.ifShare)
-              // })
+              // this.questionInfo.ifShare = this.$store.state.marking.questionInfo.ifShare
+              this.$store.state.marking.questionInfo.ifShare === 0 ? this.questionInfo.ifShare = 1 : this.questionInfo.ifShare = 0
+              // console.log(this.questionInfo.ifShare)
+              
             }
           })
           .catch(error => {
@@ -279,6 +266,21 @@ export default {
       }
     },
     share2() {
+      // let p = new Promise(resolve => {
+      //   localforage.getItem('student').then(student => {
+      //     this.$store.commit('marking/STUDENTINFOID', student.studentId)
+      //   })
+      //   this.$store.commit(
+      //     'marking/UPDATEHOMEWORKQUESTIONID',
+      //     this.questionInfo.homeworkQuestionId
+      //   )
+      //   this.$store.dispatch('marking/questionInfo')
+      // })
+      // return p
+      // p.then(() => {
+      //   this.questionInfo.ifShare = this.$store.state.marking.questionInfo.ifShare
+      //   console.log(this.questionInfo.ifShare)
+      // })
       // console.log(this.$store.state.marking.questionInfo)
       if (
         (this.questionInfo.hasRewive == 1 ||
