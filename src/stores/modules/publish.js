@@ -618,6 +618,13 @@ const actions = {
       .then(({ data }) => {
         if (data.flag === 1) {
           data.infos.forEach(item => {
+            if (item.unitModelList) {
+              item.unitModelList.forEach((item1,index1) => {
+                if (item1.unitModelId === 0) {
+                  item.unitModelList.splice(index1, 1)
+                }
+              })
+            }
             data.infos.forEach((item2, index2) => {
               if (
                 item2.textbookChapterLevel === 3 &&
@@ -636,17 +643,6 @@ const actions = {
                 data.infos.splice(index2, 1)
               }
             })
-            if (item.unitModelList) {
-              item.unitModelList.forEach(item1 => {
-                if (item1.unitModelId === 0) {
-                  item.unitModelList.forEach((item1, index1) => {
-                    if (item1.unitModelId !== 0) {
-                      item.unitModelList.splice(index1, 1)
-                    }
-                  })
-                }
-              })
-            }
           })
           data.infos.forEach((item, index) => {
             if (item.textbookChapterLevel === 1) {
