@@ -63,8 +63,8 @@
               style="overflow: scroll;"
             >
               <div style="overflow:scroll;display:block">
-                <span style="margin-top:10px">作答分析</span>
-                <div style="margin-top:10px">
+                <span style="margin-top:20px">作答分析</span>
+                <div style="margin-top:20px">
                   <div>
                     <span
                       @click="selecTh(index)"
@@ -84,7 +84,7 @@
                     :style="{
                       width: '460px',
                       height: '260px',
-                      margin: '10px auto 0 '
+                      margin: '20px auto 0 '
                     }"
                   ></div>
 
@@ -1129,7 +1129,7 @@ export default {
           formatter: '{b}:{c}人 {d}%  '
         },
         legend: {
-          top: 'auto',
+          top: 'top',
           data: ['做对', '做错', '未提交', '半对', '未批阅']
         },
         color: [
