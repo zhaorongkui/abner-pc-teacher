@@ -617,9 +617,13 @@ const actions = {
       })
       .then(({ data }) => {
         if (data.flag === 1) {
-          data.infos.forEach(item => {
+          data.infos.forEach((item, index) => {
+            // 因为目前只展示两级，所以大于3以上的直接数组中去掉了
+            if (item.textbookChapterLevel > 3) {
+              data.infos.splice(index, 1)
+            }
             if (item.unitModelList) {
-              item.unitModelList.forEach((item1,index1) => {
+              item.unitModelList.forEach((item1, index1) => {
                 if (item1.unitModelId === 0) {
                   item.unitModelList.splice(index1, 1)
                 }

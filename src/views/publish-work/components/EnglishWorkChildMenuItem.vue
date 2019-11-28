@@ -2,7 +2,7 @@
   <li
     class="child"
     :class="EnglishWorkUnitModelId === child.unitModelId ? 'active' : ''"
-    @click="handleEnglishWorkUnitModelId(child.unitModelId)"
+    @click="handleEnglishWorkUnitModelId(child.unitModelId, child)"
   >
     <p>{{ child.unitModelName }}</p>
   </li>
@@ -28,10 +28,16 @@ export default {
     }
   },
   methods: {
-    handleEnglishWorkUnitModelId(unitModelId) {
+    handleEnglishWorkUnitModelId(unitModelId, child) {
       this.$store.commit('publish/TSCOUNT', 1)
       localStorage.setItem('EnglishWorkUnitModelId', unitModelId)
       this.$store.commit('publish/ENGLISHWORKUNITMODEID', unitModelId)
+      if (!unitModelId) {
+        this.$store.commit(
+          'publish/ENGLISHWORKTEXTBOOKCHAPTERCODE',
+          child.textbookChapterCode
+        )
+      }
       this.$store.dispatch('publish/unitModel')
       this.$parent.itemBac = false
     }
