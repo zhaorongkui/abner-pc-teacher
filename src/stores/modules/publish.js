@@ -618,14 +618,22 @@ const actions = {
       .then(({ data }) => {
         if (data.flag === 1) {
           data.infos.forEach(item => {
+            if (item.unitModelList) {
+              item.unitModelList.forEach((item1,index1) => {
+                if (item1.unitModelId === 0) {
+                  item.unitModelList.splice(index1, 1)
+                }
+              })
+            }
             data.infos.forEach((item2, index2) => {
               if (
                 item2.textbookChapterLevel === 3 &&
                 item2.textbookChapterParentid === item.textbookChapterId
               ) {
                 item2.unitModelName = item2.textbookChapterName
-                item2.unitModelId = 0
+                // 如果當前父級有unitModelList，并且unitModelList不为空，那么不显示unitModelList里面的模块，而是显示他的子集新push进来的
                 if (item.unitModelList) {
+                  item.unitModelList = []
                   item.unitModelList.push(item2)
                 } else {
                   item.unitModelList = []
@@ -634,17 +642,6 @@ const actions = {
                 data.infos.splice(index2, 1)
               }
             })
-            if (item.unitModelList) {
-              item.unitModelList.forEach(item1 => {
-                if (item1.unitModelId === 0) {
-                  item.unitModelList.forEach((item1, index1) => {
-                    if (item1.unitModelId !== 0) {
-                      item.unitModelList.splice(index1, 1)
-                    }
-                  })
-                }
-              })
-            }
           })
           data.infos.forEach((item, index) => {
             if (item.textbookChapterLevel === 1) {
