@@ -518,30 +518,42 @@ export default {
     // 撤回作文作业
     handleRecallHomework() {
       this.$http
-        .get('/api/teacher/homework/delete', {
-          params: {
-            homeworkClassIds: [this.item.homeworkClassId].join(',')
-          }
+        .get('/api/teacher/system/time', {
+          params: {}
         })
-        .then(res => {
-          if (res.data.flag === 1) {
-            this.$message.success('撤回作业成功！')
-            this.recallDialogShow = false
-            localforage.getItem('userInfo').then(value => {
-              if (value) {
-                this.$store.commit('work/UPDATECURRENTPAGE', 1)
-                this.$store.dispatch('work/homeworkList')
-              }
-            })
-          } else {
-            res.data.message
-              ? this.$message.error(res.data.message)
-              : this.$message.error('撤回作业成功！')
+        .then(({ data }) => {
+          if (data.flag == 1) {
+            if (data.infos > this.item.homeworkStarttime) {
+              this.$message.error('此份作业已开始,不能撤回了！')
+            } else {
+              this.$http
+                .get('/api/teacher/homework/delete', {
+                  params: {
+                    homeworkClassIds: [this.item.homeworkClassId].join(',')
+                  }
+                })
+                .then(res => {
+                  if (res.data.flag === 1) {
+                    this.$message.success('撤回作业成功！')
+                    this.recallDialogShow = false
+                    localforage.getItem('userInfo').then(value => {
+                      if (value) {
+                        this.$store.commit('work/UPDATECURRENTPAGE', 1)
+                        this.$store.dispatch('work/homeworkList')
+                      }
+                    })
+                  } else {
+                    res.data.message
+                      ? this.$message.error(res.data.message)
+                      : this.$message.error('撤回作业成功！')
+                  }
+                })
+                .catch(err => {
+                  this.$message.error('撤回作业失败！')
+                  console.log(err)
+                })
+            }
           }
-        })
-        .catch(err => {
-          this.$message.error('撤回作业失败！')
-          console.log(err)
         })
     },
     // 作文的撤回跟其他不一样
