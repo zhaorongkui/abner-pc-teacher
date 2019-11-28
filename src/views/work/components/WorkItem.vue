@@ -624,17 +624,29 @@ export default {
     },
     handleConfirm() {
       this.$http
-        .get('/api/teacher/homework/delete', {
-          params: {
-            homeworkClassIds: this.homeworkClassIds.join(',')
-          }
+        .get('/api/teacher/system/time', {
+          params: {}
         })
         .then(({ data }) => {
-          if (data.flag === 1) {
-            this.isShowRevocation = false
-            this.$message.success('撤回成功')
-            this.$store.commit('work/UPDATECURRENTPAGE', 1)
-            this.$store.dispatch('work/homeworkList')
+          if (data.flag == 1) {
+            if (data.infos > this.item.homeworkStarttime) {
+              this.$message.error('此份作业已开始,不能撤回了！')
+            } else {
+              this.$http
+                .get('/api/teacher/homework/delete', {
+                  params: {
+                    homeworkClassIds: this.homeworkClassIds.join(',')
+                  }
+                })
+                .then(({ data }) => {
+                  if (data.flag === 1) {
+                    this.isShowRevocation = false
+                    this.$message.success('撤回成功')
+                    this.$store.commit('work/UPDATECURRENTPAGE', 1)
+                    this.$store.dispatch('work/homeworkList')
+                  }
+                })
+            }
           }
         })
     },
