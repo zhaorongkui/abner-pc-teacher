@@ -44,9 +44,7 @@ export default {
   scrollbar-width: none;
   width: 100%;
   // flex: auto;
-  display: flex;
-  flex-direction: column;
-  flex: auto;
+  height: 585px;
   margin-top: 10px;
   background: rgba(255, 255, 255, 1);
   box-shadow: 0px 8px 38px 0px rgba(186, 213, 238, 0.29);
