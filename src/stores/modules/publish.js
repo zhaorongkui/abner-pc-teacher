@@ -631,7 +631,6 @@ const actions = {
                 item2.textbookChapterParentid === item.textbookChapterId
               ) {
                 item2.unitModelName = item2.textbookChapterName
-                item2.unitModelId = 0
                 // 如果當前父級有unitModelList，并且unitModelList不为空，那么不显示unitModelList里面的模块，而是显示他的子集新push进来的
                 if (item.unitModelList) {
                   item.unitModelList = []
