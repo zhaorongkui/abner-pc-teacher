@@ -183,7 +183,7 @@ export default {
 @import '@/styles/variable.scss';
 .english-work {
   width: 1200px;
-  height: 700px;
+  height: 88%;
   margin: 0 auto;
   display: flex;
   padding: 20px 0;

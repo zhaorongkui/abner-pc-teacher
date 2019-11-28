@@ -173,7 +173,8 @@ export default {
       }
     },
     handleChoice() {
-      if (this.startPageIndex > this.endPageIndex
+      if (
+        this.startPageIndex > this.endPageIndex
         // this.endMenuIndex < this.startMenuIndex ||
         // (this.endMenuIndex > this.startMenuIndex &&
         //   this.startPageIndex > this.endPageIndex)
@@ -219,7 +220,7 @@ export default {
 <style lang="scss" scoped>
 .word-work {
   width: 1200px;
-  height: 630px;
+  height: 82%;
   margin: 20px auto 0;
   display: flex;
   background: rgba(255, 255, 255, 1);

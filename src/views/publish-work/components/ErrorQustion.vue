@@ -77,9 +77,12 @@
             <!-- <div class="select-all" v-if="isSomeChecked" @click="someToAll">
               <span></span><span>本页全选</span>
             </div> -->
-            <el-checkbox class="headCheckbox" v-model="isAllChecked" @change="selectAll">{{
-              isAllChecked ? '取消本页全选' : '本页全选'
-            }}</el-checkbox>
+            <el-checkbox
+              class="headCheckbox"
+              v-model="isAllChecked"
+              @change="selectAll"
+              >{{ isAllChecked ? '取消本页全选' : '本页全选' }}</el-checkbox
+            >
           </div>
           <div>
             <div
@@ -901,14 +904,14 @@ export default {
   }
 }
 .work-type-error {
-  @include wh(1200px, 700px);
+  @include wh(1200px, 82%);
   margin: 20px auto 0;
   img {
     width: auto;
   }
   .work-type-conent-1 {
     margin: 21px auto 0;
-    @include wh(100%, 630px);
+    @include wh(100%, 100%);
     background: #fff;
     @include fj();
     .work-type-conent-left {
@@ -1001,7 +1004,7 @@ export default {
       }
     }
     .work-type-conent-right-1 {
-      @include wh(912px, 630px);
+      @include wh(912px, 100%);
       border: 1px solid rgba(233, 233, 233, 1);
       box-shadow: 0px 8px 12px 0px rgba(186, 213, 238, 0.18);
       border-radius: 0px 4px 4px 0px;
@@ -1010,7 +1013,7 @@ export default {
       }
       > div.question {
         height: 97%;
-        .headCheckbox{
+        .headCheckbox {
           z-index: 0;
         }
         > div:nth-of-type(1) {
