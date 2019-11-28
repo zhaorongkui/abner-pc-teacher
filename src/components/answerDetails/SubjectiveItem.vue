@@ -82,17 +82,38 @@
 }
 </style>
 <template>
-  <div class="subjective card" style="box-shadow: none">
+  <div
+    class="subjective card"
+    style="box-shadow: none"
+  >
     <ReadPeerGrading :questionInfo="questionInfo"></ReadPeerGrading>
     <div class="canvas">
-      <div class="share" @click="share()">
-        <img src="../../assets/img/shareNormal.png" alt="" v-if="questionInfo.ifShare == 1" />
-        <img src="../../assets/img/shareOut.png" alt="" v-else />
+      <div
+        class="share"
+        @click="share()"
+      >
+        <img
+          src="../../assets/img/shareNormal.png"
+          alt=""
+          v-if="questionInfo.ifShare == 1"
+        />
+        <img
+          src="../../assets/img/shareOut.png"
+          alt=""
+          v-else
+        />
         <span v-if="questionInfo.ifShare == 1">分享全班</span>
-        <span class="hover-span" v-else>分享全班</span>
+        <span
+          class="hover-span"
+          v-else
+        >分享全班</span>
       </div>
       <template v-if="techerReviewList.length > 0 && techerReviewList[0].reviewFileStr">
-        <EditCanvas :src="techerReviewList[0].reviewFileStr.split(',')[picIndex - 1]" @importImg="handleImportImg" :picIndex="picIndex"></EditCanvas>
+        <EditCanvas
+          :src="techerReviewList[0].reviewFileStr.split(',')[picIndex - 1]"
+          @importImg="handleImportImg"
+          :picIndex="picIndex"
+        ></EditCanvas>
         <div class="pagination">
           <ul>
             <li @click="handleLeft">
@@ -110,7 +131,11 @@
         </div>
       </template>
       <template v-else-if="fileList.length > 0">
-        <EditCanvas :src="fileList[picIndex - 1].answerFileUrlStr" :picIndex="picIndex" @importImg="handleImportImg"></EditCanvas>
+        <EditCanvas
+          :src="fileList[picIndex - 1].answerFileUrlStr"
+          :picIndex="picIndex"
+          @importImg="handleImportImg"
+        ></EditCanvas>
         <div class="pagination">
           <ul>
             <li @click="handleLeft">
@@ -127,7 +152,10 @@
       </template>
       <template v-else>
         <div class="default-pic">
-          <img src="../../assets/img/pic_homepage_empty@2x.png" alt="" /> 没有上传答案图片
+          <img
+            src="../../assets/img/pic_homepage_empty@2x.png"
+            alt=""
+          /> 没有上传答案图片
         </div>
       </template>
     </div>
@@ -190,9 +218,7 @@ export default {
       this.blob = null
     }
   },
-  mounted() {
-    //  this.$store.state.marking.questionInfo.ifShare === 0 ? this.questionInfo.ifShare = 1 : this.questionInfo.ifShare = 0
-  },
+  mounted() {},
   methods: {
     handleImportImg(blob) {
       this.blob = blob
@@ -245,8 +271,9 @@ export default {
               )
               this.$store.dispatch('marking/questionInfo')
               // this.questionInfo.ifShare = this.$store.state.marking.questionInfo.ifShare
-              this.$store.state.marking.questionInfo.ifShare === 0 ? this.questionInfo.ifShare = 1 : this.questionInfo.ifShare = 0
-              
+              this.$store.state.marking.questionInfo.ifShare === 0
+                ? (this.questionInfo.ifShare = 1)
+                : (this.questionInfo.ifShare = 0)
             }
           })
           .catch(error => {
