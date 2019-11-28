@@ -500,7 +500,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$route.params)
+    // console.log(this.$route.params)
     if (this.$route.params.record) {
       this.pageData = this.$route.params.record
       this.appeal = this.pageData.homeworkAppealType
@@ -520,7 +520,7 @@ export default {
       })
     } else {
       localforage.getItem('compositionStdInfo').then(res => {
-        console.log(res)
+        // console.log(res)
         localforage.getItem('workListItem').then(response => {
           this.pageData = Object.assign(res, response)
           this.appeal = this.pageData.homeworkAppealType
@@ -553,7 +553,7 @@ export default {
           }
         })
         .then(res => {
-          console.log(res)
+          // console.log(res)
           if (res.data.flag === 1) {
             this.data = res.data.infos
           }
@@ -588,7 +588,7 @@ export default {
           }
         })
         .then(res => {
-          console.log(res)
+          // console.log(res)
           if (res.data.infos) {
             let composition = { ...res.data.infos }
             let review = composition.homeworkStudentAnswerCompositionReview
@@ -649,7 +649,7 @@ export default {
                   }
                 })
                 this.evalLists.splice(0, this.evalLists.length, ...group)
-                console.log(group)
+                // console.log(group)
                 let teacherId = this.$store.state.userInfo.teacherId
               } else {
                 this.isMarking = false
