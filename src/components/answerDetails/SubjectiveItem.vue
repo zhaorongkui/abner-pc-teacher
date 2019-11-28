@@ -82,22 +82,33 @@
 }
 </style>
 <template>
-  <div class="subjective card" style="box-shadow: none">
+  <div
+    class="subjective card"
+    style="box-shadow: none"
+  >
     <ReadPeerGrading :questionInfo="questionInfo"></ReadPeerGrading>
     <div class="canvas">
-      <div class="share" @click="share()">
+      <div
+        class="share"
+        @click="share()"
+      >
         <img
           src="../../assets/img/shareNormal.png"
           alt=""
           v-if="questionInfo.ifShare == 1"
         />
-        <img src="../../assets/img/shareOut.png" alt="" v-else />
+        <img
+          src="../../assets/img/shareOut.png"
+          alt=""
+          v-else
+        />
         <span v-if="questionInfo.ifShare == 1">分享全班</span>
-        <span class="hover-span" v-else>分享全班</span>
+        <span
+          class="hover-span"
+          v-else
+        >分享全班</span>
       </div>
-      <template
-        v-if="techerReviewList.length > 0 && techerReviewList[0].reviewFileStr"
-      >
+      <template v-if="techerReviewList.length > 0 && techerReviewList[0].reviewFileStr">
         <EditCanvas
           :src="techerReviewList[0].reviewFileStr.split(',')[picIndex - 1]"
           @importImg="handleImportImg"
@@ -109,14 +120,11 @@
               <a-icon type="caret-left" />
             </li>
             <li>
-              <span>{{ picIndex }}</span
-              >/{{ techerReviewList[0].reviewFileStr.split(',').length }}
+              <span>{{ picIndex }}</span>/{{ techerReviewList[0].reviewFileStr.split(',').length }}
             </li>
-            <li
-              @click="
+            <li @click="
                 handleRight(techerReviewList[0].reviewFileStr.split(',').length)
-              "
-            >
+              ">
               <a-icon type="caret-right" />
             </li>
           </ul>
@@ -134,8 +142,7 @@
               <a-icon type="caret-left" />
             </li>
             <li>
-              <span>{{ picIndex }}</span
-              >/{{ fileList.length }}
+              <span>{{ picIndex }}</span>/{{ fileList.length }}
             </li>
             <li @click="handleRight(fileList.length)">
               <a-icon type="caret-right" />
@@ -145,7 +152,10 @@
       </template>
       <template v-else>
         <div class="default-pic">
-          <img src="../../assets/img/pic_homepage_empty@2x.png" alt="" />
+          <img
+            src="../../assets/img/pic_homepage_empty@2x.png"
+            alt=""
+          />
           没有上传答案图片
         </div>
       </template>
@@ -236,8 +246,13 @@ export default {
           this.questionInfo.hasRewive == 4) &&
         this.questionInfo.isTrue == 0
       ) {
-        if (this.$store.state.marking.questionInfo.ifShare == 0) {
-          this.ifShare = 1
+        if (this.$store.state.marking.questionInfo.ifShare !== undefined) {
+          if (this.$store.state.marking.questionInfo.ifShare == 0) {
+            this.ifShare = 1
+          }
+        } else {
+          // console.log('-------',this.questionInfo.ifShare)
+          this.questionInfo.ifShare === 1 ?this.ifShare = 0 :this.ifShare = 1
         }
         this.$http
           .post('/api/teacher/homework/shareStudentAnswer', {
@@ -261,9 +276,15 @@ export default {
                 this.questionInfo.homeworkQuestionId
               )
               this.$store.dispatch('marking/questionInfo')
-              this.$store.state.marking.questionInfo.ifShare === 0
-                ? (this.questionInfo.ifShare = 1)
-                : (this.questionInfo.ifShare = 0)
+              if (
+                this.$store.state.marking.questionInfo.ifShare !== undefined
+              ) {
+                this.$store.state.marking.questionInfo.ifShare === 0
+                  ? (this.questionInfo.ifShare = 1)
+                  : (this.questionInfo.ifShare = 0)
+              } else {
+                this.questionInfo.ifShare === 1 ?this.questionInfo.ifShare = 0 :this.questionInfo.ifShare = 1
+              }
             }
           })
           .catch(error => {
